@@ -9,11 +9,8 @@ package treinsimulator;
  *
  * @author Bernard
  */
-public class TreinSimulator {
-
-    // to do : readlists updaten
-    public static void main(String[] args) {
-        
-    }
-    
+//segment/deeltraject is de weg tussen twee opeenvolgende stations
+public class Segment {
+    Station vertrekStation;
+    Station eindStation;
 }
