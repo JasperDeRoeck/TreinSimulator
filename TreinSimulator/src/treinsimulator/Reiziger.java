@@ -16,4 +16,11 @@ public class Reiziger {
     // het tijdstip waarop de volgende gebeurtenis met betrekking tot de reiziger plaatsvindt
     // als een reiziger strandt of aankomt bij zijn eindstation dan wordt dit ingesteld op oneindig
     int vtijd;
+    Reis reis;
+    int aantalGenomenOverstappen;
+    
+    /*public Trein zoekTrein(){
+        reis.getAantalOverstappen();
+        
+    }*/
 }
