@@ -7,15 +7,15 @@ package treinsimulator;
 
 /**
  *
- * @author Jasper
+ * @author Bernard
  */
 public class TreinSimulator {
 
-    /**
-     * @param args the command line arguments
-     */
+    // to do : readlists updaten
     public static void main(String[] args) {
-        // TODO code application logic here
+        DAO.readLists();
+        //DAO.schrijfStations();
+        DAO.schrijfLijnen();
     }
     
 }

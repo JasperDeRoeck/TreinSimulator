@@ -13,7 +13,17 @@ package treinsimulator;
 public class Segment {
     Station vertrekStation;
     Station eindStation;
+    char richting;
     
+    public Segment(){
+        
+    }
+    
+    public Segment(Station vertrek, Station eind, char richting){
+        vertrekStation = vertrek;
+        eindStation = eind;
+        this.richting = richting;
+    }
     @Override
     public String toString(){
         return ("Segment : "+vertrekStation.getStadsnaam()+"==>"+eindStation.getStadsnaam());

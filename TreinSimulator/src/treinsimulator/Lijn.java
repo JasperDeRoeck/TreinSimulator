@@ -30,24 +30,15 @@ public class Lijn {
 
     }
 
-    //onderstaande constructor wordt gebruikt om een spiegellijn te creëeren
     public Lijn(Lijn k) {
         id = k.id;
-        richting ='B';
+        id = 'B';
         capaciteit = k.capaciteit;
         zitplaatsen = k.zitplaatsen;
         haltes = new Station[k.getHaltes().length];
         for (int i = 0; i < haltes.length; i++) {
             haltes[i] = k.haltes[k.haltes.length - 1 - i];
         }
-        Segment[] segmentarray = new Segment[haltes.length-1];
-        for (int i =0;i<segmentarray.length;i++){
-            Segment seg = new Segment();
-            seg.vertrekStation=haltes[i];
-            seg.eindStation=haltes[i+1];
-            segmentarray[i]=seg;
-        }
-        segmenten=segmentarray;
         reisduren = new int[k.reisduren.length];
         for (int i = 0; i < reisduren.length; i++) {
             reisduren[i] = k.reisduren[k.reisduren.length - 1 - i];
@@ -72,6 +63,22 @@ public class Lijn {
                 uurPiekVertrek.add(nieuwePiek + "");
             }
         }
+        k.maakSegmenten(); //segmenten in B-richting aanmaken
+    }
+    
+    public Segment maakSegment(Station s1, Station s2, char richting){
+        Segment seg = new Segment(s1, s2, richting);
+        return seg;
+    }
+    
+    public void maakSegmenten(){
+        int aantal= this.getHaltes().length-1;
+        Segment[] segArray = new Segment[aantal];
+        for(int i=0; i<=(this.getHaltes().length)-2;i++){
+            Segment seg = new Segment(this.haltes[i],this.haltes[i+1], this.richting);
+            segArray[i]=seg;
+        }
+        this.setSegmenten(segArray);
     }
 
     public int getId() {
@@ -148,24 +155,21 @@ public class Lijn {
 
     @Override
     public String toString() {
-        String zin = "\nLijn " + id + " passeert de volgende stations in richting "+richting+":\n";
+        String zin = "\nLijn " + id + " rijdt over volgende trajecten:\n ";
         int j = 0;
         for (int i = 0; i < haltes.length - 1; i++) {
-            zin +=haltes[i].getStadsnaam() + "=>" + haltes[i + 1].getStadsnaam() + " voor een duur van " + reisduren[j] + " minuten.\n";
+            zin += "\t" + haltes[i].getStadsnaam() + "=>" + haltes[i + 1].getStadsnaam() + " voor een duur van " + reisduren[j] + " minuten.\n";
             j++;
         }
-        zin += "Capaciteit :" + capaciteit + "\n";
-        zin += "Zitplaatsen: " + zitplaatsen + "\n";
-        zin += "Rijdt om: ";
+        zin += "\ncapaciteit :" + capaciteit + "\n";
+        zin += "zitplaatsen: " + zitplaatsen + "\n";
+        zin += "en rijdt om : \n";
         for (String i : uurVertrek) {
-            zin += i + "u ";
+            zin += i + "u,";
         }
-        zin += "\nHeeft de volgende piekdiensten: ";
+        zin += "\nEn heeft ook de volgende piekdiensten:\n ";
         for (String i : uurPiekVertrek) {
-            zin += i + " ";
-        }
-        for (int i=0;i<segmenten.length;i++){
-            zin=zin+"\n"+segmenten[i].toString();
+            zin += i + ",";
         }
         return zin;
     }
