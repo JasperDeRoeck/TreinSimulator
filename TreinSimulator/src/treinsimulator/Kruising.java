@@ -5,6 +5,8 @@
  */
 package treinsimulator;
 
+import java.lang.reflect.Array;
+
 /**
  *
  * @author Bernard
@@ -16,9 +18,14 @@ public class Kruising {
     // naam van een kruising is van de vorm "Lijn_n1xLijn_n2"
     String naam;
     private int overstaptijd;
+    private Station[] stations;
 
     public int getOverstaptijd() {
         return overstaptijd;
+    }
+
+    public Station[] getStations() {
+        return stations;
     }
     
 }
