@@ -13,14 +13,31 @@ public class Reiziger {
     int aankomstSysteem;
     Station vertrekStation;
     Station eindStation;
+    Trein juisteTrein;
+    
     // het tijdstip waarop de volgende gebeurtenis met betrekking tot de reiziger plaatsvindt
     // als een reiziger strandt of aankomt bij zijn eindstation dan wordt dit ingesteld op oneindig
     int vtijd;
-    Reis reis;
-    int aantalGenomenOverstappen;
-    
-    /*public Trein zoekTrein(){
-        reis.getAantalOverstappen();
+    Reiziger(){
+        juisteTrein = zoekTrein();
+    }
+    public void uitstappen(){
         
-    }*/
+    }
+    public Trein zoekTrein(){
+        return new Trein(); //Gewoon tijdelijk om foutmeldingen te voorkomen
+    }
+    
+    public void activeer(int t){
+        if(vtijd == t){
+            if(!juisteTrein.opstappen(this)){
+                juisteTrein = zoekTrein();
+            }
+            else{
+                Kruising kruising = juisteTrein.getKruising();
+                kruising.voegDataToe(); //Welke data moet toegevoegd worden?
+            }
+        }
+    }
+    
 }

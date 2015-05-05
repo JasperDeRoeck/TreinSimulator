@@ -5,8 +5,6 @@
  */
 package treinsimulator;
 
-import java.lang.reflect.Array;
-
 /**
  *
  * @author Bernard
@@ -17,15 +15,9 @@ import java.lang.reflect.Array;
 public class Kruising {
     // naam van een kruising is van de vorm "Lijn_n1xLijn_n2"
     String naam;
-    private int overstaptijd;
-    private Station[] stations;
-
-    public int getOverstaptijd() {
-        return overstaptijd;
-    }
-
-    public Station[] getStations() {
-        return stations;
+    
+    void voegDataToe() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

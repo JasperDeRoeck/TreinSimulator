@@ -5,7 +5,6 @@
  */
 package treinsimulator;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,28 +16,14 @@ import java.util.Set;
 // anders enkel nodig als verbindingspunt
 public class Station {
     String stadsnaam;
+    Set<Station> buren;
     int overstaptijd;
-    ArrayList<Station> buren;
-    Set<Lijn>lijnen;
     
     public Station(String naam,int overstaptijd){
         this.stadsnaam = naam;
         this.overstaptijd=overstaptijd;
+        buren = new HashSet<>();
     }
-    
-    /*public Trein juisteTrein( int n){
-        Set<Station>bereikbareStations = new HashSet<>();
-        Set<Station>buurStations = new HashSet<>();
-        
-        while(n>0){
-        for(Lijn lijntje: lijnen){
-            for(Station statie : lijntje.getHaltes()){
-                
-            }
-        }
-        n--;
-    }
-    }*/
 
     public String getStadsnaam() {
         return stadsnaam;
@@ -46,10 +31,6 @@ public class Station {
 
     public int getOverstaptijd() {
         return overstaptijd;
-    }
-    
-    public ArrayList getBuren(){
-        return buren;
     }
     
 }
