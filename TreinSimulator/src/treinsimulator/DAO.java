@@ -72,7 +72,7 @@ public class DAO {
 
     private static void maakStations(BufferedReader br) throws IOException {
         String huidig = br.readLine();
-            // alle tekst tussen [Stations] en [Uurregeling] wordt in één string 
+           // alle tekst tussen [Stations] en [Uurregeling] wordt in één string 
         //gestoken en daarna verwerkt zodat stationslijst geïnit kan worden
         String stationstekst = "";
         while (!huidig.contains("[Uurregeling]")) {
