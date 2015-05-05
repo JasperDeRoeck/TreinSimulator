@@ -57,10 +57,11 @@ public class DAO {
                 huidig = br.readLine();
             }
             uurregelingstekst = uurregelingstekst.replaceAll("\\\\", "");
-            System.out.println(uurregelingstekst);
-            String[] lijnen = uurregelingstekst.split("/[Lijn]/");
-            for (String s : lijnen) {
-                lijnenLijst.add(verwerkLijnParagraaf(s));
+            String[] lijnen = uurregelingstekst.split("\\[Lijn\\]");
+            for (int i = 1; i < lijnen.length; i++) {
+                Lijn l = verwerkLijnParagraaf(lijnen[i].replaceAll(" ", ""));
+                lijnenLijst.add(l);
+                lijnenLijst.add(new Lijn(l));
             }
         } catch (FileNotFoundException fnfe) {
             System.out.println("Een .ini bestand is niet gevonden.");
@@ -69,34 +70,64 @@ public class DAO {
         }
     }
 
+    private static void maakStations(BufferedReader br) throws IOException {
+        String huidig = br.readLine();
+           // alle tekst tussen [Stations] en [Uurregeling] wordt in één string 
+        //gestoken en daarna verwerkt zodat stationslijst geïnit kan worden
+        String stationstekst = "";
+        while (!huidig.contains("[Uurregeling]")) {
+            if (!huidig.contains(";") && !huidig.isEmpty()) {
+                stationstekst += huidig;
+            }
+            huidig = br.readLine();
+        }
+        stationstekst = stationstekst.replaceAll("\\\\", "");
+        String[] lines = stationstekst.split("min");
+        for (String s : lines) {
+            s = s.trim();
+            String[] lines2 = s.split(" ");
+            stationLijst.add(new Station(lines2[0], Integer.parseInt(lines2[1])));
+        }
+    }
+
+    //neemt een ganse lijnparagraaf ,analyseert ze en geeft een uitgewerkt lijnobj terug
+
     private static Lijn verwerkLijnParagraaf(String s) {
         Lijn l = new Lijn();
-        String[] lines = s.split("  ");
-        l.setId(Integer.parseInt(lines[0].substring(lines[0].indexOf("=") + 1)));
-        String[] stationsnamen = lines[1].substring(lines[1].indexOf("=") + 1).split("->");
-        Station[] stationsarray = new Station[stationsnamen.length];
+        l.setRichting('A');
+        l.setId(Integer.parseInt(s.substring(s.indexOf("nummer=") + 7, s.indexOf("traject="))));
+        String[] stationsnamen = s.substring(s.indexOf("traject=") + 8, s.indexOf("Tijden=")).split("->");
+        Station[] haltes = new Station[stationsnamen.length];
         for (int i = 0; i < stationsnamen.length; i++) {
+            Segment seg = new Segment();
             for (Station station : stationLijst) {
                 if (station.getStadsnaam().equals(stationsnamen[i])) {
-                    stationsarray[i] = station;
+                    haltes[i] = station;
                 }
             }
         }
-        l.setHaltes(stationsarray);
-        String[] reisdurenInString = lines[2].substring(lines[2].indexOf("=") + 1).split("\\+");
+        Segment[] segmentarray = new Segment[stationsnamen.length - 1];
+        for (int i = 0; i < segmentarray.length; i++) {
+            Segment seg = new Segment();
+            seg.vertrekStation = haltes[i];
+            seg.eindStation = haltes[i + 1];
+            segmentarray[i] = seg;
+        }
+        l.setSegmenten(segmentarray);
+        l.setHaltes(haltes);
+        String[] reisdurenInString = s.substring(s.indexOf("Tijden=") + 7, s.indexOf("CapaciteitPerTrein=")).split("\\+");
         int[] reisduren = new int[reisdurenInString.length];
         for (int i = 0; i < reisdurenInString.length; i++) {
-            System.out.println("=>" + reisdurenInString[i]);
             reisduren[i] = Integer.parseInt(reisdurenInString[i]);
         }
         l.setReisduren(reisduren);
-        l.setCapaciteit(Integer.parseInt(lines[3].substring(lines[3].indexOf("=") + 1)));
-        l.setZitplaatsen(Integer.parseInt(lines[4].substring(lines[4].indexOf("=") + 1)));
-        for (String uur : lines[5].substring(lines[5].indexOf("=") + 1).split(",")) {
-            l.getUurVertrek().add(uur);
+        l.setCapaciteit(Integer.parseInt(s.substring(s.indexOf("CapaciteitPerTrein=") + 19, s.indexOf("ZitplaatsenPerTrein="))));
+        l.setZitplaatsen(Integer.parseInt(s.substring(s.indexOf("ZitplaatsenPerTrein=") + 20, s.indexOf("UurvasteDienst="))));
+        for (String uur : s.substring(s.indexOf("UurvasteDienst=") + 16, s.indexOf("Piekuurtreinen=")).split(",")) {
+            l.getUurVertrek().add(uur.substring(uur.indexOf("+")));
         }
-        for (String uur : lines[6].substring(lines[5].indexOf("=") + 1).split(",")) {
-            l.getUurPiekVertrek().add(uur);
+        for (String uur : s.substring(s.indexOf("Piekuurtreinen=") + 15).split(",")) {
+            l.getUurPiekVertrek().add(uur.replace("u", ""));
         }
         return l;
     }
@@ -106,9 +137,9 @@ public class DAO {
             System.out.println(s.getStadsnaam() + " heeft " + s.getOverstaptijd() + " min overstaptijd.\n");
         }
     }
-    
-    public static void schrijfLijnen(){
-        for (Lijn l : lijnenLijst){
+
+    public static void schrijfLijnen() {
+        for (Lijn l : lijnenLijst) {
             System.out.println(l.toString());
         }
     }

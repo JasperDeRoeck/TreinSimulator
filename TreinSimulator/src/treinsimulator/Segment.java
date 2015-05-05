@@ -24,4 +24,8 @@ public class Segment {
         eindStation = eind;
         this.richting = richting;
     }
+    @Override
+    public String toString(){
+        return ("Segment : "+vertrekStation.getStadsnaam()+"==>"+eindStation.getStadsnaam());
+    }
 }

@@ -5,6 +5,10 @@
  */
 package treinsimulator;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author Bernard
@@ -14,11 +18,27 @@ package treinsimulator;
 public class Station {
     String stadsnaam;
     int overstaptijd;
+    ArrayList<Station> buren;
+    Set<Lijn>lijnen;
     
     public Station(String naam,int overstaptijd){
         this.stadsnaam = naam;
         this.overstaptijd=overstaptijd;
     }
+    
+    /*public Trein juisteTrein( int n){
+        Set<Station>bereikbareStations = new HashSet<>();
+        Set<Station>buurStations = new HashSet<>();
+        
+        while(n>0){
+        for(Lijn lijntje: lijnen){
+            for(Station statie : lijntje.getHaltes()){
+                
+            }
+        }
+        n--;
+    }
+    }*/
 
     public String getStadsnaam() {
         return stadsnaam;
@@ -26,6 +46,10 @@ public class Station {
 
     public int getOverstaptijd() {
         return overstaptijd;
+    }
+    
+    public ArrayList getBuren(){
+        return buren;
     }
     
 }
