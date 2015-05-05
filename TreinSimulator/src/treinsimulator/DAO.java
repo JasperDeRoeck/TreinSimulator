@@ -98,7 +98,6 @@ public class DAO {
         for (String uur : lines[6].substring(lines[5].indexOf("=") + 1).split(",")) {
             l.getUurPiekVertrek().add(uur);
         }
-        l.maakSegmenten(); //segmenten aanmaken
         return l;
     }
 
