@@ -13,9 +13,8 @@ public class TreinSimulator {
 
     // to do : readlists updaten
     public static void main(String[] args) {
-        DAO.readLists();
-        //DAO.schrijfStations();
-        DAO.schrijfLijnen();
+        DAO.initialiseer();
+        DAO.schrijfKruisingen();
     }
     
 }

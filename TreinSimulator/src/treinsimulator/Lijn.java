@@ -32,7 +32,7 @@ public class Lijn {
 
     public Lijn(Lijn k) {
         id = k.id;
-        id = 'B';
+        richting = 'B';
         capaciteit = k.capaciteit;
         zitplaatsen = k.zitplaatsen;
         haltes = new Station[k.getHaltes().length];
@@ -63,7 +63,7 @@ public class Lijn {
                 uurPiekVertrek.add(nieuwePiek + "");
             }
         }
-        k.maakSegmenten(); //segmenten in B-richting aanmaken
+        k.maakSegmenten(k); //segmenten in B-richting aanmaken
     }
     
     public Segment maakSegment(Station s1, Station s2, char richting){
@@ -71,14 +71,14 @@ public class Lijn {
         return seg;
     }
     
-    public void maakSegmenten(){
-        int aantal= this.getHaltes().length-1;
+    private void maakSegmenten(Lijn k){
+        int aantal= k.getHaltes().length-1;
         Segment[] segArray = new Segment[aantal];
-        for(int i=0; i<=(this.getHaltes().length)-2;i++){
-            Segment seg = new Segment(this.haltes[i],this.haltes[i+1], this.richting);
+        for(int i=0; i<=(k.getHaltes().length)-2;i++){
+            Segment seg = new Segment(k.haltes[i],k.haltes[i+1], 'B');
             segArray[i]=seg;
         }
-        this.setSegmenten(segArray);
+        segmenten = segArray;
     }
 
     public int getId() {
@@ -155,7 +155,7 @@ public class Lijn {
 
     @Override
     public String toString() {
-        String zin = "\nLijn " + id + " rijdt over volgende trajecten:\n ";
+        String zin = "\nLijn " + id + " rijdt over volgende trajecten :\n Volgens richting "+richting+"\n";
         int j = 0;
         for (int i = 0; i < haltes.length - 1; i++) {
             zin += "\t" + haltes[i].getStadsnaam() + "=>" + haltes[i + 1].getStadsnaam() + " voor een duur van " + reisduren[j] + " minuten.\n";
