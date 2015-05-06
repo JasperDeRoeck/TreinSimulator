@@ -5,8 +5,6 @@
  */
 package treinsimulator;
 
-import java.lang.reflect.Array;
-
 /**
  *
  * @author Bernard
@@ -31,6 +29,9 @@ public class Kruising {
 
     public Station[] getStations() {
         return stations;
+    
+    void voegDataToe() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getNaam() {

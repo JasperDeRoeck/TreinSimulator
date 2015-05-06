@@ -22,9 +22,16 @@ import java.util.logging.Logger;
  * @author Bernard
  */
 public class DAO {
-
+    
     private static ArrayList<Station> stationLijst = new ArrayList<>();
     private static ArrayList<Lijn> lijnenLijst = new ArrayList<>();
+    private static ArrayList<Reiziger>  reizigerLijst = new ArrayList<>();
+    
+    public static void readLists() {
+        
+    }
+    public Station getTrein(int i){
+        return stationLijst.get(i);
     private static HashMap<String,ArrayList<Reiziger>> reizigersLijst = new HashMap<>();
     private static ArrayList<Kruising> kruisingLijst = new ArrayList<>();
 
@@ -75,6 +82,9 @@ public class DAO {
             stationLijst.add(new Station(lines2[0], Integer.parseInt(lines2[1])));
         }
         return br;
+
+    public static ArrayList<Station> getStationLijst() {
+        return stationLijst;
     }
     //initialiseert de lijnen in lijnenLijst,wordt opgeroepen door leesIni()
     private static BufferedReader maakLijnen(BufferedReader br) throws IOException {
@@ -170,6 +180,9 @@ public class DAO {
             l.getUurPiekVertrek().add(uur.replace("u", ""));
         }
         return l;
+
+    public static ArrayList<Lijn> getLijnenLijst() {
+        return lijnenLijst;
     }
     //initialiseert de buren van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
     private static void geefStationsBuren(){
@@ -221,6 +234,9 @@ public class DAO {
             s.getBuren().forEach(System.out::println);
             System.out.println("");
         }
+
+    public static ArrayList<Reiziger> getReizigerLijst() {
+        return reizigerLijst;
     }
 
     public static void schrijfLijnen() {

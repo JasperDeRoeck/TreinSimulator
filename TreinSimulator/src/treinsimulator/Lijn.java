@@ -24,12 +24,11 @@ public class Lijn {
     private int zitplaatsen;
     private ArrayList<String> uurVertrek = new ArrayList<>();
     private ArrayList<String> uurPiekVertrek = new ArrayList<>();
-    private int[] reisduren;
-
-    public Lijn() {
-
+    private String[] reisduren;
+    public ArrayList<Trein> treinen =  new ArrayList<>();
+    public Lijn(){
+        
     }
-
     public Lijn(Lijn k) {
         id = k.id;
         richting = 'B';
@@ -39,14 +38,14 @@ public class Lijn {
         for (int i = 0; i < haltes.length; i++) {
             haltes[i] = k.haltes[k.haltes.length - 1 - i];
         }
-        reisduren = new int[k.reisduren.length];
+        reisduren = new String[k.reisduren.length];
         for (int i = 0; i < reisduren.length; i++) {
             reisduren[i] = k.reisduren[k.reisduren.length - 1 - i];
         }
         uurVertrek = new ArrayList<>();
         for (String s : k.uurVertrek) {
             if (Integer.parseInt(s) == 0) {
-                uurVertrek.add(Integer.parseInt(s) + "");
+                uurVertrek.add(Integer.parseInt(s)+"");
             } else {
                 uurVertrek.add(60 - Integer.parseInt(s) + "");
             }
@@ -63,7 +62,6 @@ public class Lijn {
                 uurPiekVertrek.add(nieuwePiek + "");
             }
         }
-        k.maakSegmenten(k); //segmenten in B-richting aanmaken
     }
     
     public Segment maakSegment(Station s1, Station s2, char richting){
@@ -92,45 +90,23 @@ public class Lijn {
     public Station[] getHaltes() {
         return haltes;
     }
-
-    public void setHaltes(Station[] haltes) {
-        this.haltes = haltes;
+    
+    public Segment geefEersteSegment(char richting){
+        if(richting == 'A'){
+            return segmenten[0];
+        }
+        else{
+            return segmenten[segmenten.length-1];
+        }
     }
-
-    public Segment[] getSegmenten() {
-        return segmenten;
-    }
-
-    public void setSegmenten(Segment[] segmenten) {
-        this.segmenten = segmenten;
-    }
-
-    public char getRichting() {
-        return richting;
-    }
-
-    public void setRichting(char richting) {
-        this.richting = richting;
-    }
-
-    public int getCapaciteit() {
-        return capaciteit;
-    }
-
-    public void setCapaciteit(int capaciteit) {
-        this.capaciteit = capaciteit;
-    }
-
-    public int getZitplaatsen() {
+    public int getZitplaatsen(){
         return zitplaatsen;
     }
-
-    public void setZitplaatsen(int zitplaatsen) {
-        this.zitplaatsen = zitplaatsen;
+    public ArrayList<Trein> getTreinen() {
+        return treinen;
     }
-
-    public ArrayList<String> getUurVertrek() {
-        return uurVertrek;
+    public Kruising getKruising(){ //Moet op een of andere manier door een passagier gevraagd worden aan Lijn
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public void setUurVertrek(ArrayList<String> uurVertrek) {
