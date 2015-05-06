@@ -16,13 +16,13 @@ import java.util.Set;
 // anders enkel nodig als verbindingspunt
 public class Station {
     String stadsnaam;
-    Set<Station> buren;
     int overstaptijd;
+    Set<Station> buren = new HashSet<>();
+    Set<Lijn>lijnen;
     
     public Station(String naam,int overstaptijd){
         this.stadsnaam = naam;
         this.overstaptijd=overstaptijd;
-        buren = new HashSet<>();
     }
 
     public String getStadsnaam() {
@@ -31,6 +31,27 @@ public class Station {
 
     public int getOverstaptijd() {
         return overstaptijd;
+    }
+    
+    public Set getBuren(){
+        return buren;
+    }
+     /*public Trein juisteTrein( int n){
+        Set<Station>bereikbareStations = new HashSet<>();
+        Set<Station>buurStations = new HashSet<>();
+        
+        while(n>0){
+        for(Lijn lijntje: lijnen){
+            for(Station statie : lijntje.getHaltes()){
+                
+            }
+        }
+        n--;
+    }
+    }*/
+    @Override
+    public String toString(){
+        return stadsnaam;
     }
     
 }

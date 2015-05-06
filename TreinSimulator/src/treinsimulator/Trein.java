@@ -22,6 +22,7 @@ public class Trein {
     Set<Reiziger> inzittenden = new HashSet<>();
     Segment huidigSegment;
     char richting;
+    
     //richting kan oftewel 'A' of 'B' zijn 
     //A ,van voor naar achter in de lijst van stations. B vice versa
     boolean isRijdend;
@@ -63,6 +64,7 @@ public class Trein {
     public Lijn getLijn(){
         return lijn;
     }
+    
 }
 
 

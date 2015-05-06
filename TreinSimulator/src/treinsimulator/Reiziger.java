@@ -14,10 +14,13 @@ public class Reiziger {
     Station vertrekStation;
     Station eindStation;
     Trein juisteTrein;
+    int vtijd;
+    Reis reis;
+    int aantalGenomenOverstappen;
     
     // het tijdstip waarop de volgende gebeurtenis met betrekking tot de reiziger plaatsvindt
     // als een reiziger strandt of aankomt bij zijn eindstation dan wordt dit ingesteld op oneindig
-    int vtijd;
+    
     Reiziger(){
         juisteTrein = zoekTrein();
     }
@@ -40,4 +43,11 @@ public class Reiziger {
         }
     }
     
+    
+    
+    public Reiziger(int aankomstSysteem, Station vertrekStation , Station eindStation){
+        this.aankomstSysteem= aankomstSysteem;
+        this.vertrekStation = vertrekStation;
+        this.eindStation = eindStation;
+    }
 }

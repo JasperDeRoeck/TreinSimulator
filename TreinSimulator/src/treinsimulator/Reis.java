@@ -5,6 +5,9 @@
  */
 package treinsimulator;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author Bernard
@@ -16,9 +19,54 @@ public class Reis {
     int aantalGestrandeReizigers;
     // totaal aantal minuten reisweg voor alle reizigers samen
     int totaleReiswegTijd;
+    int aantalOverstappen;
+    Station vertrekstation;
+    Station eindstation;
     
-    void voegGestrandeReizigerToe(Reiziger r){
-        
+    public int getAantalOverstappen(){
+        return aantalOverstappen;
     }
     
+    public int berekenWachttijdInReis(Station vertrek, Station doel){ // nog niet af
+        return 0;
+    }
+    
+    public int bepaalAantalOverstappen(){
+        int n = -1;
+        Set<Station> afgewerkt = new HashSet<>();
+        afgewerkt.add(vertrekstation);
+        Set<Station> nietafgewerkt = new HashSet<>();
+        nietafgewerkt.addAll(vertrekstation.getBuren());
+        while(!nietafgewerkt.contains(eindstation)){
+            n+=1;
+            Set<Station> nieuwnietafgewerkt = new HashSet<>();
+            for(Station statie: nietafgewerkt){
+                nieuwnietafgewerkt.addAll(statie.getBuren());
+            }
+            afgewerkt.addAll(nietafgewerkt);
+            nietafgewerkt.clear();
+            nietafgewerkt.addAll(nieuwnietafgewerkt);
+        }
+        return n;
+    }
+
+    public int getAantalReizigers() {
+        return aantalReizigers;
+    }
+
+    public int getAantalGestrandeReizigers() {
+        return aantalGestrandeReizigers;
+    }
+
+    public int getTotaleReiswegTijd() {
+        return totaleReiswegTijd;
+    }
+
+    public Station getVertrekstation() {
+        return vertrekstation;
+    }
+
+    public Station getEindstation() {
+        return eindstation;
+    }
 }

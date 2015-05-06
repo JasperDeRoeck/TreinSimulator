@@ -7,6 +7,7 @@ package treinsimulator;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.naming.OperationNotSupportedException;
 
 /**
  *
@@ -19,8 +20,18 @@ public class Segment {
     Lijn lijn;
     Segment volgendSegment;
     Segment vorigSegment;
+    char richting;
     Set<Segmentdata> data = new HashSet<>();
     
+    public Segment(Station vertrek, Station eind, char richting){
+        vertrekStation = vertrek;
+        eindStation = eind;
+        this.richting = richting;
+    }
+
+    Segment() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     public Segment geefVolgendeSegment(char richting){
         if(richting == 'A'){
             return volgendSegment;

@@ -6,6 +6,7 @@
 package treinsimulator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,17 +18,20 @@ public class TreinSimulator {
     
     private static ArrayList<Station> stationLijst;
     private static ArrayList<Lijn> lijnenLijst;
-    private static ArrayList<Reiziger>  reizigerLijst;
+    private static HashMap<String,ArrayList<Reiziger>> reizigersLijst;
    
     DAO mijnDAO;
     // to do : readlists updaten
     public static void main(String[] args) {
         //Set up:
         
-            DAO.readLists();
+        //Set up:
+            DAO.initialiseer();
+            DAO.schrijfKruisingen();
+            
             stationLijst = DAO.getStationLijst();
             lijnenLijst = DAO.getLijnenLijst();
-            reizigerLijst = DAO.getReizigerLijst();
+            reizigersLijst = DAO.getReizigersLijst();
             int STOPTIJD = 1440;
             
             int t = 0;
@@ -41,7 +45,7 @@ public class TreinSimulator {
                         trein.aankomst(t);
                     }
                 }
-                for(Reiziger reiziger: reizigerLijst){
+                for(Reiziger reiziger: reizigersLijst.get(t)){
                     reiziger.activeer(t);
                 }
                 for(Trein trein : alleTreinen){
