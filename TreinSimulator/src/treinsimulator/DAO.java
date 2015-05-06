@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,13 +23,6 @@ public class DAO {
     
     private static ArrayList<Station> stationLijst = new ArrayList<>();
     private static ArrayList<Lijn> lijnenLijst = new ArrayList<>();
-    private static ArrayList<Reiziger>  reizigerLijst = new ArrayList<>();
-    
-    public static void readLists() {
-        
-    }
-    public Station getTrein(int i){
-        return stationLijst.get(i);
     private static HashMap<String,ArrayList<Reiziger>> reizigersLijst = new HashMap<>();
     private static ArrayList<Kruising> kruisingLijst = new ArrayList<>();
 
@@ -40,6 +31,14 @@ public class DAO {
         leesIni();
         maakDeductieStructuren();
     }
+    
+    public static void readLists() {
+        
+    }
+    public Station getTrein(int i){
+        return stationLijst.get(i);
+    }
+    
     //leest .ini bestand in met stationsinfo, lijninfo en passagiersinfo
     private static void leesIni() {
         try {
@@ -82,6 +81,7 @@ public class DAO {
             stationLijst.add(new Station(lines2[0], Integer.parseInt(lines2[1])));
         }
         return br;
+    }
 
     public static ArrayList<Station> getStationLijst() {
         return stationLijst;
@@ -143,9 +143,12 @@ public class DAO {
     }
     //neemt een ganse lijnparagraaf ,analyseert ze en geeft een uitgewerkt lijnobj terug
     private static Lijn verwerkLijnParagraaf(String s) {
-        Lijn l = new Lijn();
-        l.setRichting('A');
-        l.setId(Integer.parseInt(s.substring(s.indexOf("nummer=") + 7, s.indexOf("traject="))));
+                 /* Kleine aanpassing aangebracht: om het aantal getters/setters toch een beetje te reduceren,
+                  * heb ik de constructor van Lijn aangepast om richting en id al aan te nemen. Deze worden dan
+                  * onmiddellijk meegegeven.
+                  */
+        int id = Integer.parseInt(s.substring(s.indexOf("nummer=") + 7, s.indexOf("traject=")));
+        Lijn l = new Lijn('A', id);
         String[] stationsnamen = s.substring(s.indexOf("traject=") + 8, s.indexOf("Tijden=")).split("->");
         Station[] haltes = new Station[stationsnamen.length];
         for (int i = 0; i < stationsnamen.length; i++) {
@@ -174,12 +177,13 @@ public class DAO {
         l.setCapaciteit(Integer.parseInt(s.substring(s.indexOf("CapaciteitPerTrein=") + 19, s.indexOf("ZitplaatsenPerTrein="))));
         l.setZitplaatsen(Integer.parseInt(s.substring(s.indexOf("ZitplaatsenPerTrein=") + 20, s.indexOf("Uurvaste"))));
         for (String uur : s.substring(s.indexOf("Uurvaste") + 16, s.indexOf("Piekuurtreinen=")).split(",")) {
-            l.getUurVertrek().add(uur.substring(uur.indexOf("+")));
+            l.getUurVertrek().add(Integer.parseInt(uur.substring(uur.indexOf("+"))));   //!!Heb hier parseInt toegepast, omdat we nu met int's werken.
         }
         for (String uur : s.substring(s.indexOf("Piekuurtreinen=") + 15).split(",")) {
-            l.getUurPiekVertrek().add(uur.replace("u", ""));
+            l.getUurPiekVertrek().add(Integer.parseInt(uur.replace("u", "")));
         }
         return l;
+    }
 
     public static ArrayList<Lijn> getLijnenLijst() {
         return lijnenLijst;
@@ -234,11 +238,7 @@ public class DAO {
             s.getBuren().forEach(System.out::println);
             System.out.println("");
         }
-
-    public static ArrayList<Reiziger> getReizigerLijst() {
-        return reizigerLijst;
     }
-
     public static void schrijfLijnen() {
         for (Lijn l : lijnenLijst) {
             System.out.println(l.toString());
@@ -256,5 +256,8 @@ public class DAO {
             System.out.println(k.toString());
         }
     }
-
+    public static HashMap<String,ArrayList<Reiziger>> getReizigersLijst() {
+        return reizigersLijst;
+    }
+    
 }

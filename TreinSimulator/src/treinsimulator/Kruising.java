@@ -29,9 +29,6 @@ public class Kruising {
 
     public Station[] getStations() {
         return stations;
-    
-    void voegDataToe() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getNaam() {
@@ -45,11 +42,9 @@ public class Kruising {
     public void setOverstaptijd(int overstaptijd) {
         this.overstaptijd = overstaptijd;
     }
-
     public void setStations(Station[] stations) {
         this.stations = stations;
     }
-    
     @Override
     public String toString(){
         String zin =naam+" kruist volgende stations :";
@@ -57,6 +52,9 @@ public class Kruising {
             zin =zin + "\n" +station.getStadsnaam();
         }
         return (zin);
+    }
+    void voegDataToe() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
