@@ -45,5 +45,25 @@ public class Reis {
         }
         return n;
     }
+
+    public int getAantalReizigers() {
+        return aantalReizigers;
+    }
+
+    public int getAantalGestrandeReizigers() {
+        return aantalGestrandeReizigers;
+    }
+
+    public int getTotaleReiswegTijd() {
+        return totaleReiswegTijd;
+    }
+
+    public Station getVertrekstation() {
+        return vertrekstation;
+    }
+
+    public Station getEindstation() {
+        return eindstation;
+    }
    
 }
