@@ -34,8 +34,8 @@ public class Statistiek {
     public HashMap berekenWachttijdReiziger(){
         HashMap<Reis, Integer> wachttijd = new HashMap<>();
         for(Reis r: alleReizen){
-            String vertrek = r.getVertrekstation().getStadsnaam();
-            String doel = r.getEindstation().getStadsnaam();
+            Station vertrek = r.getVertrekstation();
+            Station doel = r.getEindstation();
             int tijd = r.berekenWachttijdInReis(vertrek,doel);
             wachttijd.put(r, tijd);
         }

@@ -23,4 +23,10 @@ public class Reiziger {
         reis.getAantalOverstappen();
         
     }*/
+    
+    public Reiziger(int aankomstSysteem, Station vertrekStation , Station eindStation){
+        this.aankomstSysteem= aankomstSysteem;
+        this.vertrekStation = vertrekStation;
+        this.eindStation = eindStation;
+    }
 }

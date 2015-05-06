@@ -20,12 +20,42 @@ public class Kruising {
     private int overstaptijd;
     private Station[] stations;
 
+    public Kruising (String naam ,Station [] stations){
+        this.naam=naam;
+        this.stations = stations;
+    }
+    
     public int getOverstaptijd() {
         return overstaptijd;
     }
 
     public Station[] getStations() {
         return stations;
+    }
+
+    public String getNaam() {
+        return naam;
+    }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+
+    public void setOverstaptijd(int overstaptijd) {
+        this.overstaptijd = overstaptijd;
+    }
+
+    public void setStations(Station[] stations) {
+        this.stations = stations;
+    }
+    
+    @Override
+    public String toString(){
+        String zin =naam+" kruist volgende stations :";
+        for (Station station : stations){
+            zin =zin + "\n" +station.getStadsnaam();
+        }
+        return (zin);
     }
     
 }

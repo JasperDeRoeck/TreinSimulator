@@ -27,6 +27,10 @@ public class Reis {
         return aantalOverstappen;
     }
     
+    public int berekenWachttijdInReis(Station vertrek, Station doel){ // nog niet af
+        return 0;
+    }
+    
     public int bepaalAantalOverstappen(){
         int n = -1;
         Set<Station> afgewerkt = new HashSet<>();
@@ -65,5 +69,6 @@ public class Reis {
     public Station getEindstation() {
         return eindstation;
     }
+    
    
 }
