@@ -16,4 +16,10 @@ public class Segmentdata {
     int aantalReizigersPerTrein;
     int aantalRechtstaandeReizigers;
     int aantalAchterGeblevenReizigers;
+
+    public int getAantalRechtstaandeReizigers() {
+        return aantalRechtstaandeReizigers;
+    }
+    
+    
 }

@@ -27,9 +27,7 @@ public class Reis {
         return aantalOverstappen;
     }
     
-    public int berekenWachttijdInReis(Station vertrek, Station doel){ // nog niet af
-        return 0;
-    }
+    
     
     public int bepaalAantalOverstappen(){
         int n = -1;

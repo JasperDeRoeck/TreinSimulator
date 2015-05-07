@@ -44,5 +44,9 @@ public class Segment {
     void setData(Segmentdata sd) {
         data.add(sd);
     }
+
+    public Set<Segmentdata> getData() {
+        return data;
+    }
     
 }
