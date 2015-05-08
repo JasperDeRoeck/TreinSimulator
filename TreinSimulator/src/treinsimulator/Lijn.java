@@ -22,8 +22,8 @@ public class Lijn {
 
     private int capaciteit;
     private int zitplaatsen;
-    private ArrayList<String> uurVertrek = new ArrayList<>();
-    private ArrayList<String> uurPiekVertrek = new ArrayList<>();
+    private ArrayList<Integer> uurVertrek = new ArrayList<>();
+    private ArrayList<Integer> uurPiekVertrek = new ArrayList<>();
     private int[] reisduren;
 
     public Lijn() {
@@ -44,23 +44,23 @@ public class Lijn {
             reisduren[i] = k.reisduren[k.reisduren.length - 1 - i];
         }
         uurVertrek = new ArrayList<>();
-        for (String s : k.uurVertrek) {
-            if (Integer.parseInt(s) == 0) {
-                uurVertrek.add(Integer.parseInt(s) + "");
+        for (Integer e : k.uurVertrek) {
+            if (e == 0) {
+                uurVertrek.add(e);
             } else {
-                uurVertrek.add(60 - Integer.parseInt(s) + "");
+                uurVertrek.add(60 - e);
             }
         }
         uurPiekVertrek = new ArrayList<>();
-        for (String s : k.uurPiekVertrek) {
-            int piek = Integer.parseInt(s);
+        for (Integer e : k.uurPiekVertrek) {
+            int piek = e;
             int nieuwePiek;
             if ((1600 < piek && piek <= 1800) || (700 <= piek && piek < 900)) {
                 nieuwePiek = piek - (piek % 100) - 100 + (60 - piek % 100);
                 if (nieuwePiek % 100 == 60) {
                     nieuwePiek = nieuwePiek - 60;
                 }
-                uurPiekVertrek.add(nieuwePiek + "");
+                uurPiekVertrek.add(nieuwePiek );
             }
         }
         k.maakSegmenten(k); //segmenten in B-richting aanmaken
@@ -129,19 +129,19 @@ public class Lijn {
         this.zitplaatsen = zitplaatsen;
     }
 
-    public ArrayList<String> getUurVertrek() {
+    public ArrayList<Integer> getUurVertrek() {
         return uurVertrek;
     }
 
-    public void setUurVertrek(ArrayList<String> uurVertrek) {
+    public void setUurVertrek(ArrayList<Integer> uurVertrek) {
         this.uurVertrek = uurVertrek;
     }
 
-    public ArrayList<String> getUurPiekVertrek() {
+    public ArrayList<Integer> getUurPiekVertrek() {
         return uurPiekVertrek;
     }
 
-    public void setUurPiekVertrek(ArrayList<String> uurPiekVertrek) {
+    public void setUurPiekVertrek(ArrayList<Integer> uurPiekVertrek) {
         this.uurPiekVertrek = uurPiekVertrek;
     }
 
@@ -164,11 +164,11 @@ public class Lijn {
         zin += "\ncapaciteit :" + capaciteit + "\n";
         zin += "zitplaatsen: " + zitplaatsen + "\n";
         zin += "en rijdt om : \n";
-        for (String i : uurVertrek) {
-            zin += i + "u,";
+        for (Integer i : uurVertrek) {
+            zin =zin +" XX."+ i  ;
         }
         zin += "\nEn heeft ook de volgende piekdiensten:\n ";
-        for (String i : uurPiekVertrek) {
+        for (Integer i : uurPiekVertrek) {
             zin += i + ",";
         }
         return zin;
