@@ -25,14 +25,15 @@ public class Lijn {
     private ArrayList<Integer> uurVertrek = new ArrayList<>();
     private ArrayList<Integer> uurPiekVertrek = new ArrayList<>();
     private int[] reisduren;
-
-    public Lijn() {
-
+    public ArrayList<Trein> treinen =  new ArrayList<>();
+    
+    public Lijn(char richting, int id){
+        this.richting = richting;
+        this.id = id;
     }
-
     public Lijn(Lijn k) {
         id = k.id;
-        richting = 'B';
+        id = 'B';
         capaciteit = k.capaciteit;
         zitplaatsen = k.zitplaatsen;
         haltes = new Station[k.getHaltes().length];
@@ -63,14 +64,7 @@ public class Lijn {
                 uurPiekVertrek.add(nieuwePiek );
             }
         }
-        k.maakSegmenten(k); //segmenten in B-richting aanmaken
     }
-    
-    public Segment maakSegment(Station s1, Station s2, char richting){
-        Segment seg = new Segment(s1, s2, richting);
-        return seg;
-    }
-    
     private void maakSegmenten(Lijn k){
         int aantal= k.getHaltes().length-1;
         Segment[] segArray = new Segment[aantal];
@@ -81,17 +75,17 @@ public class Lijn {
         segmenten = segArray;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Station[] getHaltes() {
         return haltes;
     }
+    
+    public Segment geefEersteSegment(char richting){
+        if(richting == 'A'){
+            return segmenten[0];
+        }
+        else{
+            return segmenten[segmenten.length-1];
+        }
 
     public void setHaltes(Station[] haltes) {
         this.haltes = haltes;
@@ -173,4 +167,51 @@ public class Lijn {
         }
         return zin;
     }
+
+    public int getCapaciteit() {
+        return capaciteit;
+    }
+
+    public int getZitplaatsen() {
+        return zitplaatsen;
+    }
+
+    public ArrayList<Trein> getTreinen() {
+        return treinen;
+    }
+    public ArrayList<Integer> getUurVertrek() {
+        return uurVertrek;
+    }
+    public ArrayList<Integer> getUurPiekVertrek() {
+        return uurPiekVertrek;
+    }
+    public void setSegmenten(Segment[] segmenten) {
+        this.segmenten = segmenten;
+    }
+
+    public void setReisduren(int[] reisduren) {
+        this.reisduren = reisduren;
+    }
+
+    public void setCapaciteit(int capaciteit) {
+        this.capaciteit = capaciteit;
+    }
+
+    public void setHaltes(Station[] haltes) {
+        this.haltes = haltes;
+    }
+
+    public void setZitplaatsen(int zitplaatsen) {
+        this.zitplaatsen = zitplaatsen;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public Kruising getKruising(){ //Moet op een of andere manier door een passagier gevraagd worden aan Lijn
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+    
+    
+    
 }

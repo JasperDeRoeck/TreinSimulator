@@ -69,6 +69,4 @@ public class Reis {
     public Station getEindstation() {
         return eindstation;
     }
-    
-   
 }

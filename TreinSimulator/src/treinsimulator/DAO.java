@@ -14,15 +14,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Bernard
  */
 public class DAO {
-
+    
     private static ArrayList<Station> stationLijst = new ArrayList<>();
     private static ArrayList<Lijn> lijnenLijst = new ArrayList<>();
     private static HashMap<Integer,ArrayList<Reiziger>> reizigersLijst = new HashMap<>();
@@ -33,6 +31,14 @@ public class DAO {
         leesIni();
         maakDeductieStructuren();
     }
+    
+    public static void readLists() {
+        
+    }
+    public Station getTrein(int i){
+        return stationLijst.get(i);
+    }
+    
     //leest .ini bestand in met stationsinfo, lijninfo en passagiersinfo
     private static void leesIni() {
         try {
@@ -75,6 +81,10 @@ public class DAO {
             stationLijst.add(new Station(lines2[0], Integer.parseInt(lines2[1])));
         }
         return br;
+    }
+
+    public static ArrayList<Station> getStationLijst() {
+        return stationLijst;
     }
     //initialiseert de lijnen in lijnenLijst,wordt opgeroepen door leesIni()
     private static BufferedReader maakLijnen(BufferedReader br) throws IOException {
@@ -136,9 +146,12 @@ public class DAO {
     }
     //neemt een ganse lijnparagraaf ,analyseert ze en geeft een uitgewerkt lijnobj terug
     private static Lijn verwerkLijnParagraaf(String s) {
-        Lijn l = new Lijn();
-        l.setRichting('A');
-        l.setId(Integer.parseInt(s.substring(s.indexOf("nummer=") + 7, s.indexOf("traject="))));
+                 /* Kleine aanpassing aangebracht: om het aantal getters/setters toch een beetje te reduceren,
+                  * heb ik de constructor van Lijn aangepast om richting en id al aan te nemen. Deze worden dan
+                  * onmiddellijk meegegeven.
+                  */
+        int id = Integer.parseInt(s.substring(s.indexOf("nummer=") + 7, s.indexOf("traject=")));
+        Lijn l = new Lijn('A', id);
         String[] stationsnamen = s.substring(s.indexOf("traject=") + 8, s.indexOf("Tijden=")).split("->");
         Station[] haltes = new Station[stationsnamen.length];
         for (int i = 0; i < stationsnamen.length; i++) {
@@ -173,6 +186,10 @@ public class DAO {
             l.getUurPiekVertrek().add(Integer.parseInt(uur.replace("u", "")));
         }
         return l;
+    }
+
+    public static ArrayList<Lijn> getLijnenLijst() {
+        return lijnenLijst;
     }
     //initialiseert de buren van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
     private static void geefStationsBuren(){
@@ -225,7 +242,6 @@ public class DAO {
             System.out.println("");
         }
     }
-
     public static void schrijfLijnen() {
         for (Lijn l : lijnenLijst) {
             System.out.println(l.toString());
@@ -243,5 +259,8 @@ public class DAO {
             System.out.println(k.toString());
         }
     }
-
+    public static HashMap<String,ArrayList<Reiziger>> getReizigersLijst() {
+        return reizigersLijst;
+    }
+    
 }

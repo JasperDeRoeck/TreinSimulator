@@ -5,6 +5,10 @@
  */
 package treinsimulator;
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.naming.OperationNotSupportedException;
+
 /**
  *
  * @author Bernard
@@ -13,19 +17,32 @@ package treinsimulator;
 public class Segment {
     Station vertrekStation;
     Station eindStation;
+    Lijn lijn;
+    Segment volgendSegment;
+    Segment vorigSegment;
     char richting;
-    
-    public Segment(){
-        
-    }
+    Set<Segmentdata> data = new HashSet<>();
     
     public Segment(Station vertrek, Station eind, char richting){
         vertrekStation = vertrek;
         eindStation = eind;
         this.richting = richting;
     }
-    @Override
-    public String toString(){
-        return ("Segment : "+vertrekStation.getStadsnaam()+"==>"+eindStation.getStadsnaam());
+
+    Segment() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    public Segment geefVolgendeSegment(char richting){
+        if(richting == 'A'){
+            return volgendSegment;
+        }
+        else{
+            return vorigSegment;
+        }
+    }
+
+    void setData(Segmentdata sd) {
+        data.add(sd);
+    }
+    
 }
