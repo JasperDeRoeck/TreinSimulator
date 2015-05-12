@@ -155,28 +155,29 @@ public class DAO {
         String[] stationsnamen = s.substring(s.indexOf("traject=") + 8, s.indexOf("Tijden=")).split("->");
         Station[] haltes = new Station[stationsnamen.length];
         for (int i = 0; i < stationsnamen.length; i++) {
-            Segment seg = new Segment();
             for (Station station : stationLijst) {
                 if (station.getStadsnaam().equals(stationsnamen[i])) {
                     haltes[i] = station;
                 }
             }
         }
-        Segment[] segmentarray = new Segment[stationsnamen.length - 1];
-        for (int i = 0; i < segmentarray.length; i++) {
-            Segment seg = new Segment();
-            seg.vertrekStation = haltes[i];
-            seg.eindStation = haltes[i + 1];
-            segmentarray[i] = seg;
-        }
-        l.setSegmenten(segmentarray);
-        l.setHaltes(haltes);
         String[] reisdurenInString = s.substring(s.indexOf("Tijden=") + 7, s.indexOf("CapaciteitPerTrein=")).split("\\+");
         int[] reisduren = new int[reisdurenInString.length];
         for (int i = 0; i < reisdurenInString.length; i++) {
             reisduren[i] = Integer.parseInt(reisdurenInString[i]);
         }
         l.setReisduren(reisduren);
+        Segment[] segmentarray = new Segment[stationsnamen.length - 1];
+        for (int i = 0; i < segmentarray.length; i++) {
+            Segment seg = new Segment();
+            seg.vertrekStation = haltes[i];
+            seg.eindStation = haltes[i + 1];
+            seg.tijd = l.reisduren[i];
+            segmentarray[i] = seg;
+        }
+        l.setSegmenten(segmentarray);
+        l.setHaltes(haltes);
+        
         l.setCapaciteit(Integer.parseInt(s.substring(s.indexOf("CapaciteitPerTrein=") + 19, s.indexOf("ZitplaatsenPerTrein="))));
         l.setZitplaatsen(Integer.parseInt(s.substring(s.indexOf("ZitplaatsenPerTrein=") + 20, s.indexOf("Uurvaste"))));
         for (String uur : s.substring(s.indexOf("Uurvaste") + 16, s.indexOf("Piekuurtreinen=")).split(",")) {
@@ -259,7 +260,7 @@ public class DAO {
             System.out.println(k.toString());
         }
     }
-    public static HashMap<String,ArrayList<Reiziger>> getReizigersLijst() {
+    public static HashMap<Integer,ArrayList<Reiziger>> getReizigersLijst() {
         return reizigersLijst;
     }
     

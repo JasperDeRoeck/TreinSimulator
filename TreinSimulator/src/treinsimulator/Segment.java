@@ -22,6 +22,7 @@ public class Segment {
     Segment vorigSegment;
     char richting;
     Set<Segmentdata> data = new HashSet<>();
+    int tijd;
     
     public Segment(Station vertrek, Station eind, char richting){
         vertrekStation = vertrek;
@@ -30,7 +31,7 @@ public class Segment {
     }
 
     Segment() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     public Segment geefVolgendeSegment(char richting){
         if(richting == 'A'){
