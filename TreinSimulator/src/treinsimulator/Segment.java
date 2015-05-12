@@ -31,8 +31,8 @@ public class Segment {
         this.tijd = tijd;
     }
 
-    public Segment() {
-        
+    Segment() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     public Segment geefVolgendeSegment(char richting){
         if(richting == 'A'){

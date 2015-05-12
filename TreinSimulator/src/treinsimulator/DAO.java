@@ -260,7 +260,7 @@ public class DAO {
             System.out.println(k.toString());
         }
     }
-    public static HashMap<Integer,ArrayList<Reiziger>> getReizigersLijst() {
+    public static HashMap<String,ArrayList<Reiziger>> getReizigersLijst() {
         return reizigersLijst;
     }
     
