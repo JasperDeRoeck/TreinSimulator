@@ -56,15 +56,7 @@ public class Statistiek {
 	}
 	return aantalGestrandeReizigers;
     }
-    public HashMap<Kruising, Double> bepaalTotaleOverstapTijdPerKruising(){
-	HashMap<Kruising,Double> totaleTijd = new HashMap<>();
-	for(Kruising k: alleKruisingen){
-		double tijdKruising = k.getOverstaptijd();
-		totaleTijd.put(k,tijdKruising);
-	}
-	return totaleTijd;
-    }
-   
+    
     public HashMap<Kruising,Double> bepaalGemiddeldeOverstapTijdPerKruising(){ //Het aantal stations opvragen en dan totale tijd delen door het aantal stations
 	HashMap<Kruising, Double> gemiddeldeTijd = new HashMap<>();
 	
@@ -80,6 +72,15 @@ public class Statistiek {
 		gemiddeldeTijd.put(k,gemiddelde);
 	}
 	return gemiddeldeTijd;
+    }
+    
+    public HashMap<Reis,Double> bepaalPercentageGestrandeReizigers(){
+        HashMap<Reis,Double> hm = new HashMap<>();
+        for (Reis r : alleReizen){
+            double percentage = r.getAantalGestrandeReizigers()/r.getAantalReizigers();
+            hm.put(r, percentage);
+        }
+        return hm;
     }
     
      //Is voor alle kruisingen in het algemeen, maar moet per kruising 
