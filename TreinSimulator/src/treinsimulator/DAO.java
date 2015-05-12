@@ -167,6 +167,7 @@ public class DAO {
             Segment seg = new Segment();
             seg.vertrekStation = haltes[i];
             seg.eindStation = haltes[i + 1];
+            seg.tijd= l.reisduren[i]; //reisduren per segment
             segmentarray[i] = seg;
         }
         l.setSegmenten(segmentarray);

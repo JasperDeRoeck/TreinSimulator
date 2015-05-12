@@ -23,6 +23,20 @@ public class Trein {
     Segment huidigSegment;
     char richting;
     
+    public Trein(){
+        
+    }
+    
+    public Trein(Lijn l, int vtijd, char richting){
+        this.vtijd = vtijd;
+        lijn = l;
+        this.richting=richting;
+    }
+    
+    public void herrekenvTijd(){
+        //eerst tijd tussen stations berekenen
+    }
+    
     //richting kan oftewel 'A' of 'B' zijn 
     //A ,van voor naar achter in de lijst van stations. B vice versa
     boolean isRijdend;
@@ -63,6 +77,10 @@ public class Trein {
     }
     public Lijn getLijn(){
         return lijn;
+    }
+    
+    public void herrekenVtijd(){
+        
     }
     
 }

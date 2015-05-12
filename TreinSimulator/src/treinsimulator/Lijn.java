@@ -24,7 +24,7 @@ public class Lijn {
     private int zitplaatsen;
     private ArrayList<Integer> uurVertrek = new ArrayList<>();
     private ArrayList<Integer> uurPiekVertrek = new ArrayList<>();
-    private int[] reisduren;
+    protected int[] reisduren;
     public ArrayList<Trein> treinen =  new ArrayList<>();
     
     public Lijn(char richting, int id){
@@ -65,15 +65,27 @@ public class Lijn {
             }
         }
     }
-    private void maakSegmenten(Lijn k){
+    
+    public void maakTreinen(){    //zou wolfger al gedaan hebben
+        for(Integer tijd : uurVertrek){
+            Trein tr =new Trein(this, tijd, this.richting);
+            treinen.add(tr);
+        }
+        for(Integer tijd : uurPiekVertrek){
+            Trein tr =new Trein(this, tijd, this.richting);
+            treinen.add(tr);
+        }
+    }
+    
+    /*private void maakSegmenten(Lijn k){
         int aantal= k.getHaltes().length-1;
         Segment[] segArray = new Segment[aantal];
         for(int i=0; i<=(k.getHaltes().length)-2;i++){
-            Segment seg = new Segment(k.haltes[i],k.haltes[i+1], 'B');
+            Segment seg = new Segment(k.haltes[i],k.haltes[i+1], k.getRichting(),k.reisduren[i]);
             segArray[i]=seg;
         }
         segmenten = segArray;
-    }
+    }*/
 
     public Station[] getHaltes() {
         return haltes;
