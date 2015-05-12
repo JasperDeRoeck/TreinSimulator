@@ -20,16 +20,16 @@ import java.util.Set;
 // dit het meest flexibele model oplevert.
 
 public class Statistiek {
- private HashMap<Reis, Integer> wachttijdReiziger;
+    private HashMap<Reis, Integer> wachttijdReiziger;
     private ArrayList<Reis> alleReizen;
     private HashMap<Reis,Double> gestrandeReizigers;
     private ArrayList<Kruising> alleKruisingen;
-    private ArrayList<Segment> segmentenLijst;
     private HashMap<Segment,Integer> rechtstaandeReizigers;
     
     public Statistiek(){
         this.alleKruisingen = DAO.getKruisingLijst();
-        //alleReizen en segmentenLijst nog initialiseren. 
+        //alleReizen en segmentenLijst nog initialiseren.
+        
         this.wachttijdReiziger = berekenWachttijdReiziger();
         this.gestrandeReizigers = bepaalAantalGestrandeReizigersPerReis();
         this.rechtstaandeReizigers=bepaalStaandeReizigersPerDeeltraject();
@@ -136,11 +136,11 @@ public class Statistiek {
     
     public HashMap<Segment,Integer> bepaalStaandeReizigersPerDeeltraject(){
         HashMap<Segment,Integer> aantalRecht = new HashMap<>();
-        for(Segment s: segmentenLijst){
-            Set<Segmentdata> data = s.getData();
-            int aantal =0; //Weet niet zo goed hoe die segmentdata in elkaar zit, moet nog ingevuld worden.
-            aantalRecht.put(s, aantal);
-        }
+//        for(Segment s: segmentenLijst){
+//            Set<Segmentdata> data = s.getData();
+//            int aantal =0; //Weet niet zo goed hoe die segmentdata in elkaar zit, moet nog ingevuld worden.
+//            aantalRecht.put(s, aantal);
+//        }
         return aantalRecht;
     }
    
