@@ -42,7 +42,7 @@ public class Trein {
                 reiziger.uitstappen(tijd);
             }
             isRijdend=false;
-            vtijd = lijn.getVolgendeVertrekuur(tijd, this);
+            vtijd += huidigSegment.eindStation.overstaptijd;
         }
     }
     void vertrek(int tijd){

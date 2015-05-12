@@ -198,9 +198,6 @@ public class Lijn {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    int getVolgendeVertrekuur(int t, Trein trein) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
     
     
     
