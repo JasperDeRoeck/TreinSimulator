@@ -23,7 +23,6 @@ public class TreinSimulator {
     // DAO mijnDAO; -----------> niet nodig, want zijn statische methodes..
     // to do : readlists updaten
     public static void main(String[] args) {
-        //Set up:
         
         //Set up:
             DAO.initialiseer();
