@@ -33,7 +33,7 @@ public class Lijn {
     }
     public Lijn(Lijn k) {
         id = k.id;
-        id = 'B';
+        richting = 'B';
         capaciteit = k.capaciteit;
         zitplaatsen = k.zitplaatsen;
         haltes = new Station[k.getHaltes().length];
@@ -64,13 +64,14 @@ public class Lijn {
                 uurPiekVertrek.add(nieuwePiek );
             }
         }
+        maakSegmenten(k);
     }
     private void maakSegmenten(Lijn k){
         int aantal= k.getHaltes().length-1;
         Segment[] segArray = new Segment[aantal];
-        for(int i=0; i<=(k.getHaltes().length)-2;i++){
-            Segment seg = new Segment(k.haltes[i],k.haltes[i+1], 'B');
-            segArray[i]=seg;
+        for(int i=(k.getHaltes().length)-1; i>0;i--){
+            Segment seg = new Segment(k.haltes[i],k.haltes[i-1], 'B');
+            segArray[i-1]=seg;
         }
         segmenten = segArray;
     }
@@ -86,7 +87,7 @@ public class Lijn {
         else{
             return segmenten[segmenten.length-1];
         }
-
+    }
     public void setHaltes(Station[] haltes) {
         this.haltes = haltes;
     }
@@ -165,44 +166,17 @@ public class Lijn {
         for (Integer i : uurPiekVertrek) {
             zin += i + ",";
         }
+        for (Segment s :segmenten){
+            zin+=s.toString();
+            zin+="\n";
+        }
         return zin;
     }
 
-    public int getCapaciteit() {
-        return capaciteit;
-    }
 
-    public int getZitplaatsen() {
-        return zitplaatsen;
-    }
 
     public ArrayList<Trein> getTreinen() {
         return treinen;
-    }
-    public ArrayList<Integer> getUurVertrek() {
-        return uurVertrek;
-    }
-    public ArrayList<Integer> getUurPiekVertrek() {
-        return uurPiekVertrek;
-    }
-    public void setSegmenten(Segment[] segmenten) {
-        this.segmenten = segmenten;
-    }
-
-    public void setReisduren(int[] reisduren) {
-        this.reisduren = reisduren;
-    }
-
-    public void setCapaciteit(int capaciteit) {
-        this.capaciteit = capaciteit;
-    }
-
-    public void setHaltes(Station[] haltes) {
-        this.haltes = haltes;
-    }
-
-    public void setZitplaatsen(int zitplaatsen) {
-        this.zitplaatsen = zitplaatsen;
     }
 
     public int getId() {

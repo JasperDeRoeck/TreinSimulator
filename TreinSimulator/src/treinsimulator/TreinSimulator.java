@@ -18,7 +18,7 @@ public class TreinSimulator {
     
     private static ArrayList<Station> stationLijst;
     private static ArrayList<Lijn> lijnenLijst;
-    private static HashMap<String,ArrayList<Reiziger>> reizigersLijst;
+    private static HashMap<Integer,ArrayList<Reiziger>> reizigersLijst;
    
     DAO mijnDAO;
     // to do : readlists updaten
@@ -26,7 +26,9 @@ public class TreinSimulator {
         //Set up:
         
         //Set up:
-            DAO.initialiseer();
+        DAO.initialiseer();
+            DAO.schrijfLijnen();
+            
             DAO.schrijfKruisingen();
             
             stationLijst = DAO.getStationLijst();

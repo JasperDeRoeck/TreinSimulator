@@ -30,7 +30,6 @@ public class Segment {
     }
 
     Segment() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     public Segment geefVolgendeSegment(char richting){
         if(richting == 'A'){
@@ -43,6 +42,11 @@ public class Segment {
 
     void setData(Segmentdata sd) {
         data.add(sd);
+    }
+    
+    @Override
+    public String toString(){
+        return ("Segment : "+vertrekStation.getStadsnaam()+" === "+eindStation.getStadsnaam());
     }
     
 }
