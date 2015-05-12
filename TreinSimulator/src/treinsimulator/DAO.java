@@ -58,7 +58,7 @@ public class DAO {
     }
     //gaat adhv ingelezen gegevens de buren van de stations , kruisingen ... deduceren 
     private static void maakDeductieStructuren(){
-        geefStationsBuren();
+        geefStationsBurenEnLijnen();
         maakKruisingen();
     }
     //initialiseert de stations in stationLijst,wordt opgeroepen door leesIni()
@@ -161,19 +161,23 @@ public class DAO {
                 }
             }
         }
-        Segment[] segmentarray = new Segment[stationsnamen.length - 1];
-        for (int i = 0; i < segmentarray.length; i++) {
-            Segment seg = new Segment(haltes[i], haltes[i + 1]);
-            segmentarray[i] = seg;
-        }
-        l.setSegmenten(segmentarray);
-        l.setHaltes(haltes);
         String[] reisdurenInString = s.substring(s.indexOf("Tijden=") + 7, s.indexOf("CapaciteitPerTrein=")).split("\\+");
         int[] reisduren = new int[reisdurenInString.length];
         for (int i = 0; i < reisdurenInString.length; i++) {
             reisduren[i] = Integer.parseInt(reisdurenInString[i]);
         }
         l.setReisduren(reisduren);
+        Segment[] segmentarray = new Segment[stationsnamen.length - 1];
+        for (int i = 0; i < segmentarray.length; i++) {
+            Segment seg = new Segment();
+            seg.vertrekStation = haltes[i];
+            seg.eindStation = haltes[i + 1];
+            seg.tijd = l.reisduren[i];
+            segmentarray[i] = seg;
+        }
+        l.setSegmenten(segmentarray);
+        l.setHaltes(haltes);
+        
         l.setCapaciteit(Integer.parseInt(s.substring(s.indexOf("CapaciteitPerTrein=") + 19, s.indexOf("ZitplaatsenPerTrein="))));
         l.setZitplaatsen(Integer.parseInt(s.substring(s.indexOf("ZitplaatsenPerTrein=") + 20, s.indexOf("Uurvaste"))));
         for (String uur : s.substring(s.indexOf("Uurvaste") + 16, s.indexOf("Piekuurtreinen=")).split(",")) {
@@ -182,16 +186,18 @@ public class DAO {
         for (String uur : s.substring(s.indexOf("Piekuurtreinen=") + 15).split(",")) {
             l.getUurPiekVertrek().add(Integer.parseInt(uur.replace("u", "")));
         }
-        l.maakTreinen();
         return l;
     }
 
     public static ArrayList<Lijn> getLijnenLijst() {
         return lijnenLijst;
     }
-    //initialiseert de buren van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
-    private static void geefStationsBuren(){
+    //initialiseert de buren en doorgaande lijnen van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
+    private static void geefStationsBurenEnLijnen(){
         for (Lijn l : lijnenLijst){
+            for (Station s : l.getHaltes()){
+                s.lijnen.add(l);
+            }
             for (int i =0;i<l.getHaltes().length-1;i++){
                 l.getHaltes()[i].getBuren().add(l.getHaltes()[i+1]);
                 l.getHaltes()[i+1].getBuren().add(l.getHaltes()[i]);
@@ -236,7 +242,7 @@ public class DAO {
         for (Station s : stationLijst) {
             System.out.println(s.getStadsnaam() + " heeft " + s.getOverstaptijd() + " min overstaptijd.");
             System.out.println("Heeft de volgende buren: ");
-            s.getBuren().forEach(System.out::println);
+           // s.getBuren().forEach(System.out.println()); Hier zit een fout in????
             System.out.println("");
         }
     }
@@ -259,6 +265,10 @@ public class DAO {
     }
     public static HashMap<Integer,ArrayList<Reiziger>> getReizigersLijst() {
         return reizigersLijst;
+    }
+
+    public static ArrayList<Kruising> getKruisingLijst() {
+        return kruisingLijst;
     }
     
 }

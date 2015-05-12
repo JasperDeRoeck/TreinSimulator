@@ -15,12 +15,15 @@ package treinsimulator;
 public class Kruising {
     // naam van een kruising is van de vorm "Lijn_n1xLijn_n2"
     String naam;
-    private int overstaptijd;
+    private int overstaptijd=0;
     private Station[] stations;
 
     public Kruising (String naam ,Station [] stations){
         this.naam=naam;
         this.stations = stations;
+        for (int i= 0;i<stations.length;i++){
+            overstaptijd +=stations[i].getOverstaptijd();
+        }
     }
     
     public int getOverstaptijd() {

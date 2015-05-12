@@ -28,10 +28,6 @@ public class Trein {
     //A ,van voor naar achter in de lijst van stations. B vice versa
     boolean isRijdend;
     
-    void testfunctie(){
-        System.out.println("dit is een testfunctie");
-    }
-    
     Trein(int vtijd, Lijn l, char richting){
         this.vtijd = vtijd;
         this.lijn = l;
@@ -57,7 +53,7 @@ public class Trein {
             
             //Iets met "word", nog niet aan uit wat "word" hier plots komt doen
             Segmentdata sd = new Segmentdata();
-            huidigSegment.addData(sd);
+            huidigSegment.setData(sd);
         }
     }
     /*
@@ -78,6 +74,16 @@ public class Trein {
     }
     public Lijn getLijn(){
         return lijn;
+    }
+        public int getVtijd() {
+        return vtijd;
+    }
+    public int getAantalInzittenden(){
+        int aantal = 0;
+        for(Reiziger r: inzittenden){
+            aantal++;
+        }
+        return aantal;
     }
 }
 //opmerking: is richting hier niet overbodig want het zit eigelijk al in de var. l ?

@@ -24,7 +24,7 @@ public class Lijn {
     private int zitplaatsen;
     private ArrayList<Integer> uurVertrek = new ArrayList<>();
     private ArrayList<Integer> uurPiekVertrek = new ArrayList<>();
-    private int[] reisduren;
+    public int[] reisduren;
     public ArrayList<Trein> treinen =  new ArrayList<>();
     
     public Lijn(char richting, int id){
@@ -84,7 +84,7 @@ public class Lijn {
         int aantal= k.getHaltes().length-1;
         Segment[] segArray = new Segment[aantal];
         for(int i=0; i<=(k.getHaltes().length)-2;i++){
-            Segment seg = new Segment(k.haltes[i],k.haltes[i+1]);
+            Segment seg = new Segment(k.haltes[i],k.haltes[i+1], richting);
             segArray[i]=seg;
         }
         segmenten = segArray;

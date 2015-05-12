@@ -20,7 +20,7 @@ public class TreinSimulator {
     private static ArrayList<Lijn> lijnenLijst;
     private static HashMap<Integer,ArrayList<Reiziger>> reizigersLijst;
    
-    DAO mijnDAO;
+    // DAO mijnDAO; -----------> niet nodig, want zijn statische methodes..
     // to do : readlists updaten
     public static void main(String[] args) {
         //Set up:
