@@ -58,7 +58,7 @@ public class DAO {
     }
     //gaat adhv ingelezen gegevens de buren van de stations , kruisingen ... deduceren 
     private static void maakDeductieStructuren(){
-        geefStationsBuren();
+        geefStationsBurenEnLijnen();
         maakKruisingen();
     }
     //initialiseert de stations in stationLijst,wordt opgeroepen door leesIni()
@@ -192,8 +192,8 @@ public class DAO {
     public static ArrayList<Lijn> getLijnenLijst() {
         return lijnenLijst;
     }
-    //initialiseert de buren van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
-    private static void geefStationsBuren(){
+    //initialiseert de buren en doorgaande lijnen van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
+    private static void geefStationsBurenEnLijnen(){
         for (Lijn l : lijnenLijst){
             for (Station s : l.getHaltes()){
                 s.lijnen.add(l);
