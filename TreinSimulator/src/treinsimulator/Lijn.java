@@ -88,6 +88,7 @@ public class Lijn {
             return segmenten[segmenten.length-1];
         }
     }
+
     public void setHaltes(Station[] haltes) {
         this.haltes = haltes;
     }
@@ -172,8 +173,6 @@ public class Lijn {
         }
         return zin;
     }
-
-
 
     public ArrayList<Trein> getTreinen() {
         return treinen;
