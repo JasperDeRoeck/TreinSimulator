@@ -18,7 +18,7 @@ public class Station {
     String stadsnaam;
     int overstaptijd;
     Set<Station> buren = new HashSet<>();
-    Set<Lijn>lijnen;
+    Set<Lijn>lijnen = new HashSet<>();
     
     public Station(String naam,int overstaptijd){
         this.stadsnaam = naam;

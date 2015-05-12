@@ -22,25 +22,39 @@ public class Trein {
     Set<Reiziger> inzittenden = new HashSet<>();
     Segment huidigSegment;
     char richting;
+    boolean weg = false;
+    boolean netaangemaakt = true;
     
     //richting kan oftewel 'A' of 'B' zijn 
     //A ,van voor naar achter in de lijst van stations. B vice versa
-    boolean isRijdend;
+    boolean isRijdend=false;
+    
     void aankomst(int tijd){
-        if((!isRijdend)&&(tijd == vtijd)){
+        if((isRijdend)&&(tijd == vtijd)){
             for(Reiziger reiziger : inzittenden){
                 reiziger.uitstappen();
             }
+            isRijdend=false;
         }
     }
     void vertrek(int tijd){
-        if((isRijdend)&&(tijd == vtijd)){
-            if(huidigSegment == null){
+        if((!isRijdend)&&(tijd == vtijd)){
+            if(netaangemaakt){
                 huidigSegment = lijn.geefEersteSegment(richting);
+                isRijdend= true;
+                netaangemaakt = false;
+                vtijd += huidigSegment.tijd;
+            }
+            else if(huidigSegment.geefVolgendeSegment(richting) == null){
+                weg = true;
+                vtijd = -1;
             }
             else{
                 huidigSegment = huidigSegment.geefVolgendeSegment(richting);
+                isRijdend= true;
+                vtijd += huidigSegment.tijd;
             }
+            
             
             //Iets met "word", nog niet aan uit wat "word" hier plots komt doen
             Segmentdata sd = new Segmentdata();

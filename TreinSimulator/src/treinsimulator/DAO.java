@@ -196,7 +196,7 @@ public class DAO {
     private static void geefStationsBurenEnLijnen(){
         for (Lijn l : lijnenLijst){
             for (Station s : l.getHaltes()){
-                s.lijnen.add(l);
+            s.lijnen.add(l);
             }
             for (int i =0;i<l.getHaltes().length-1;i++){
                 l.getHaltes()[i].getBuren().add(l.getHaltes()[i+1]);

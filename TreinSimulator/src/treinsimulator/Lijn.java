@@ -79,6 +79,9 @@ public class Lijn {
     public Station[] getHaltes() {
         return haltes;
     }
+    public Station getHalte(int i){
+        return haltes[i];
+    }
     
     public Segment geefEersteSegment(char richting){
         if(richting == 'A'){
