@@ -33,7 +33,7 @@ public class Lijn {
     }
     public Lijn(Lijn k) {
         id = k.id;
-        id = 'B';
+        richting = 'B';
         capaciteit = k.capaciteit;
         zitplaatsen = k.zitplaatsen;
         haltes = new Station[k.getHaltes().length];
@@ -64,13 +64,14 @@ public class Lijn {
                 uurPiekVertrek.add(nieuwePiek );
             }
         }
+        maakSegmenten(k);
     }
     private void maakSegmenten(Lijn k){
         int aantal= k.getHaltes().length-1;
         Segment[] segArray = new Segment[aantal];
-        for(int i=0; i<=(k.getHaltes().length)-2;i++){
-            Segment seg = new Segment(k.haltes[i],k.haltes[i+1], 'B');
-            segArray[i]=seg;
+        for(int i=((k.getHaltes().length)-1); i>0;i--){
+            Segment seg = new Segment(k.haltes[i],k.haltes[i-1], 'B');
+            segArray[i-1]=seg;
         }
         segmenten = segArray;
     }
@@ -165,6 +166,11 @@ public class Lijn {
         zin += "\nEn heeft ook de volgende piekdiensten:\n ";
         for (Integer i : uurPiekVertrek) {
             zin += i + ",";
+        }
+        for (Segment s : segmenten){
+            zin+="\n";
+            zin+=s.toString();
+            
         }
         return zin;
     }
