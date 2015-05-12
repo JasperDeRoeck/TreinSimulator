@@ -66,4 +66,9 @@ public class Segment {
         return data;
     }
     
+    @Override
+    public String toString(){
+        return ("Segment : "+vertrekStation.getStadsnaam()+" === "+eindStation.getStadsnaam());
+    }
+    
 }
