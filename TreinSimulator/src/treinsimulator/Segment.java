@@ -22,13 +22,11 @@ public class Segment {
     Segment vorigSegment;
     char richting;
     Set<Segmentdata> data = new HashSet<>();
-    int tijd;
     
-    public Segment(Station vertrek, Station eind, char richting, int tijd){
+    public Segment(Station vertrek, Station eind, char richting){
         vertrekStation = vertrek;
         eindStation = eind;
         this.richting = richting;
-        this.tijd = tijd;
     }
 
     Segment() {
