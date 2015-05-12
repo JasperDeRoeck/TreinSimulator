@@ -23,6 +23,11 @@ public class Reis {
     Station vertrekstation;
     Station eindstation;
     
+    public Reis(Station vertrek,Station doel){
+        vertrekstation = vertrek;
+        eindstation = doel;
+    }
+    
     public int getAantalOverstappen(){
         return aantalOverstappen;
     }

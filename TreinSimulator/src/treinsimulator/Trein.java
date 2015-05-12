@@ -25,16 +25,23 @@ public class Trein {
     boolean weg = false;
     boolean netaangemaakt = true;
     
+    
     //richting kan oftewel 'A' of 'B' zijn 
     //A ,van voor naar achter in de lijst van stations. B vice versa
-    boolean isRijdend=false;
+    boolean isRijdend;
     
+    Trein(int vtijd, Lijn l, char richting){
+        this.vtijd = vtijd;
+        this.lijn = l;
+        this.richting = richting;
+    }
     void aankomst(int tijd){
-        if((isRijdend)&&(tijd == vtijd)){
+        if((!isRijdend)&&(tijd == vtijd)){
+            System.out.println("Trein op lijn: " + lijn.getId() +  " komt aan om " + vtijd);
             for(Reiziger reiziger : inzittenden){
-                reiziger.uitstappen();
+                reiziger.uitstappen(tijd);
             }
-            isRijdend=false;
+            vtijd = lijn.getVolgendeVertrekuur(tijd, this);
         }
     }
     void vertrek(int tijd){
@@ -61,8 +68,10 @@ public class Trein {
             huidigSegment.setData(sd);
         }
     }
-
-    boolean opstappen(Reiziger r) {
+    /*
+     * Voegt toe als er nog plaats is, anders returnt de methode false
+     */
+    boolean opstappen(Reiziger r) {     
         if(inzittenden.size() < lijn.getZitplaatsen()){
             inzittenden.add(r);
             return true;
@@ -78,8 +87,7 @@ public class Trein {
     public Lijn getLijn(){
         return lijn;
     }
-
-    public int getVtijd() {
+        public int getVtijd() {
         return vtijd;
     }
     public int getAantalInzittenden(){
@@ -90,6 +98,4 @@ public class Trein {
         return aantal;
     }
 }
-
-
 //opmerking: is richting hier niet overbodig want het zit eigelijk al in de var. l ?
