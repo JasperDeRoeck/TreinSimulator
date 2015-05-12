@@ -86,6 +86,7 @@ public class Lijn {
         else{
             return segmenten[segmenten.length-1];
         }
+    }
 
     public void setHaltes(Station[] haltes) {
         this.haltes = haltes;
@@ -168,41 +169,8 @@ public class Lijn {
         return zin;
     }
 
-    public int getCapaciteit() {
-        return capaciteit;
-    }
-
-    public int getZitplaatsen() {
-        return zitplaatsen;
-    }
-
     public ArrayList<Trein> getTreinen() {
         return treinen;
-    }
-    public ArrayList<Integer> getUurVertrek() {
-        return uurVertrek;
-    }
-    public ArrayList<Integer> getUurPiekVertrek() {
-        return uurPiekVertrek;
-    }
-    public void setSegmenten(Segment[] segmenten) {
-        this.segmenten = segmenten;
-    }
-
-    public void setReisduren(int[] reisduren) {
-        this.reisduren = reisduren;
-    }
-
-    public void setCapaciteit(int capaciteit) {
-        this.capaciteit = capaciteit;
-    }
-
-    public void setHaltes(Station[] haltes) {
-        this.haltes = haltes;
-    }
-
-    public void setZitplaatsen(int zitplaatsen) {
-        this.zitplaatsen = zitplaatsen;
     }
 
     public int getId() {

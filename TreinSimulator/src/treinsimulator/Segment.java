@@ -29,8 +29,8 @@ public class Segment {
         this.richting = richting;
     }
 
-    Segment() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Segment() {
+        
     }
     public Segment geefVolgendeSegment(char richting){
         if(richting == 'A'){
