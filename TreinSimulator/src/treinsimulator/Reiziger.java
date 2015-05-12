@@ -35,7 +35,7 @@ public class Reiziger {
         else{
             //We zijn er nog niet -> nieuwe trein zoeken
             juisteTrein = zoekTrein();
-            vtijd = juisteTrein.lijn.getVolgendeVertrekuur(t, juisteTrein);
+            vtijd = juisteTrein.getVtijd();
         }
     }
     
@@ -47,14 +47,14 @@ public class Reiziger {
         if(vtijd == t){
             if(juisteTrein == null){
                 juisteTrein = zoekTrein();
-                vtijd = juisteTrein.lijn.getVolgendeVertrekuur(t, juisteTrein);
+                vtijd = juisteTrein.getVtijd();
             }
             else{
                     
                 if(!juisteTrein.opstappen(this)){
                     //Als trein vol is, nieuwe trein zoeken, vtijd instellen op volgende vertrekuur
                     juisteTrein = zoekTrein();
-                    vtijd = juisteTrein.lijn.getVolgendeVertrekuur(t, juisteTrein);
+                    vtijd = juisteTrein.getVtijd();
                 }
                 else{
                     //Als er nog plaats is, nieuwe data toevoegen aan .. Kruising? (--> moet dat niet segment zijn?)
