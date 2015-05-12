@@ -5,7 +5,6 @@
  */
 package treinsimulator;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +17,7 @@ import java.util.Set;
 public class Station {
     String stadsnaam;
     int overstaptijd;
-    ArrayList<Station> buren;
+    Set<Station> buren = new HashSet<>();
     Set<Lijn>lijnen;
     
     public Station(String naam,int overstaptijd){
@@ -26,7 +25,20 @@ public class Station {
         this.overstaptijd=overstaptijd;
     }
     
-    /*public Trein juisteTrein( int n){
+    
+
+    public String getStadsnaam() {
+        return stadsnaam;
+    }
+
+    public int getOverstaptijd() {
+        return overstaptijd;
+    }
+    
+    public Set getBuren(){
+        return buren;
+    }
+     /*public Trein juisteTrein( int n){
         Set<Station>bereikbareStations = new HashSet<>();
         Set<Station>buurStations = new HashSet<>();
         
@@ -42,16 +54,9 @@ public class Station {
     
     
 
-    public String getStadsnaam() {
+    @Override
+    public String toString(){
         return stadsnaam;
-    }
-
-    public int getOverstaptijd() {
-        return overstaptijd;
-    }
-    
-    public ArrayList getBuren(){
-        return buren;
     }
     
 }
