@@ -147,6 +147,7 @@ public class Lijn {
     public void setReisduren(int[] reisduren) {
         this.reisduren = reisduren;
     }
+    
 
     @Override
     public String toString() {

@@ -31,6 +31,7 @@ public class Reiziger {
         return new Trein(); //Gewoon tijdelijk om foutmeldingen te voorkomen
     }
     
+      
     public void activeer(int t){
         if(vtijd == t){
             if(!juisteTrein.opstappen(this)){
