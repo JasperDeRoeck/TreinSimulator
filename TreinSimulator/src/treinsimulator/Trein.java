@@ -64,7 +64,17 @@ public class Trein {
     public Lijn getLijn(){
         return lijn;
     }
-    
+
+    public int getVtijd() {
+        return vtijd;
+    }
+    public int getAantalInzittenden(){
+        int aantal = 0;
+        for(Reiziger r: inzittenden){
+            aantal++;
+        }
+        return aantal;
+    }
 }
 
 

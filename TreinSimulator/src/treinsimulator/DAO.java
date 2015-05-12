@@ -239,7 +239,7 @@ public class DAO {
         for (Station s : stationLijst) {
             System.out.println(s.getStadsnaam() + " heeft " + s.getOverstaptijd() + " min overstaptijd.");
             System.out.println("Heeft de volgende buren: ");
-            s.getBuren().forEach(System.out::println);
+           // s.getBuren().forEach(System.out.println()); Hier zit een fout in????
             System.out.println("");
         }
     }
@@ -262,6 +262,10 @@ public class DAO {
     }
     public static HashMap<Integer,ArrayList<Reiziger>> getReizigersLijst() {
         return reizigersLijst;
+    }
+
+    public static ArrayList<Kruising> getKruisingLijst() {
+        return kruisingLijst;
     }
     
 }

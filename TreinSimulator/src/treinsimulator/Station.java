@@ -24,6 +24,8 @@ public class Station {
         this.stadsnaam = naam;
         this.overstaptijd=overstaptijd;
     }
+    
+    
 
     public String getStadsnaam() {
         return stadsnaam;

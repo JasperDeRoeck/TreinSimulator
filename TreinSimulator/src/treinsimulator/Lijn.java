@@ -146,6 +146,7 @@ public class Lijn {
     public void setReisduren(int[] reisduren) {
         this.reisduren = reisduren;
     }
+    
 
     @Override
     public String toString() {
@@ -180,7 +181,7 @@ public class Lijn {
     public Kruising getKruising(){ //Moet op een of andere manier door een passagier gevraagd worden aan Lijn
         throw new UnsupportedOperationException("Not yet implemented");
     }
-    
+
     
     
 }
