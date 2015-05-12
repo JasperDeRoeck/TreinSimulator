@@ -24,7 +24,7 @@ public class Lijn {
     private int zitplaatsen;
     private ArrayList<Integer> uurVertrek = new ArrayList<>();
     private ArrayList<Integer> uurPiekVertrek = new ArrayList<>();
-    public int[] reisduren;
+    private int[] reisduren;
     public ArrayList<Trein> treinen =  new ArrayList<>();
     
     public Lijn(char richting, int id){
@@ -33,7 +33,7 @@ public class Lijn {
     }
     public Lijn(Lijn k) {
         id = k.id;
-        richting = 'B';
+        id = 'B';
         capaciteit = k.capaciteit;
         zitplaatsen = k.zitplaatsen;
         haltes = new Station[k.getHaltes().length];
@@ -64,14 +64,28 @@ public class Lijn {
                 uurPiekVertrek.add(nieuwePiek );
             }
         }
-        maakSegmenten(k);
+        maakTreinen();
+    }
+    
+    public void maakTreinen(){
+        //Aanmaken treinen:
+        for(int i : uurPiekVertrek){
+            treinen.add(new Trein(i, this, richting));
+            //System.out.println("Nieuwe piekuurtrein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + i);
+        }
+        for(int i : uurVertrek){
+            for (int j = 0; j < 2400; j+= 100) {
+                treinen.add(new Trein(j + i, this, richting));
+                //System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
+            }
+        }
     }
     private void maakSegmenten(Lijn k){
         int aantal= k.getHaltes().length-1;
         Segment[] segArray = new Segment[aantal];
-        for(int i=((k.getHaltes().length)-1); i>0;i--){
-            Segment seg = new Segment(k.haltes[i],k.haltes[i-1], 'B');
-            segArray[i-1]=seg;
+        for(int i=0; i<=(k.getHaltes().length)-2;i++){
+            Segment seg = new Segment(k.haltes[i],k.haltes[i+1]);
+            segArray[i]=seg;
         }
         segmenten = segArray;
     }
@@ -88,6 +102,7 @@ public class Lijn {
             return segmenten[segmenten.length-1];
         }
     }
+    
     public void setHaltes(Station[] haltes) {
         this.haltes = haltes;
     }
@@ -147,7 +162,6 @@ public class Lijn {
     public void setReisduren(int[] reisduren) {
         this.reisduren = reisduren;
     }
-    
 
     @Override
     public String toString() {
@@ -167,19 +181,12 @@ public class Lijn {
         for (Integer i : uurPiekVertrek) {
             zin += i + ",";
         }
-        for (Segment s : segmenten){
-            zin+="\n";
-            zin+=s.toString();
-            
-        }
         return zin;
     }
-
 
     public ArrayList<Trein> getTreinen() {
         return treinen;
     }
-    
 
     public int getId() {
         return id;
@@ -188,6 +195,10 @@ public class Lijn {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    int getVolgendeVertrekuur(int t, Trein trein) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+    
     
     
 }

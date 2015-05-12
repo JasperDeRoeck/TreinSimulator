@@ -23,16 +23,13 @@ public class Reis {
     Station vertrekstation;
     Station eindstation;
     
-    public Reis(Station vertrek,Station doel){
-        vertrekstation = vertrek;
-        eindstation = doel;
-    }
-    
     public int getAantalOverstappen(){
         return aantalOverstappen;
     }
     
-    
+    public int berekenWachttijdInReis(Station vertrek, Station doel){ // nog niet af
+        return 0;
+    }
     
     public int bepaalAantalOverstappen(){
         int n = -1;

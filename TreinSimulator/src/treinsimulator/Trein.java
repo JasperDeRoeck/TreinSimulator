@@ -23,14 +23,23 @@ public class Trein {
     Segment huidigSegment;
     char richting;
     
+    
     //richting kan oftewel 'A' of 'B' zijn 
     //A ,van voor naar achter in de lijst van stations. B vice versa
     boolean isRijdend;
+    
+    Trein(int vtijd, Lijn l, char richting){
+        this.vtijd = vtijd;
+        this.lijn = l;
+        this.richting = richting;
+    }
     void aankomst(int tijd){
         if((!isRijdend)&&(tijd == vtijd)){
+            System.out.println("Trein op lijn: " + lijn.getId() +  " komt aan om " + vtijd);
             for(Reiziger reiziger : inzittenden){
-                reiziger.uitstappen();
+                reiziger.uitstappen(tijd);
             }
+            vtijd = lijn.getVolgendeVertrekuur(tijd, this);
         }
     }
     void vertrek(int tijd){
@@ -44,11 +53,13 @@ public class Trein {
             
             //Iets met "word", nog niet aan uit wat "word" hier plots komt doen
             Segmentdata sd = new Segmentdata();
-            huidigSegment.setData(sd);
+            huidigSegment.addData(sd);
         }
     }
-
-    boolean opstappen(Reiziger r) {
+    /*
+     * Voegt toe als er nog plaats is, anders returnt de methode false
+     */
+    boolean opstappen(Reiziger r) {     
         if(inzittenden.size() < lijn.getZitplaatsen()){
             inzittenden.add(r);
             return true;
@@ -64,18 +75,5 @@ public class Trein {
     public Lijn getLijn(){
         return lijn;
     }
-
-    public int getVtijd() {
-        return vtijd;
-    }
-    public int getAantalInzittenden(){
-        int aantal = 0;
-        for(Reiziger r: inzittenden){
-            aantal++;
-        }
-        return aantal;
-    }
 }
-
-
 //opmerking: is richting hier niet overbodig want het zit eigelijk al in de var. l ?

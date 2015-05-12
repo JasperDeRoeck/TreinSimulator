@@ -23,9 +23,6 @@ public class TreinSimulator {
     DAO mijnDAO;
     // to do : readlists updaten
     public static void main(String[] args) {
-        DAO.initialiseer();
-        //DAO.schrijfKruisingen();
-        DAO.schrijfLijnen();
         //Set up:
         
         //Set up:
@@ -40,7 +37,7 @@ public class TreinSimulator {
             int t = 0;
         //Klok:
             while(t <= STOPTIJD){
-                Set<Trein> alleTreinen = new HashSet<>(); 
+                Set<Trein> alleTreinen = new HashSet<>();
                 for(Lijn lijn: lijnenLijst){
                     for(Trein trein : lijn.getTreinen()){
                         alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
@@ -48,13 +45,17 @@ public class TreinSimulator {
                         trein.aankomst(t);
                     }
                 }
-                for(Reiziger reiziger: reizigersLijst.get(t)){
-                    reiziger.activeer(t);
+                if(reizigersLijst.get(t) != null){
+                    for(Reiziger reiziger: reizigersLijst.get(t)){
+                             reiziger.activeer(t);
+                    }
                 }
                 for(Trein trein : alleTreinen){
                     trein.vertrek(t);
                 }
-                
+                if(t == 60){
+                    t = 100;        //Moet door het gekozen formaat van tijd.
+                }
                 t++;
             }
         //Data-stuff:

@@ -5,7 +5,6 @@
  */
 package treinsimulator;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javax.naming.OperationNotSupportedException;
@@ -21,18 +20,11 @@ public class Segment {
     Lijn lijn;
     Segment volgendSegment;
     Segment vorigSegment;
-    char richting;
     Set<Segmentdata> data = new HashSet<>();
-    int tijd;
     
-    public Segment(Station vertrek, Station eind, char richting){
+    public Segment(Station vertrek, Station eind){
         vertrekStation = vertrek;
         eindStation = eind;
-        this.richting = richting;
-    }
-
-    Segment() {
-        
     }
     public Segment geefVolgendeSegment(char richting){
         if(richting == 'A'){
@@ -42,34 +34,9 @@ public class Segment {
             return vorigSegment;
         }
     }
-    
-    public void maakSegmentData(){
-        ArrayList<Trein> treinen = lijn.getTreinen();
-        for(Trein t: treinen){
-            Segmentdata segdata = new Segmentdata();
-            int vtijd = t.getVtijd();
-            segdata.setVtijd(vtijd);
-            int aantalReizigers = t.getAantalInzittenden();
-            segdata.setAantalReizigersPerTrein(aantalReizigers);
-            int aantalzitplaatsen = lijn.getZitplaatsen(); //tussenwaarde om aantalRechtstaande te berekenen
-            int aantalRechtstaande = aantalReizigers - aantalzitplaatsen;
-            segdata.setAantalRechtstaandeReizigers(aantalRechtstaande);
-            int aantalAchtergebleven;
-            data.add(segdata);
-        }
-    }
 
-    void setData(Segmentdata sd) {
+    void addData(Segmentdata sd) {
         data.add(sd);
-    }
-
-    public Set<Segmentdata> getData() {
-        return data;
-    }
-    
-    @Override
-    public String toString(){
-        return ("Segment : "+vertrekStation.getStadsnaam()+" === "+eindStation.getStadsnaam());
     }
     
 }
