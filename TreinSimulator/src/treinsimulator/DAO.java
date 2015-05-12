@@ -195,6 +195,9 @@ public class DAO {
     //initialiseert de buren van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
     private static void geefStationsBuren(){
         for (Lijn l : lijnenLijst){
+            for (Station s : l.getHaltes()){
+                s.lijnen.add(l);
+            }
             for (int i =0;i<l.getHaltes().length-1;i++){
                 l.getHaltes()[i].getBuren().add(l.getHaltes()[i+1]);
                 l.getHaltes()[i+1].getBuren().add(l.getHaltes()[i]);
