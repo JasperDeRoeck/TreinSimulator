@@ -28,7 +28,7 @@ public class Trein {
     
     //richting kan oftewel 'A' of 'B' zijn 
     //A ,van voor naar achter in de lijst van stations. B vice versa
-    boolean isRijdend;
+    boolean isRijdend = false;
     
     Trein(int vtijd, Lijn l, char richting){
         this.vtijd = vtijd;
@@ -36,11 +36,12 @@ public class Trein {
         this.richting = richting;
     }
     void aankomst(int tijd){
-        if((!isRijdend)&&(tijd == vtijd)){
+        if((isRijdend)&&(tijd == vtijd)){
             System.out.println("Trein op lijn: " + lijn.getId() +  " komt aan om " + vtijd);
             for(Reiziger reiziger : inzittenden){
                 reiziger.uitstappen(tijd);
             }
+            isRijdend=false;
             vtijd = lijn.getVolgendeVertrekuur(tijd, this);
         }
     }
