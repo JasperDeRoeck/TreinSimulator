@@ -45,23 +45,23 @@ public class Lijn {
             reisduren[i] = k.reisduren[k.reisduren.length - 1 - i];
         }
         uurVertrek = new ArrayList<>();
-        for (int s : k.uurVertrek) {
-            if (s == 0) {
-                uurVertrek.add(s);
+        for (Integer e : k.uurVertrek) {
+            if (e == 0) {
+                uurVertrek.add(e);
             } else {
-                uurVertrek.add(60 - s);
+                uurVertrek.add(60 - e);
             }
         }
         uurPiekVertrek = new ArrayList<>();
-        for (int s : k.uurPiekVertrek) {
-            int piek = s;
+        for (Integer e : k.uurPiekVertrek) {
+            int piek = e;
             int nieuwePiek;
             if ((1600 < piek && piek <= 1800) || (700 <= piek && piek < 900)) {
                 nieuwePiek = piek - (piek % 100) - 100 + (60 - piek % 100);
                 if (nieuwePiek % 100 == 60) {
                     nieuwePiek = nieuwePiek - 60;
                 }
-                uurPiekVertrek.add(nieuwePiek);
+                uurPiekVertrek.add(nieuwePiek );
             }
         }
     }
@@ -88,6 +88,66 @@ public class Lijn {
         }
     }
 
+    public void setHaltes(Station[] haltes) {
+        this.haltes = haltes;
+    }
+
+    public Segment[] getSegmenten() {
+        return segmenten;
+    }
+
+    public void setSegmenten(Segment[] segmenten) {
+        this.segmenten = segmenten;
+    }
+
+    public char getRichting() {
+        return richting;
+    }
+
+    public void setRichting(char richting) {
+        this.richting = richting;
+    }
+
+    public int getCapaciteit() {
+        return capaciteit;
+    }
+
+    public void setCapaciteit(int capaciteit) {
+        this.capaciteit = capaciteit;
+    }
+
+    public int getZitplaatsen() {
+        return zitplaatsen;
+    }
+
+    public void setZitplaatsen(int zitplaatsen) {
+        this.zitplaatsen = zitplaatsen;
+    }
+
+    public ArrayList<Integer> getUurVertrek() {
+        return uurVertrek;
+    }
+
+    public void setUurVertrek(ArrayList<Integer> uurVertrek) {
+        this.uurVertrek = uurVertrek;
+    }
+
+    public ArrayList<Integer> getUurPiekVertrek() {
+        return uurPiekVertrek;
+    }
+
+    public void setUurPiekVertrek(ArrayList<Integer> uurPiekVertrek) {
+        this.uurPiekVertrek = uurPiekVertrek;
+    }
+
+    public int[] getReisduren() {
+        return reisduren;
+    }
+
+    public void setReisduren(int[] reisduren) {
+        this.reisduren = reisduren;
+    }
+
     @Override
     public String toString() {
         String zin = "\nLijn " + id + " rijdt over volgende trajecten :\n Volgens richting "+richting+"\n";
@@ -99,51 +159,18 @@ public class Lijn {
         zin += "\ncapaciteit :" + capaciteit + "\n";
         zin += "zitplaatsen: " + zitplaatsen + "\n";
         zin += "en rijdt om : \n";
-        for (int i : uurVertrek) {
-            zin += i + "u,";
+        for (Integer i : uurVertrek) {
+            zin =zin +" XX."+ i  ;
         }
         zin += "\nEn heeft ook de volgende piekdiensten:\n ";
-        for (int i : uurPiekVertrek) {
+        for (Integer i : uurPiekVertrek) {
             zin += i + ",";
         }
         return zin;
     }
 
-    public int getCapaciteit() {
-        return capaciteit;
-    }
-
-    public int getZitplaatsen() {
-        return zitplaatsen;
-    }
-
     public ArrayList<Trein> getTreinen() {
         return treinen;
-    }
-    public ArrayList<Integer> getUurVertrek() {
-        return uurVertrek;
-    }
-    public ArrayList<Integer> getUurPiekVertrek() {
-        return uurPiekVertrek;
-    }
-    public void setSegmenten(Segment[] segmenten) {
-        this.segmenten = segmenten;
-    }
-
-    public void setReisduren(int[] reisduren) {
-        this.reisduren = reisduren;
-    }
-
-    public void setCapaciteit(int capaciteit) {
-        this.capaciteit = capaciteit;
-    }
-
-    public void setHaltes(Station[] haltes) {
-        this.haltes = haltes;
-    }
-
-    public void setZitplaatsen(int zitplaatsen) {
-        this.zitplaatsen = zitplaatsen;
     }
 
     public int getId() {

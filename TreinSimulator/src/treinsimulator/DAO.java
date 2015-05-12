@@ -23,10 +23,10 @@ public class DAO {
     
     private static ArrayList<Station> stationLijst = new ArrayList<>();
     private static ArrayList<Lijn> lijnenLijst = new ArrayList<>();
-    private static HashMap<String,ArrayList<Reiziger>> reizigersLijst = new HashMap<>();
+    private static HashMap<Integer,ArrayList<Reiziger>> reizigersLijst = new HashMap<>();
     private static ArrayList<Kruising> kruisingLijst = new ArrayList<>();
 
-   
+    //enige functie die nodig is om DAO te initialiseren en zijn gegevens te kunne gebruiken
     public static void initialiseer(){
         leesIni();
         maakDeductieStructuren();
@@ -119,9 +119,11 @@ public class DAO {
         }
         passagiersLijst = passagiersLijst.replaceAll("\\\\", "");
         String [] lines = passagiersLijst.split(" ");
+        
         for (int i =0;i<lines.length;i=i+4){
             Station beginstation=null ;
             Station doelstation=null;
+            int tijd = Integer.parseInt(lines[i].replace("u", ""));
             for (Station s : stationLijst){
                 if (s.getStadsnaam().equals(lines[i+2])){
                     beginstation =s;
@@ -129,13 +131,14 @@ public class DAO {
                     doelstation =s;
                 }
             }
+            
             for (int j =0;j< Integer.parseInt(lines[i+1]);j++){
-                if (reizigersLijst.containsKey(lines[i])){
-                    reizigersLijst.get(lines[i]).add(new Reiziger(Integer.parseInt(lines[i].replace("u", "")),beginstation,doelstation));
+                if (reizigersLijst.containsKey(tijd)){
+                    reizigersLijst.get(tijd).add(new Reiziger(tijd,beginstation,doelstation));
                 } else{
                     ArrayList<Reiziger> lijst = new ArrayList<>();
-                    lijst.add(new Reiziger(Integer.parseInt(lines[i].replace("u", "")),beginstation,doelstation));
-                    reizigersLijst.put(lines[i],lijst);
+                    lijst.add(new Reiziger(tijd,beginstation,doelstation));
+                    reizigersLijst.put(tijd,lijst);
                 }
             }
         }
@@ -177,7 +180,7 @@ public class DAO {
         l.setCapaciteit(Integer.parseInt(s.substring(s.indexOf("CapaciteitPerTrein=") + 19, s.indexOf("ZitplaatsenPerTrein="))));
         l.setZitplaatsen(Integer.parseInt(s.substring(s.indexOf("ZitplaatsenPerTrein=") + 20, s.indexOf("Uurvaste"))));
         for (String uur : s.substring(s.indexOf("Uurvaste") + 16, s.indexOf("Piekuurtreinen=")).split(",")) {
-            l.getUurVertrek().add(Integer.parseInt(uur.substring(uur.indexOf("+"))));   //!!Heb hier parseInt toegepast, omdat we nu met int's werken.
+            l.getUurVertrek().add(Integer.parseInt(uur.substring(uur.indexOf("+"))));
         }
         for (String uur : s.substring(s.indexOf("Piekuurtreinen=") + 15).split(",")) {
             l.getUurPiekVertrek().add(Integer.parseInt(uur.replace("u", "")));
@@ -246,7 +249,7 @@ public class DAO {
     }
     
     public static void schrijfPassagiers(){
-        for (Map.Entry<String,ArrayList<Reiziger>> s: reizigersLijst.entrySet()){
+        for (Map.Entry<Integer,ArrayList<Reiziger>> s: reizigersLijst.entrySet()){
             System.out.println("Om "+s.getKey()+" vertrekken er "+s.getValue().size()+ " reizigers.\n");
         }
     }
@@ -256,7 +259,7 @@ public class DAO {
             System.out.println(k.toString());
         }
     }
-    public static HashMap<String,ArrayList<Reiziger>> getReizigersLijst() {
+    public static HashMap<Integer,ArrayList<Reiziger>> getReizigersLijst() {
         return reizigersLijst;
     }
 
