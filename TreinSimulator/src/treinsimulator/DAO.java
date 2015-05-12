@@ -31,10 +31,7 @@ public class DAO {
         leesIni();
         maakDeductieStructuren();
     }
-    
-    public static void readLists() {
-        
-    }
+   
     public Station getTrein(int i){
         return stationLijst.get(i);
     }
