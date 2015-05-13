@@ -27,8 +27,7 @@ public class TreinSimulator {
         
         //Set up:
             DAO.initialiseer();
-            DAO.schrijfKruisingen();
-            
+                        
             stationLijst = DAO.getStationLijst();
             lijnenLijst = DAO.getLijnenLijst();
             reizigersLijst = DAO.getReizigersLijst();

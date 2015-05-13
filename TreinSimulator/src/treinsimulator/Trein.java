@@ -32,10 +32,7 @@ public class Trein {
     //A ,van voor naar achter in de lijst van stations. B vice versa
     boolean isRijdend = false;
     
-    public Trein(){
-        eersteSegment = lijn.geefEersteSegment(richting);
-        tellerNietOpgestapt = 0;
-    }
+
     public void setData(Segmentdata sd){
         
         
@@ -47,6 +44,8 @@ public class Trein {
         this.vtijd = vtijd;
         this.lijn = l;
         this.richting = richting;
+        tellerNietOpgestapt = 0;
+        huidigSegment = l.getSegmenten()[0];
     }
     void aankomst(int tijd){
         if((isRijdend)&&(tijd == vtijd)){
@@ -61,7 +60,6 @@ public class Trein {
     void vertrek(int tijd){
         if((!isRijdend)&&(tijd == vtijd)){
             if(netaangemaakt){
-                huidigSegment = lijn.geefEersteSegment(richting);
                 isRijdend= true;
                 netaangemaakt = false;
                 vtijd += huidigSegment.tijd;
