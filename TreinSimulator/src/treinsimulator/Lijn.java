@@ -85,7 +85,7 @@ public class Lijn {
         int aantal= k.getHaltes().length-1;
         Segment[] segArray = new Segment[aantal];
         for(int i=0; i<=(k.getHaltes().length)-2;i++){
-            Segment seg = new Segment(k.haltes[i],k.haltes[i+1], richting);
+            Segment seg = new Segment(this,k.haltes[i],k.haltes[i+1]);
             segArray[i]=seg;
         }
         segmenten = segArray;
