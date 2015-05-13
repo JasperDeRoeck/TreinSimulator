@@ -17,6 +17,8 @@ public class Reiziger {
     int aantalGenomenOverstappen;
     boolean moetUitstappen;
     int overstaptijd;
+    Station huidigStation;
+    Station volgendStation;
     
     // het tijdstip waarop de volgende gebeurtenis met betrekking tot de reiziger plaatsvindt
     // als een reiziger strandt of aankomt bij zijn eindstation dan wordt dit ingesteld op oneindig
@@ -24,8 +26,9 @@ public class Reiziger {
      public Reiziger(int aankomstSysteem, Reis reis){
         beginTijd = aankomstSysteem;
         vtijd = aankomstSysteem;
-        juisteTrein = zoekTrein();
         this.reis = reis;
+        huidigStation = reis.getVertrekstation();
+        juisteTrein = zoekTrein();       
     }
     
     public void uitstappen(int t){
@@ -42,7 +45,11 @@ public class Reiziger {
     }
     
     public Trein zoekTrein(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        reis.bepaalAantalOverstappen();
+        Overstapdata data = huidigStation.juisteTrein(reis.getAantalOverstappen(), huidigStation, reis.getEindstation());
+        volgendStation = data.getOverstap();
+        Trein trein = data.getTrein();
+        return trein;
     }
     
     public void activeer(int t){
@@ -66,6 +73,8 @@ public class Reiziger {
                     
                     juisteTrein.getKruising().addOverstaptijd(overstaptijd);  //Passagier geeft door aan kruising dat het niet meer op kruising bevindt.
                     moetUitstappen = true;                  //Vanaf nu zit passagier op trein
+                    huidigStation = volgendStation;
+                    volgendStation = null;
                 }
             }
             
