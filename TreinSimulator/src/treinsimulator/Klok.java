@@ -18,19 +18,66 @@ public class Klok {
     public Klok(int starttijd){
             tijd = starttijd;
             //onderstaande statement normaliseert de starttijd => 666 wordt 706;
-            incrementeer(0);
+            
     }
     
-    public void incrementeer(int teller){
-        tijd+=teller;
-        int rest =tijd%100;
-        if (rest>59){
-            tijd/=100;
-            tijd=(tijd*100)+(rest+40);
-        } 
-        if (tijd/100>23){
-            tijd=tijd-2400;
+     public static int incrementeer(int tijd, int teller) {
+        int huidig  = valideer(tijd);
+        int totaal = (huidig % 100) + teller + (huidig / 100) * 60;
+        int som = 0;
+        while (totaal > 59) {
+            som += 100;
+            totaal -= 60;
         }
+        som += totaal;
+        if (som % 100 > 59) {
+            som += 40;
+        }
+        if (som > 2400) {
+            som -= 2400;
+        }
+        return som;
+    }
+ 
+    public static int decrementeer(int tijd, int teller) {
+        int huidig = valideer(tijd);
+        int totaal = huidig/100;
+        totaal = totaal*100;
+        totaal = totaal-teller+huidig%100;
+        System.out.println(totaal);
+        int som = 0;
+        if (totaal < 0) {
+            som = 2300;
+            while (totaal < -59) {
+                som -= 100;
+                totaal += 60;
+            }
+            if (totaal < 0) {
+                System.out.println(totaal);
+                return (som + (60 + totaal));
+            } else {
+                return (som + (60 - totaal));
+            }
+        }
+        while (totaal > 59) {
+            som += 100;
+            totaal -= 60;
+        }
+        som += totaal;
+        if (som % 100 > 59) {
+            som += 40;
+        }
+ 
+        return som;
+    }
+   
+    private static int valideer(int tijd){
+        String a = tijd+"";
+        while (a.startsWith("0")){
+            a=a.substring(0);
+            System.out.println(a);
+        }
+        return Integer.parseInt(a);
     }
     
     public static int getTijd(){

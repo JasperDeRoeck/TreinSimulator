@@ -40,6 +40,7 @@ public class TreinSimulator {
                         alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
                                                             // iedere lijn te moeten afgaan om daar alle treinen uit te halen
                         trein.aankomst(k.getTijd());
+                        System.out.println(k.getTijd());
                     }
                 }
                 if(reizigersLijst.get(k.getTijd()) != null){
@@ -50,7 +51,7 @@ public class TreinSimulator {
                 for(Trein trein : alleTreinen){
                     trein.vertrek(k.getTijd());
                 }
-                k.incrementeer(1);
+                k.incrementeer(k.getTijd(),1);
             }
         //Data-stuff:
              

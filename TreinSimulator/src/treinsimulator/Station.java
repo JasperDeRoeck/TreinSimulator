@@ -39,10 +39,9 @@ public class Station {
         return buren;
     }
 
-    public Trein juisteTrein(int n, Station vertrek, Station doel) {
+    public Overstapdata juisteTrein(int n, Station vertrek, Station doel) {
 
         int tijd = 0;
-        Station overstap;
 
 
         for (Lijn lijntje : lijnen) {
@@ -55,9 +54,11 @@ public class Station {
                     for (int j = i + 1; j < lijntje.getHaltes().length; j++) {
                         Reis r = new Reis(lijntje.getHaltes()[j], doel);
                         if (r.bepaalAantalOverstappen() <= n - 1) {
-                            overstap = lijntje.getHaltes()[j];
+                            Station overstap = lijntje.getHaltes()[j];
                             Trein trein = lijntje.geefEersteTrein(tijd);
-                            return trein;
+                            Overstapdata data = new Overstapdata(overstap, trein);
+                            return data;
+                            
                         }
                     }
 

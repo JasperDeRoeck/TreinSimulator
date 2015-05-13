@@ -203,14 +203,14 @@ public class Lijn {
 
     public Trein geefEersteTrein(int tijd) {
         for (int vertrek : treinen.keySet()) {
-            if ((Klok.incrementeer(vertrek, tijd)>= Klok.getSimulatietijd())) {
+            if ((Klok.incrementeer(vertrek, tijd)>= Klok.getTijd())) {
                 Trein trein= treinen.get(vertrek);
                 return trein;
             } else {
                 return null;
             }
         }
-
+        return null;
     }
 
 }
