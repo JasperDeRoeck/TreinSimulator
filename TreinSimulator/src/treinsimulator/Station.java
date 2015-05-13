@@ -42,7 +42,7 @@ public class Station {
 
         int tijd = 0;
         Station overstap;
-        Trein trein = new Trein();
+
 
         for (Lijn lijntje : lijnen) {
             for (int i = 0; i < lijntje.getHaltes().length; i++) {
@@ -55,7 +55,8 @@ public class Station {
                         Reis r = new Reis(lijntje.getHaltes()[j], doel);
                         if (r.bepaalAantalOverstappen() <= n - 1) {
                             overstap = lijntje.getHaltes()[j];
-                            trein = lijntje.geefEersteTrein(tijd);
+                            Trein trein = lijntje.geefEersteTrein(tijd);
+                            return trein;
                         }
                     }
 
@@ -64,9 +65,9 @@ public class Station {
                 }
             }
         }
-        n--;
+        return null;
     }
-    }*/
+    
     @Override
     public String toString(){
         return stadsnaam;

@@ -30,7 +30,7 @@ public class Trein {
     public void setData(Segmentdata sd) {
 
     }
-
+    
     Trein(int vtijd, Lijn l) {
         this.vtijd = vtijd;
         this.lijn = l;
