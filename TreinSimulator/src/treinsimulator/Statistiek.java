@@ -24,10 +24,11 @@ public class Statistiek {
     private ArrayList<Kruising> alleKruisingen;
     private HashMap<Segment,Integer> rechtstaandeReizigers;
     private ArrayList<Lijn> lijnenLijst ;
-    public Statistiek(){
+    
+    public Statistiek(ArrayList<Lijn> lijnenLijst){
         
         alleKruisingen = DAO.getKruisingLijst();
-        lijnenLijst = DAO.getLijnenLijst();
+        this.lijnenLijst = lijnenLijst;
         //alleReizen en segmentenLijst nog initialiseren.
         
         this.wachttijdReiziger = berekenWachttijdReiziger();
@@ -141,7 +142,7 @@ public class Statistiek {
         int aantal;
         for(Lijn l: lijnenLijst){
             aantal = 0;
-            Segment s = l.geefEersteSegment();
+            Segment s = l.getSegmenten()[0];
             for(Segmentdata sd : s.getData()){
                 aantal += sd.aantalRechtstaandeReizigers;
             }

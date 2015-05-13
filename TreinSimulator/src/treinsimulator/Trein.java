@@ -20,11 +20,6 @@ public class Trein {
     int vtijd;
     Lijn lijn;
     Set<Reiziger> inzittenden = new HashSet<>();
-    Segment huidigSegment;
-    Segment eersteSegment;
-    //richting kan oftewel 'A' of 'B' zijn 
-    //A ,van voor naar achter in de lijst van stations. B vice versa
-    char richting;
     int tellerNietOpgestapt;
     boolean weg = false;
     boolean netaangemaakt = true;
@@ -36,12 +31,10 @@ public class Trein {
 
     }
 
-    Trein(int vtijd, Lijn l, char richting) {
+    Trein(int vtijd, Lijn l) {
         this.vtijd = vtijd;
         this.lijn = l;
-        this.richting = richting;
         tellerNietOpgestapt = 0;
-        huidigSegment = l.getSegmenten()[positie];
     }
 
     void aankomst(int tijd) {
@@ -51,7 +44,7 @@ public class Trein {
                 reiziger.uitstappen(tijd);
             }
             isRijdend = false;
-            vtijd += huidigSegment.eindStation.overstaptijd;
+            vtijd += lijn.getSegmenten()[positie].getTijd();
         }
     }
 
@@ -60,20 +53,19 @@ public class Trein {
             if (netaangemaakt) {
                 isRijdend = true;
                 netaangemaakt = false;
-                vtijd += huidigSegment.tijd;
+                vtijd += lijn.getSegmenten()[positie].getTijd();
             } else if (positie == lijn.getSegmenten().length - 1) {
                 vtijd = -1;
             } else {
                 positie++;
-                huidigSegment = lijn.getSegmenten()[positie];
                 isRijdend = true;
-                vtijd += huidigSegment.tijd;
+                vtijd += lijn.getSegmenten()[positie].getTijd();
             }
             //Iets met "word", nog niet aan uit wat "word" hier plots komt doen
 
-            Segmentdata sd = huidigSegment.maakSegmentData(this);
+            Segmentdata sd = lijn.getSegmenten()[positie].maakSegmentData(this);
             sd.setAantalAchterGeblevenReizigers(tellerNietOpgestapt);
-            huidigSegment.setData(sd);
+            lijn.getSegmenten()[positie].setData(sd);
         }
     }
     

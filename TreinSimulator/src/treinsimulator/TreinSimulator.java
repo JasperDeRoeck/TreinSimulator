@@ -53,7 +53,7 @@ public class TreinSimulator {
                 k.incrementeer(1);
             }
         //Data-stuff:
-            
+            Statistiek st = new Statistiek(lijnenLijst);
     }
     
 }
