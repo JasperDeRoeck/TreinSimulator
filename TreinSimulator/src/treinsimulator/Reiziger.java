@@ -44,6 +44,11 @@ public class Reiziger {
         }
     }
     
+    /*public Kruising vraagKruising(){
+        Kruising k ;
+        return k;
+    }*/
+    
     
     
     public Reiziger(int aankomstSysteem, Station vertrekStation , Station eindStation){

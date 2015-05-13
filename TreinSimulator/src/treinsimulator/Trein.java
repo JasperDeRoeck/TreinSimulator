@@ -21,11 +21,23 @@ public class Trein {
     Lijn lijn;
     Set<Reiziger> inzittenden = new HashSet<>();
     Segment huidigSegment;
+    Segment eersteSegment;
     char richting;
+    int tellerNietOpgestapt ;
     
     //richting kan oftewel 'A' of 'B' zijn 
     //A ,van voor naar achter in de lijst van stations. B vice versa
     boolean isRijdend;
+    
+    public Trein(){
+        eersteSegment = lijn.geefEersteSegment(richting);
+        tellerNietOpgestapt = 0;
+    }
+    public void setData(Segmentdata sd){
+        
+        
+    }
+    
     void aankomst(int tijd){
         if((!isRijdend)&&(tijd == vtijd)){
             for(Reiziger reiziger : inzittenden){
@@ -43,18 +55,23 @@ public class Trein {
             }
             
             //Iets met "word", nog niet aan uit wat "word" hier plots komt doen
-            Segmentdata sd = new Segmentdata();
+            
+            Segmentdata sd = huidigSegment.maakSegmentData(this);
+            sd.setAantalAchterGeblevenReizigers(tellerNietOpgestapt);
             huidigSegment.setData(sd);
         }
     }
 
     boolean opstappen(Reiziger r) {
+        
         if(inzittenden.size() < lijn.getZitplaatsen()){
             inzittenden.add(r);
             return true;
         }
         else{
+            tellerNietOpgestapt++;
             return false;
+            
         }
     }
 
@@ -75,6 +92,8 @@ public class Trein {
         }
         return aantal;
     }
+    
+    
 }
 
 

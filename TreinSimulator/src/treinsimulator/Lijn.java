@@ -75,7 +75,11 @@ public class Lijn {
         }
         segmenten = segArray;
     }
-
+    
+    /*public Kruising getKruising(){
+        
+    }
+*/
     public Station[] getHaltes() {
         return haltes;
     }
