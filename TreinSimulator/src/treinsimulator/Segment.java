@@ -34,14 +34,6 @@ public class Segment {
     Segment() {
         
     }
-    public Segment geefVolgendeSegment(char richting){
-        if(richting == 'A'){
-            return volgendSegment;
-        }
-        else{
-            return vorigSegment;
-        }
-    }
     
     public Segmentdata maakSegmentData(Trein t){
         //ArrayList<Trein> treinen = lijn.getTreinen();
