@@ -58,5 +58,11 @@ public class Segment {
     public String toString(){
         return ("Segment : "+vertrekStation.getStadsnaam()+" === "+eindStation.getStadsnaam());
     }
+
+    public int getTijd() {
+        return tijd;
+    }
+    
+    
     
 }

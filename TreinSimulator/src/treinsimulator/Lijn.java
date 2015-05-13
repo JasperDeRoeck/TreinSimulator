@@ -71,12 +71,12 @@ public class Lijn {
     public void maakTreinen(){
         //Aanmaken treinen:
         for(int i : uurPiekVertrek){
-            treinen.add(new Trein(i, this, richting));
+            treinen.add(new Trein(i, this));
             //System.out.println("Nieuwe piekuurtrein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + i);
         }
         for(int i : uurVertrek){
             for (int j = 0; j < 2400; j+= 100) {
-                treinen.add(new Trein(j + i, this, richting));
+                treinen.add(new Trein(j + i, this));
                 //System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
             }
         }
