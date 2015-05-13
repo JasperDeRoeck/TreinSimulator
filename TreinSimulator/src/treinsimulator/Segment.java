@@ -25,7 +25,8 @@ public class Segment {
     Set<Segmentdata> data = new HashSet<>();
     int tijd;
     
-    public Segment(Station vertrek, Station eind, char richting){
+    public Segment(Lijn lijn,Station vertrek, Station eind){
+        this.lijn=lijn;
         vertrekStation = vertrek;
         eindStation = eind;
         this.richting = richting;

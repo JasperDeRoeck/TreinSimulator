@@ -32,13 +32,9 @@ public class DAO {
         maakDeductieStructuren();
     }
     
-    public static void readLists() {
-        
-    }
     public Station getTrein(int i){
         return stationLijst.get(i);
     }
-    
     //leest .ini bestand in met stationsinfo, lijninfo en passagiersinfo
     private static void leesIni() {
         try {
@@ -169,9 +165,7 @@ public class DAO {
         l.setReisduren(reisduren);
         Segment[] segmentarray = new Segment[stationsnamen.length - 1];
         for (int i = 0; i < segmentarray.length; i++) {
-            Segment seg = new Segment();
-            seg.vertrekStation = haltes[i];
-            seg.eindStation = haltes[i + 1];
+            Segment seg = new Segment(l,haltes[i],haltes[i + 1]);
             seg.tijd = l.reisduren[i];
             segmentarray[i] = seg;
         }
