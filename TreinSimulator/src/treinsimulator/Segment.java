@@ -5,10 +5,8 @@
  */
 package treinsimulator;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import javax.naming.OperationNotSupportedException;
 
 /**
  *
@@ -19,9 +17,6 @@ public class Segment {
     Station vertrekStation;
     Station eindStation;
     Lijn lijn;
-    Segment volgendSegment;
-    Segment vorigSegment;
-    char richting;
     Set<Segmentdata> data = new HashSet<>();
     int tijd;
     
@@ -29,12 +24,10 @@ public class Segment {
         this.lijn=lijn;
         vertrekStation = vertrek;
         eindStation = eind;
-        this.richting = richting;
+
     }
 
-    Segment() {
-        
-    }
+
     
     public Segmentdata maakSegmentData(Trein t){
         //ArrayList<Trein> treinen = lijn.getTreinen();
