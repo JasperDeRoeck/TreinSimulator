@@ -23,14 +23,17 @@ public class Statistiek {
     private HashMap<Reis,Double> gestrandeReizigers;
     private ArrayList<Kruising> alleKruisingen;
     private HashMap<Segment,Integer> rechtstaandeReizigers;
-    
+    private ArrayList<Lijn> lijnenLijst ;
     public Statistiek(){
-        this.alleKruisingen = DAO.getKruisingLijst();
+        
+        alleKruisingen = DAO.getKruisingLijst();
+        lijnenLijst = DAO.getLijnenLijst();
         //alleReizen en segmentenLijst nog initialiseren.
         
         this.wachttijdReiziger = berekenWachttijdReiziger();
         this.gestrandeReizigers = bepaalAantalGestrandeReizigersPerReis();
         this.rechtstaandeReizigers=bepaalStaandeReizigersPerDeeltraject();
+        
     }
     
     public HashMap<Reis,Integer> berekenWachttijdReiziger(){
@@ -82,19 +85,19 @@ public class Statistiek {
     }
     
      //Is voor alle kruisingen in het algemeen, maar moet per kruising 
-//    public double bepaalGemiddeldeOverstaptijd(){
-//        int tijd = 0;
-//        int aantalKruisingen = 0;
-//        for(Kruising k: alleKruisingen){
-//            int tijdKruising = k.getOverstaptijd();
-//            tijd += tijdKruising;
-//            aantalKruisingen++;
-//        }
-//        aantalKruisingen++; //want er bestaat geen 0de kruisig om het gemiddelde te berekenen
-//        double gemiddelde = tijd/aantalKruisingen;
-//        return gemiddelde;
-//        
-//    }
+    public double bepaalGemiddeldeOverstaptijd(){
+        int tijd = 0;
+        int aantalKruisingen = 0;
+        for(Kruising k: alleKruisingen){
+            int tijdKruising = k.getOverstaptijd();
+            tijd += tijdKruising;
+            aantalKruisingen++;
+        }
+        aantalKruisingen++; //want er bestaat geen 0de kruisig om het gemiddelde te berekenen
+        double gemiddelde = tijd/aantalKruisingen;
+        return gemiddelde;
+        
+    }
     
     
 //is voor totale, maar moet per Kruising    
@@ -135,12 +138,18 @@ public class Statistiek {
     
     public HashMap<Segment,Integer> bepaalStaandeReizigersPerDeeltraject(){
         HashMap<Segment,Integer> aantalRecht = new HashMap<>();
-//        for(Segment s: segmentenLijst){
-//            Set<Segmentdata> data = s.getData();
-//            int aantal =0; //Weet niet zo goed hoe die segmentdata in elkaar zit, moet nog ingevuld worden.
-//            aantalRecht.put(s, aantal);
-//        }
+        int aantal;
+        for(Lijn l: lijnenLijst){
+            aantal = 0;
+            Segment s = l.geefEersteSegment();
+            for(Segmentdata sd : s.getData()){
+                aantal += sd.aantalRechtstaandeReizigers;
+            }
+            aantalRecht.put(s,aantal);
+        }
         return aantalRecht;
     }
+    
+    
    
 }
