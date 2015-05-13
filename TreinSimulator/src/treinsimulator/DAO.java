@@ -178,6 +178,7 @@ public class DAO {
         for (String uur : s.substring(s.indexOf("Piekuurtreinen=") + 15).split(",")) {
             l.getUurPiekVertrek().add(Integer.parseInt(uur.replace("u", "")));
         }
+        l.maakTreinen();
         return l;
     }
 

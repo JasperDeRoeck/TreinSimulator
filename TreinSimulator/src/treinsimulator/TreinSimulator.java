@@ -36,7 +36,7 @@ public class TreinSimulator {
             while(k.getTijd() <= STOPTIJD){
                 Set<Trein> alleTreinen = new HashSet<>();
                 for(Lijn lijn: lijnenLijst){
-                    for(Trein trein : lijn.getTreinen()){
+                    for(Trein trein : lijn.getTreinen().values()){
                         alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
                                                             // iedere lijn te moeten afgaan om daar alle treinen uit te halen
                         trein.aankomst(k.getTijd());

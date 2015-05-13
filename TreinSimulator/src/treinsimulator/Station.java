@@ -55,7 +55,7 @@ public class Station {
                         Reis r = new Reis(lijntje.getHaltes()[j], doel);
                         if (r.bepaalAantalOverstappen() <= n - 1) {
                             overstap = lijntje.getHaltes()[j];
-                            trein = lijntje.geefEersteTrein(overstap, tijd);
+                            trein = lijntje.geefEersteTrein(tijd);
                         }
                     }
 
