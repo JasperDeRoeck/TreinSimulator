@@ -32,9 +32,6 @@ public class Segment {
         this.richting = richting;
     }
 
-    Segment() {
-        
-    }
     public Segment geefVolgendeSegment(char richting){
         if(richting == 'A'){
             return volgendSegment;
