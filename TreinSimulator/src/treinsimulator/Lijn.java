@@ -205,7 +205,7 @@ public class Lijn {
     public Trein geefEersteTrein(int tijd) {
         Trein trein = new Trein();
         for (int vertrek : treinen.keySet()) {
-            if (vertrek + tijd >= Klok.getSimulatietijd()) {
+            if ((Klok.incrementeer(vertrek, tijd)>= Klok.getSimulatietijd())) {
                 trein= treinen.get(vertrek);
                 return trein;
             } else {
