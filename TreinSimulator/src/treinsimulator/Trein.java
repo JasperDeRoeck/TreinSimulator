@@ -26,6 +26,7 @@ public class Trein {
     int tellerNietOpgestapt ;
     boolean weg = false;
     boolean netaangemaakt = true;
+    int positie = 0;
     
     
     //richting kan oftewel 'A' of 'B' zijn 
@@ -45,7 +46,7 @@ public class Trein {
         this.lijn = l;
         this.richting = richting;
         tellerNietOpgestapt = 0;
-        huidigSegment = l.getSegmenten()[0];
+        huidigSegment = l.getSegmenten()[positie];
     }
     void aankomst(int tijd){
         if((isRijdend)&&(tijd == vtijd)){
@@ -64,17 +65,15 @@ public class Trein {
                 netaangemaakt = false;
                 vtijd += huidigSegment.tijd;
             }
-            else if(huidigSegment.geefVolgendeSegment(richting) == null){
-                weg = true;
+            else if(positie == lijn.getSegmenten().length -1){
                 vtijd = -1;
             }
             else{
-                huidigSegment = huidigSegment.geefVolgendeSegment(richting);
+                positie++;
+                huidigSegment = lijn.getSegmenten()[positie];
                 isRijdend= true;
                 vtijd += huidigSegment.tijd;
             }
-            
-            
             //Iets met "word", nog niet aan uit wat "word" hier plots komt doen
             
             Segmentdata sd = huidigSegment.maakSegmentData(this);

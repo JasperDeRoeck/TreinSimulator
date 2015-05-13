@@ -33,7 +33,7 @@ public class TreinSimulator {
             reizigersLijst = DAO.getReizigersLijst();
             int STOPTIJD = 1440;
             
-            int t = 0;
+            int t = 400;
         //Klok:
             while(t <= STOPTIJD){
                 Set<Trein> alleTreinen = new HashSet<>();
@@ -52,8 +52,8 @@ public class TreinSimulator {
                 for(Trein trein : alleTreinen){
                     trein.vertrek(t);
                 }
-                if(t == 60){
-                    t = 100;        //Moet door het gekozen formaat van tijd.
+                if(t%60==0){
+                    t +=39;        //Moet door het gekozen formaat van tijd.
                 }
                 t++;
             }
