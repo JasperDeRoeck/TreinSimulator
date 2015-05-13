@@ -33,6 +33,9 @@ public class Trein {
     //A ,van voor naar achter in de lijst van stations. B vice versa
     boolean isRijdend = false;
     
+    public Trein(){
+        
+    }
 
     public void setData(Segmentdata sd){
         
