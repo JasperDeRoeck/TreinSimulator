@@ -5,7 +5,6 @@
  */
 package treinsimulator;
 
-import java.awt.Dialog;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,13 +12,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -31,8 +27,10 @@ public class DAO {
     private static ArrayList<Lijn> lijnenLijst = new ArrayList<>();
     private static HashMap<Integer, ArrayList<Reiziger>> reizigersLijst = new HashMap<>();
     private static ArrayList<Kruising> kruisingLijst = new ArrayList<>();
+    private static Set<Reis> alleReizen = new HashSet<>();
 
     //enige functie die nodig is om DAO te initialiseren en zijn gegevens te kunne gebruiken
+
     public static void initialiseer() {
         leesIni();
         maakDeductieStructuren();
@@ -41,16 +39,6 @@ public class DAO {
     //leest .ini bestand in met stationsinfo, lijninfo en passagiersinfo
     private static void leesIni() {
         try {
-            /*JFileChooser chooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter(null,"ini");
-            chooser.setFileFilter(filter);
-            int returnVal = chooser.showOpenDialog(new Dialog(new JFrame()));
-            File f=null;
-            while (returnVal != JFileChooser.APPROVE_OPTION ) {
-                returnVal = chooser.showOpenDialog(new Dialog(new JFrame()));
-            }
-            f = chooser.getSelectedFile();
-            BufferedReader br = new BufferedReader(new FileReader(f));*/
             BufferedReader br = new BufferedReader(new FileReader(new File("input.ini")));
             String huidig = br.readLine();
             while (!huidig.equals("[Stations]")) {
@@ -63,8 +51,6 @@ public class DAO {
             System.out.println("Een .ini bestand is niet gevonden.");
         } catch (IOException io) {
             System.out.println("Probleem met het inlezen van een .ini bestand.");
-        } catch (Exception ex) {
-            System.out.println("File niet geselecteerd.");
         }
     }
 
@@ -142,13 +128,26 @@ public class DAO {
                     doelstation = s;
                 }
             }
+            
+            Reis r = new Reis(beginstation, doelstation);
+            if (!alleReizen.contains(r)) {
+                alleReizen.add(r);
+            }
+            else{
+                for (Reis reis : alleReizen) {
+                        if(reis.equals(r)){
+                            r = reis;
+                        }
+                }
+            }
+            
 
             for (int j = 0; j < Integer.parseInt(lines[i + 1]); j++) {
                 if (reizigersLijst.containsKey(tijd)) {
-                    reizigersLijst.get(tijd).add(new Reiziger(tijd, beginstation, doelstation));
+                    reizigersLijst.get(tijd).add(new Reiziger(tijd, r));
                 } else {
                     ArrayList<Reiziger> lijst = new ArrayList<>();
-                    lijst.add(new Reiziger(tijd, beginstation, doelstation));
+                    lijst.add(new Reiziger(tijd, r));
                     reizigersLijst.put(tijd, lijst);
                 }
             }
@@ -293,4 +292,9 @@ public class DAO {
     public static ArrayList<Lijn> getLijnenLijst() {
         return lijnenLijst;
     }
+
+    public static Set<Reis> getAlleReizen() {
+        return alleReizen;
+    }
+    
 }

@@ -6,6 +6,7 @@
 package treinsimulator;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  *
@@ -23,7 +24,7 @@ public class Statistiek {
     private HashMap<Reis,Double> gestrandeReizigers;
     private ArrayList<Kruising> alleKruisingen;
     private HashMap<Segment,Integer> rechtstaandeReizigers;
-    private ArrayList<Lijn> lijnenLijst ;
+    private ArrayList<Lijn> lijnenLijst;
     
     public Statistiek(ArrayList<Lijn> lijnenLijst){
         
@@ -39,9 +40,7 @@ public class Statistiek {
     
     public HashMap<Reis,Integer> berekenWachttijdReiziger(){
         HashMap<Reis, Integer> wachttijd = new HashMap<>();
-        for(Reis r: alleReizen){
-//            Station vertrek = r.getVertrekstation();
-//            Station doel = r.getEindstation();
+        for(Reis r: DAO.getAlleReizen()){
             int tijd = r.getTotaleReiswegTijd(); 
             wachttijd.put(r, tijd);
         }
@@ -63,14 +62,7 @@ public class Statistiek {
 	HashMap<Kruising, Double> gemiddeldeTijd = new HashMap<>();
 	
 	for(Kruising k: alleKruisingen){
-		int aantalStation = 0;
-		int totaleTijd =0;	
-		Station[] st = k.getStations();
-		for(int i=0; i<st.length;i++){
-			totaleTijd += st[i].getOverstaptijd();
-			aantalStation++;
-		}
-		double gemiddelde = totaleTijd/aantalStation;
+		double gemiddelde = k.getOverstaptijd()/k.getAantalReizigers();
 		gemiddeldeTijd.put(k,gemiddelde);
 	}
 	return gemiddeldeTijd;

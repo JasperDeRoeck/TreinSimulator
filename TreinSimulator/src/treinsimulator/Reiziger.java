@@ -10,27 +10,29 @@ package treinsimulator;
  * @author Bernard
  */
 public class Reiziger {
-    int aankomstSysteem;
-    Station vertrekStation;
-    Station eindStation;
+    int beginTijd;
     Trein juisteTrein;
     int vtijd;
     Reis reis;
     int aantalGenomenOverstappen;
     boolean moetUitstappen;
+    int overstaptijd;
     
     // het tijdstip waarop de volgende gebeurtenis met betrekking tot de reiziger plaatsvindt
     // als een reiziger strandt of aankomt bij zijn eindstation dan wordt dit ingesteld op oneindig
     
-    Reiziger(){
+     public Reiziger(int aankomstSysteem, Reis reis){
+        beginTijd = aankomstSysteem;
+        vtijd = aankomstSysteem;
         juisteTrein = zoekTrein();
+        this.reis = reis;
     }
     
     public void uitstappen(int t){
         moetUitstappen = false;
-        if(aantalGenomenOverstappen == reis.aantalOverstappen){
+        if(aantalGenomenOverstappen == reis.getAantalOverstappen()){
             //We zijn er -> data toevoegen
-            
+            reis.addTijd(Klok.decrementeer(Klok.getTijd(), beginTijd));
         }
         else{
             //We zijn er nog niet -> nieuwe trein zoeken
@@ -44,39 +46,29 @@ public class Reiziger {
     }
     
     public void activeer(int t){
+        if(!moetUitstappen){
+            overstaptijd++;
+        }
         if(vtijd == t){
             if(juisteTrein == null){
                 juisteTrein = zoekTrein();
                 vtijd = juisteTrein.getVtijd();
+                
             }
             else{
-                    
                 if(!juisteTrein.opstappen(this)){
                     //Als trein vol is, nieuwe trein zoeken, vtijd instellen op volgende vertrekuur
                     juisteTrein = zoekTrein();
                     vtijd = juisteTrein.getVtijd();
                 }
                 else{
-                    //Als er nog plaats is, nieuwe data toevoegen aan .. Kruising? (--> moet dat niet segment zijn?)
-                    moetUitstappen = true;
-                    Kruising kruising = juisteTrein.getKruising();
-                    kruising.voegDataToe(); //Welke data moet toegevoegd worden?
+                    
+                    
+                    juisteTrein.getKruising().addOverstaptijd(overstaptijd);  //Passagier geeft door aan kruising dat het niet meer op kruising bevindt.
+                    moetUitstappen = true;                  //Vanaf nu zit passagier op trein
                 }
             }
             
         }
-    }
-    
-    /*public Kruising vraagKruising(){
-        Kruising k ;
-        return k;
-    }*/
-    
-    
-    
-    public Reiziger(int aankomstSysteem, Station vertrekStation , Station eindStation){
-        this.aankomstSysteem= aankomstSysteem;
-        this.vertrekStation = vertrekStation;
-        this.eindStation = eindStation;
-    }
+    }  
 }

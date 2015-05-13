@@ -25,15 +25,7 @@ public class Trein {
     boolean netaangemaakt = true;
     int positie = 0;
     
-    
-    //richting kan oftewel 'A' of 'B' zijn 
-    //A ,van voor naar achter in de lijst van stations. B vice versa
     boolean isRijdend = false;
-    
-    public Trein(){
-        
-    }
-
 
     public void setData(Segmentdata sd) {
 
@@ -52,7 +44,7 @@ public class Trein {
                 reiziger.uitstappen(tijd);
             }
             isRijdend = false;
-            vtijd = Klok.incrementeer(vtijd, lijn.getSegmenten()[positie].getTijd());
+            vtijd += lijn.getSegmenten()[positie].getTijd();
         }
     }
 
@@ -61,13 +53,13 @@ public class Trein {
             if (netaangemaakt) {
                 isRijdend = true;
                 netaangemaakt = false;
-                vtijd = Klok.incrementeer(vtijd, lijn.getSegmenten()[positie].getTijd());
+                vtijd += lijn.getSegmenten()[positie].getTijd();
             } else if (positie == lijn.getSegmenten().length - 1) {
                 vtijd = -1;
             } else {
                 positie++;
                 isRijdend = true;
-                vtijd = Klok.incrementeer(vtijd, lijn.getSegmenten()[positie].getTijd());
+                vtijd += lijn.getSegmenten()[positie].getTijd();
             }
             //Iets met "word", nog niet aan uit wat "word" hier plots komt doen
 
@@ -92,7 +84,7 @@ public class Trein {
     }
 
     Kruising getKruising() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return lijn.getHalte(positie).getKruising();
     }
 
     public Lijn getLijn() {

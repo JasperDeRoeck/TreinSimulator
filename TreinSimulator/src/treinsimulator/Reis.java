@@ -6,6 +6,7 @@
 package treinsimulator;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -15,19 +16,21 @@ import java.util.Set;
 //combinatie van vertrek- en eindstation
 //houdt statistisch belangrijke data bij 
 public class Reis {
-    int aantalReizigers;
-    int aantalGestrandeReizigers;
+    private int aantalReizigers;
+    private int aantalGestrandeReizigers;
     // totaal aantal minuten reisweg voor alle reizigers samen
-    int totaleReiswegTijd;
-    int aantalOverstappen;
-    Station vertrekstation;
-    Station eindstation;
+    private int totaleReiswegTijd;
+    private int aantalOverstappen;
+    private Station vertrekstation;
+    private Station eindstation;
     
     public Reis(Station vertrek,Station doel){
         vertrekstation = vertrek;
         eindstation = doel;
     }
-    
+    public void addTotaleReiswegTijd(int t){
+        totaleReiswegTijd += t;
+    }
     public int getAantalOverstappen(){
         return aantalOverstappen;
     }
@@ -70,4 +73,35 @@ public class Reis {
     public Station getEindstation() {
         return eindstation;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.vertrekstation);
+        hash = 43 * hash + Objects.hashCode(this.eindstation);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Reis other = (Reis) obj;
+        if (!Objects.equals(this.vertrekstation, other.vertrekstation)) {
+            return false;
+        }
+        if (!Objects.equals(this.eindstation, other.eindstation)) {
+            return false;
+        }
+        return true;
+    }
+
+    void addTijd(int decTijd) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

@@ -16,16 +16,23 @@ public class Kruising {
     // naam van een kruising is van de vorm "Lijn_n1xLijn_n2"
     String naam;
     private int overstaptijd=0;
+    private int aantalReizigers = 0;
     private Station[] stations;
-
+            
     public Kruising (String naam ,Station [] stations){
         this.naam=naam;
         this.stations = stations;
         for (int i= 0;i<stations.length;i++){
             overstaptijd +=stations[i].getOverstaptijd();
         }
+        for(Station st: stations){
+            st.setKruising(this);
+        }
     }
-    
+
+    public int getAantalReizigers() {
+        return aantalReizigers;
+    }
     public int getOverstaptijd() {
         return overstaptijd;
     }
@@ -56,8 +63,10 @@ public class Kruising {
         }
         return (zin);
     }
-    void voegDataToe() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    void addOverstaptijd(int overstaptijd) {
+        this.overstaptijd += overstaptijd;
+        aantalReizigers++;
     }
     
 }

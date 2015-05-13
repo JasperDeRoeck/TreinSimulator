@@ -198,10 +198,6 @@ public class Lijn {
     public Kruising getKruising(){ //Moet op een of andere manier door een passagier gevraagd worden aan Lijn
         throw new UnsupportedOperationException("Not yet implemented");
     }
-    
-    public Trein  geefEersteTrein(Station station, int tijd){
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
 
     
     
