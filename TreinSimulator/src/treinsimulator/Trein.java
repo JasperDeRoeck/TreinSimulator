@@ -48,7 +48,7 @@ public class Trein {
     void vertrek(int tijd){
         if((!isRijdend)&&(tijd == vtijd)){
             if(netaangemaakt){
-                huidigSegment = lijn.geefEersteSegment(richting);
+                huidigSegment = lijn.geefEersteSegment();
                 isRijdend= true;
                 netaangemaakt = false;
                 vtijd += huidigSegment.tijd;

@@ -97,13 +97,8 @@ public class Lijn {
         return haltes[i];
     }
     
-    public Segment geefEersteSegment(char richting){
-        if(richting == 'A'){
-            return segmenten[0];
-        }
-        else{
-            return segmenten[segmenten.length-1];
-        }
+    public Segment geefEersteSegment(){
+        return segmenten[0];
     }
     
     public void setHaltes(Station[] haltes) {
