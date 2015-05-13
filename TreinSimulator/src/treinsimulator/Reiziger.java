@@ -44,7 +44,6 @@ public class Reiziger {
     public Trein zoekTrein(){
         throw new UnsupportedOperationException("Not yet implemented");
     }
-    
     public void activeer(int t){
         if(!moetUitstappen){
             overstaptijd++;
@@ -71,4 +70,8 @@ public class Reiziger {
             
         }
     }  
+
+    Object getHuidigStation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

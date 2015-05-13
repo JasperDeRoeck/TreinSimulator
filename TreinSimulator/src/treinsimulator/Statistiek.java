@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+        
 /**
  *
  * @author Bernard
@@ -26,7 +31,7 @@ public class Statistiek {
     private HashMap<Segment,Integer> rechtstaandeReizigers;
     private ArrayList<Lijn> lijnenLijst;
     
-    public Statistiek(ArrayList<Lijn> lijnenLijst){
+    public Statistiek(ArrayList<Lijn> lijnenLijst, HashMap<Integer,ArrayList<Reiziger>> reizigersLijst){
         
         alleKruisingen = DAO.getKruisingLijst();
         this.lijnenLijst = lijnenLijst;
@@ -35,9 +40,15 @@ public class Statistiek {
         this.wachttijdReiziger = berekenWachttijdReiziger();
         this.gestrandeReizigers = bepaalAantalGestrandeReizigersPerReis();
         this.rechtstaandeReizigers=bepaalStaandeReizigersPerDeeltraject();
+        for (int i = 0; i < 2400; i++) {
+            for(Reiziger reiziger: reizigersLijst.get(i)){
+                if(!reiziger.reis.getVertrekstation().equals(reiziger.getHuidigStation())){
+                    reiziger.reis.incGestrandeReizigers();
+                }
+            }
+        }
         
     }
-    
     public HashMap<Reis,Integer> berekenWachttijdReiziger(){
         HashMap<Reis, Integer> wachttijd = new HashMap<>();
         for(Reis r: DAO.getAlleReizen()){
@@ -142,7 +153,7 @@ public class Statistiek {
         }
         return aantalRecht;
     }
-    
+
     
    
 }

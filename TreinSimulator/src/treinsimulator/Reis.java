@@ -34,7 +34,9 @@ public class Reis {
     public int getAantalOverstappen(){
         return aantalOverstappen;
     }
-    
+    public void incGestrandeReizigers(){
+        aantalGestrandeReizigers++;
+    }
     public int bepaalAantalOverstappen(){
         int n = -1;
         Set<Station> afgewerkt = new HashSet<>();

@@ -6,6 +6,7 @@
 package treinsimulator;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -78,6 +79,28 @@ public class Station {
     }
     public Kruising getKruising(){
         return kruising;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.stadsnaam);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Station other = (Station) obj;
+        if (!Objects.equals(this.stadsnaam, other.stadsnaam)) {
+            return false;
+        }
+        return true;
     }
     
     
