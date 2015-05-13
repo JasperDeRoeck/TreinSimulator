@@ -22,97 +22,94 @@ public class Trein {
     Set<Reiziger> inzittenden = new HashSet<>();
     Segment huidigSegment;
     Segment eersteSegment;
+    //richting kan oftewel 'A' of 'B' zijn 
+    //A ,van voor naar achter in de lijst van stations. B vice versa
     char richting;
-    int tellerNietOpgestapt ;
+    int tellerNietOpgestapt;
     boolean weg = false;
     boolean netaangemaakt = true;
     int positie = 0;
-    
-    
-    //richting kan oftewel 'A' of 'B' zijn 
-    //A ,van voor naar achter in de lijst van stations. B vice versa
-    boolean isRijdend = false;
-    
 
-    public void setData(Segmentdata sd){
-        
-        
+    boolean isRijdend = false;
+
+    public void setData(Segmentdata sd) {
+
     }
-    
-    
-    
-    Trein(int vtijd, Lijn l, char richting){
+
+    Trein(int vtijd, Lijn l, char richting) {
         this.vtijd = vtijd;
         this.lijn = l;
         this.richting = richting;
         tellerNietOpgestapt = 0;
         huidigSegment = l.getSegmenten()[positie];
     }
-    void aankomst(int tijd){
-        if((isRijdend)&&(tijd == vtijd)){
-            System.out.println("Trein op lijn: " + lijn.getId() +  " komt aan om " + vtijd);
-            for(Reiziger reiziger : inzittenden){
+
+    void aankomst(int tijd) {
+        if ((isRijdend) && (tijd == vtijd)) {
+            System.out.println("Trein op lijn: " + lijn.getId() + " komt aan om " + vtijd);
+            for (Reiziger reiziger : inzittenden) {
                 reiziger.uitstappen(tijd);
             }
-            isRijdend=false;
+            isRijdend = false;
             vtijd += huidigSegment.eindStation.overstaptijd;
         }
     }
-    void vertrek(int tijd){
-        if((!isRijdend)&&(tijd == vtijd)){
-            if(netaangemaakt){
-                isRijdend= true;
+
+    void vertrek(int tijd) {
+        if ((!isRijdend) && (tijd == vtijd)) {
+            if (netaangemaakt) {
+                isRijdend = true;
                 netaangemaakt = false;
                 vtijd += huidigSegment.tijd;
-            }
-            else if(positie == lijn.getSegmenten().length -1){
+            } else if (positie == lijn.getSegmenten().length - 1) {
                 vtijd = -1;
-            }
-            else{
+            } else {
                 positie++;
                 huidigSegment = lijn.getSegmenten()[positie];
-                isRijdend= true;
+                isRijdend = true;
                 vtijd += huidigSegment.tijd;
             }
             //Iets met "word", nog niet aan uit wat "word" hier plots komt doen
-            
+
             Segmentdata sd = huidigSegment.maakSegmentData(this);
             sd.setAantalAchterGeblevenReizigers(tellerNietOpgestapt);
             huidigSegment.setData(sd);
         }
     }
+    
     /*
      * Voegt toe als er nog plaats is, anders returnt de methode false
      */
-    boolean opstappen(Reiziger r) {     
-        if(inzittenden.size() < lijn.getZitplaatsen()){
+    boolean opstappen(Reiziger r) {
+        if (inzittenden.size() < lijn.getZitplaatsen()) {
             inzittenden.add(r);
             return true;
-        }
-        else{
+        } else {
             tellerNietOpgestapt++;
             return false;
-            
+
         }
     }
 
     Kruising getKruising() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    public Lijn getLijn(){
+
+    public Lijn getLijn() {
         return lijn;
     }
-        public int getVtijd() {
+
+    public int getVtijd() {
         return vtijd;
     }
-    public int getAantalInzittenden(){
+
+    public int getAantalInzittenden() {
         int aantal = 0;
-        for(Reiziger r: inzittenden){
+        for (Reiziger r : inzittenden) {
             aantal++;
         }
         return aantal;
     }
-    
-    
+
 }
 //opmerking: is richting hier niet overbodig want het zit eigelijk al in de var. l ?
