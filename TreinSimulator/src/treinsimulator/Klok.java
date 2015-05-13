@@ -14,14 +14,17 @@ import javax.naming.OperationNotSupportedException;
 public class Klok {
     
     private static int tijd;
-    
-    public Klok(int starttijd){
-            tijd = starttijd;
-            //onderstaande statement normaliseert de starttijd => 666 wordt 706;
-            
+
+    static void setTijd(int i) {
+        tijd = i;
     }
-    
-     public static int incrementeer(int tijd, int teller) {
+    public static int getTijd(){
+        return tijd;
+    }
+    public static void ticktock(){
+        tijd = incrementeer(tijd, 1);
+    }
+    public static int incrementeer(int tijd, int teller) {
         int huidig  = valideer(tijd);
         int totaal = (huidig % 100) + teller + (huidig / 100) * 60;
         int som = 0;
@@ -78,9 +81,5 @@ public class Klok {
             System.out.println(a);
         }
         return Integer.parseInt(a);
-    }
-    
-    public static int getTijd(){
-        return tijd;
     }
 }

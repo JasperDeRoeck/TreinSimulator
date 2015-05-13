@@ -31,27 +31,30 @@ public class TreinSimulator {
             reizigersLijst = DAO.getReizigersLijst();
             int STOPTIJD = 1440;
             
-            Klok k = new Klok(400);
+            Klok.setTijd(400);
         //Klok:
-            while(k.getTijd() <= STOPTIJD){
+            while(Klok.getTijd() <= STOPTIJD){
+                
                 Set<Trein> alleTreinen = new HashSet<>();
                 for(Lijn lijn: lijnenLijst){
                     for(Trein trein : lijn.getTreinen().values()){
                         alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
                                                             // iedere lijn te moeten afgaan om daar alle treinen uit te halen
-                        trein.aankomst(k.getTijd());
-                        System.out.println(k.getTijd());
+                        trein.aankomst(Klok.getTijd());
+                        System.out.println("Loop");
                     }
+                    System.out.println("LijnLoop");
                 }
-                if(reizigersLijst.get(k.getTijd()) != null){
-                    for(Reiziger reiziger: reizigersLijst.get(k.getTijd())){
-                             reiziger.activeer(k.getTijd());
+                if(reizigersLijst.get(Klok.getTijd()) != null){
+                    for(Reiziger reiziger: reizigersLijst.get(Klok.getTijd())){
+                             reiziger.activeer(Klok.getTijd());
                     }
                 }
                 for(Trein trein : alleTreinen){
-                    trein.vertrek(k.getTijd());
+                    trein.vertrek(Klok.getTijd());
                 }
-                k.incrementeer(k.getTijd(),1);
+                System.out.println("Tijd: " + Klok.getTijd());
+                Klok.ticktock();
             }
         //Data-stuff:
              

@@ -47,7 +47,6 @@ public class Statistiek {
                 }
             }
         }
-        
     }
     public HashMap<Reis,Integer> berekenWachttijdReiziger(){
         HashMap<Reis, Integer> wachttijd = new HashMap<>();

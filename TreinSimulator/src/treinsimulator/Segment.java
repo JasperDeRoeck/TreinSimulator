@@ -24,11 +24,7 @@ public class Segment {
         this.lijn=lijn;
         vertrekStation = vertrek;
         eindStation = eind;
-
     }
-
-
-    
     public Segmentdata maakSegmentData(Trein t){
         //ArrayList<Trein> treinen = lijn.getTreinen();
         //for(Trein t: treinen){
@@ -62,7 +58,5 @@ public class Segment {
     public int getTijd() {
         return tijd;
     }
-    
-    
     
 }

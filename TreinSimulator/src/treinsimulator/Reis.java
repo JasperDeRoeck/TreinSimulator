@@ -20,7 +20,7 @@ public class Reis {
     private int aantalGestrandeReizigers;
     // totaal aantal minuten reisweg voor alle reizigers samen
     private int totaleReiswegTijd;
-    private int aantalOverstappen;
+    private int aantalOverstappen = -1;     //Op -1 instellen om ongeïnitialiseerd voor te stellen
     private Station vertrekstation;
     private Station eindstation;
     
@@ -32,6 +32,9 @@ public class Reis {
         totaleReiswegTijd += t;
     }
     public int getAantalOverstappen(){
+        if(aantalOverstappen == -1){
+            aantalOverstappen = bepaalAantalOverstappen();
+        }
         return aantalOverstappen;
     }
     public void incGestrandeReizigers(){
@@ -55,6 +58,7 @@ public class Reis {
         }
         aantalOverstappen = n;
         return n;
+        
     }
 
     public int getAantalReizigers() {
@@ -105,6 +109,11 @@ public class Reis {
 
     void addTijd(int decTijd) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String toString() {
+        return  vertrekstation + " - " + eindstation;
     }
     
 }

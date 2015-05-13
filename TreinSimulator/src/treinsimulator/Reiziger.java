@@ -28,7 +28,7 @@ public class Reiziger {
         vtijd = aankomstSysteem;
         this.reis = reis;
         huidigStation = reis.getVertrekstation();
-        juisteTrein = zoekTrein();       
+        juisteTrein = null;       
     }
     
     public void uitstappen(int t){
@@ -45,10 +45,12 @@ public class Reiziger {
     }
     
     public Trein zoekTrein(){
-        reis.bepaalAantalOverstappen();
+        System.out.println("Reiziger met reis " + reis + " zoekt een trein");
         Overstapdata data = huidigStation.juisteTrein(reis.getAantalOverstappen(), huidigStation, reis.getEindstation());
         volgendStation = data.getOverstap();
+        
         Trein trein = data.getTrein();
+        System.out.println("Reiziger met reis " + reis + " heeft zijn trein gevonden");
         return trein;
     }
     public void activeer(int t){
@@ -57,12 +59,14 @@ public class Reiziger {
         }
         if(vtijd == t){
             if(juisteTrein == null){
+                
                 juisteTrein = zoekTrein();
                 vtijd = juisteTrein.getVtijd();
-                
+                System.out.println("Reiziger met reis " + reis + " heeft vtijd geupdate.");
             }
             else{
                 if(!juisteTrein.opstappen(this)){
+                    System.out.println("Reiziger met reis " + reis + " kon niet opstappen, er was niet genoeg plaats");
                     //Als trein vol is, nieuwe trein zoeken, vtijd instellen op volgende vertrekuur
                     juisteTrein = zoekTrein();
                     vtijd = juisteTrein.getVtijd();
@@ -73,6 +77,7 @@ public class Reiziger {
                     juisteTrein.getKruising().addOverstaptijd(overstaptijd);  //Passagier geeft door aan kruising dat het niet meer op kruising bevindt.
                     moetUitstappen = true;                  //Vanaf nu zit passagier op trein
                     huidigStation = volgendStation;
+                    System.out.println("Reiziger met reis " + reis + " heeft de trein genomen.");
                     volgendStation = null;
                 }
             }
