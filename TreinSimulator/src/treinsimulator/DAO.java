@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -35,7 +37,15 @@ public class DAO {
     //leest .ini bestand in met stationsinfo, lijninfo en passagiersinfo
     private static void leesIni() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("input.ini")));
+            JFileChooser chooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("ini");
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showOpenDialog(null);
+            File f=null;
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                f = chooser.getSelectedFile();
+            }
+            BufferedReader br = new BufferedReader(new FileReader(f));
             String huidig = br.readLine();
             while (!huidig.equals("[Stations]")) {
                 huidig = br.readLine();
@@ -181,8 +191,6 @@ public class DAO {
         return l;
     }
 
-   
-
     //initialiseert de buren en doorgaande lijnen van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
     private static void geefStationsBurenEnLijnen() {
         for (Lijn l : lijnenLijst) {
@@ -195,7 +203,7 @@ public class DAO {
             }
         }
     }
-    
+
     //initialiseert de kruisingen in kruisingenLijst,wordt opgeroepen door maakDeductieStructuren()
     private static void maakKruisingen() {
         for (Lijn l : lijnenLijst) {
@@ -273,8 +281,8 @@ public class DAO {
     public static ArrayList<Station> getStationLijst() {
         return stationLijst;
     }
-    
-     public static ArrayList<Lijn> getLijnenLijst() {
+
+    public static ArrayList<Lijn> getLijnenLijst() {
         return lijnenLijst;
     }
 }

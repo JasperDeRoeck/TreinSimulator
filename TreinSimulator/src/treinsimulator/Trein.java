@@ -52,7 +52,7 @@ public class Trein {
                 reiziger.uitstappen(tijd);
             }
             isRijdend = false;
-            vtijd += lijn.getSegmenten()[positie].getTijd();
+            vtijd = Klok.incrementeer(vtijd, lijn.getSegmenten()[positie].getTijd());
         }
     }
 
@@ -61,13 +61,13 @@ public class Trein {
             if (netaangemaakt) {
                 isRijdend = true;
                 netaangemaakt = false;
-                vtijd += lijn.getSegmenten()[positie].getTijd();
+                vtijd = Klok.incrementeer(vtijd, lijn.getSegmenten()[positie].getTijd());
             } else if (positie == lijn.getSegmenten().length - 1) {
                 vtijd = -1;
             } else {
                 positie++;
                 isRijdend = true;
-                vtijd += lijn.getSegmenten()[positie].getTijd();
+                vtijd = Klok.incrementeer(vtijd, lijn.getSegmenten()[positie].getTijd());
             }
             //Iets met "word", nog niet aan uit wat "word" hier plots komt doen
 

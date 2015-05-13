@@ -11,15 +11,9 @@ package treinsimulator;
  */
 public class Klok {
     
-    private int tijd;
+    private static int simulatietijd =400;
     
-    public Klok(int starttijd){
-            tijd = starttijd;
-            //onderstaande statement normaliseert de starttijd => 666 wordt 706;
-            incrementeer(0);
-    }
-    
-    public void incrementeer(int teller){
+    public static int incrementeer(int tijd ,int teller){
         tijd+=teller;
         int rest =tijd%100;
         if (rest>59){
@@ -29,9 +23,16 @@ public class Klok {
         if (tijd/100>23){
             tijd=tijd-2400;
         }
-    }
-    
-    public int getTijd(){
         return tijd;
     }
+
+    public static int getSimulatietijd() {
+        return simulatietijd;
+    }
+
+    public static void setSimulatietijd(int simulatietijd) {
+        simulatietijd = simulatietijd;
+    }
+    
+    
 }
