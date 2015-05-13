@@ -30,7 +30,7 @@ public class Trein {
     
     //richting kan oftewel 'A' of 'B' zijn 
     //A ,van voor naar achter in de lijst van stations. B vice versa
-    boolean isRijdend;
+    boolean isRijdend = false;
     
     public Trein(){
         eersteSegment = lijn.geefEersteSegment(richting);
@@ -41,7 +41,7 @@ public class Trein {
         
     }
     
-    boolean isRijdend = false;
+    
     
     Trein(int vtijd, Lijn l, char richting){
         this.vtijd = vtijd;
