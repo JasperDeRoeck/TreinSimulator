@@ -34,7 +34,6 @@ public class Trein {
         
     }
 
-    boolean isRijdend = false;
 
     public void setData(Segmentdata sd) {
 
