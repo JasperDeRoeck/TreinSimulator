@@ -41,7 +41,7 @@ public class DAO {
     //leest .ini bestand in met stationsinfo, lijninfo en passagiersinfo
     private static void leesIni() {
         try {
-            JFileChooser chooser = new JFileChooser();
+            /*JFileChooser chooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter(null,"ini");
             chooser.setFileFilter(filter);
             int returnVal = chooser.showOpenDialog(new Dialog(new JFrame()));
@@ -50,7 +50,8 @@ public class DAO {
                 returnVal = chooser.showOpenDialog(new Dialog(new JFrame()));
             }
             f = chooser.getSelectedFile();
-            BufferedReader br = new BufferedReader(new FileReader(f));
+            BufferedReader br = new BufferedReader(new FileReader(f));*/
+            BufferedReader br = new BufferedReader(new FileReader(new File("input.ini")));
             String huidig = br.readLine();
             while (!huidig.equals("[Stations]")) {
                 huidig = br.readLine();
