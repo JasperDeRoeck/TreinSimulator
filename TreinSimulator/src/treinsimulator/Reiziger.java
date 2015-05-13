@@ -79,5 +79,10 @@ public class Reiziger {
             }
             
         }
-    }  
+    }
+
+    public Station getHuidigStation() {
+        return huidigStation;
+    }
+    
 }
