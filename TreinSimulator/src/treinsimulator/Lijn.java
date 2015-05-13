@@ -6,6 +6,7 @@
 package treinsimulator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -25,12 +26,13 @@ public class Lijn {
     private ArrayList<Integer> uurVertrek = new ArrayList<>();
     private ArrayList<Integer> uurPiekVertrek = new ArrayList<>();
     public int[] reisduren;
-    public ArrayList<Trein> treinen =  new ArrayList<>();
-    
-    public Lijn(char richting, int id){
+    public HashMap<Integer, Trein> treinen = new HashMap<>();
+
+    public Lijn(char richting, int id) {
         this.richting = richting;
         this.id = id;
     }
+
     public Lijn(Lijn k) {
         id = k.id;
         richting = 'B';
@@ -61,49 +63,49 @@ public class Lijn {
                 if (nieuwePiek % 100 == 60) {
                     nieuwePiek = nieuwePiek - 60;
                 }
-                uurPiekVertrek.add(nieuwePiek );
+                uurPiekVertrek.add(nieuwePiek);
             }
         }
         maakSegmenten(k);
         maakTreinen();
     }
-    
-    public void maakTreinen(){
+
+    public void maakTreinen() {
         //Aanmaken treinen:
-        for(int i : uurPiekVertrek){
-            treinen.add(new Trein(i, this));
+        for (int i : uurPiekVertrek) {
+            treinen.put(i, new Trein(i, this));
             //System.out.println("Nieuwe piekuurtrein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + i);
         }
-        for(int i : uurVertrek){
-            for (int j = 0; j < 2400; j+= 100) {
-                treinen.add(new Trein(j + i, this));
+        for (int i : uurVertrek) {
+            for (int j = 0; j < 2400; j += 100) {
+                treinen.put(j + i, new Trein(j + i, this));
                 //System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
             }
         }
     }
-    private void maakSegmenten(Lijn k){
-        int aantal= k.getHaltes().length-1;
+
+    private void maakSegmenten(Lijn k) {
+        int aantal = k.getHaltes().length - 1;
         Segment[] segArray = new Segment[aantal];
-        for(int i=0; i<=(k.getHaltes().length)-2;i++){
-            Segment seg = new Segment(this,k.haltes[i],k.haltes[i+1]);
-            segArray[i]=seg;
+        for (int i = 0; i <= (k.getHaltes().length) - 2; i++) {
+            Segment seg = new Segment(this, k.haltes[i], k.haltes[i + 1]);
+            segArray[i] = seg;
         }
         segmenten = segArray;
     }
-    
+
     /*public Kruising getKruising(){
         
-    }
-*/
+     }
+     */
     public Station[] getHaltes() {
         return haltes;
     }
-    public Station getHalte(int i){
+
+    public Station getHalte(int i) {
         return haltes[i];
     }
-    
-    
-    
+
     public void setHaltes(Station[] haltes) {
         this.haltes = haltes;
     }
@@ -166,7 +168,7 @@ public class Lijn {
 
     @Override
     public String toString() {
-        String zin = "\nLijn " + id + " rijdt over volgende trajecten :\n Volgens richting "+richting+"\n";
+        String zin = "\nLijn " + id + " rijdt over volgende trajecten :\n Volgens richting " + richting + "\n";
         int j = 0;
         for (int i = 0; i < haltes.length - 1; i++) {
             zin += "\t" + haltes[i].getStadsnaam() + "=>" + haltes[i + 1].getStadsnaam() + " voor een duur van " + reisduren[j] + " minuten.\n";
@@ -176,19 +178,19 @@ public class Lijn {
         zin += "zitplaatsen: " + zitplaatsen + "\n";
         zin += "en rijdt om : \n";
         for (Integer i : uurVertrek) {
-            zin =zin +" XX."+ i  ;
+            zin = zin + " XX." + i;
         }
         zin += "\nEn heeft ook de volgende piekdiensten:\n ";
         for (Integer i : uurPiekVertrek) {
             zin += i + ",";
         }
-        for(Segment s : segmenten){
-            zin+=s.toString();
+        for (Segment s : segmenten) {
+            zin += s.toString();
         }
         return zin;
     }
 
-    public ArrayList<Trein> getTreinen() {
+    public HashMap<Integer, Trein> getTreinen() {
         return treinen;
     }
 
@@ -199,7 +201,18 @@ public class Lijn {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    
-    
-    
+    public Trein geefEersteTrein(int tijd) {
+        Trein trein = new Trein();
+        for (int vertrek : treinen.keySet()) {
+            if ((Klok.incrementeer(vertrek, tijd)>= Klok.getSimulatietijd())) {
+                trein= treinen.get(vertrek);
+                return trein;
+            } else {
+                trein = null;
+            }
+        }
+        return trein;
+
+    }
+
 }
