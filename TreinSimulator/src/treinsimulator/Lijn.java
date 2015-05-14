@@ -165,7 +165,7 @@ public class Lijn {
     public void setReisduren(int[] reisduren) {
         this.reisduren = reisduren;
     }
-
+    
     @Override
     public String toString() {
         String zin = "\nLijn " + id + " rijdt over volgende trajecten :\n Volgens richting " + richting + "\n";

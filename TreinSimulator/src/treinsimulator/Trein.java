@@ -26,10 +26,6 @@ public class Trein {
     int positie = 0;
     
     boolean isRijdend = false;
-
-    public void setData(Segmentdata sd) {
-
-    }
     
     Trein(int vtijd, Lijn l) {
         this.vtijd = vtijd;
@@ -103,5 +99,10 @@ public class Trein {
         return aantal;
     }
 
+    @Override
+    public String toString() {
+        return ("Trein op lijn " + lijn.getId());
+    }
+    
 }
 //opmerking: is richting hier niet overbodig want het zit eigelijk al in de var. l ?
