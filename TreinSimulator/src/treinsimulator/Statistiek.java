@@ -161,7 +161,5 @@ public class Statistiek {
         }
         return aantalRecht;
     }
-
-    
    
 }

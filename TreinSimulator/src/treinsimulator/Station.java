@@ -41,7 +41,7 @@ public class Station {
     }
 
     public Overstapdata juisteTrein(int n, Station vertrek, Station doel) {
-
+        System.out.println("van " + vertrek + " naar " + doel);
         for (Lijn lijntje : lijnen) {
             int tijd = 0;
             for (int i = 0; i < lijntje.getHaltes().length; i++) {
@@ -57,6 +57,7 @@ public class Station {
                             Station overstap = lijntje.getHaltes()[j];
                             Trein trein = lijntje.geefEersteTrein(tijd);
                             Overstapdata data = new Overstapdata(overstap, trein);
+                            System.out.println("en heeft de trein gevonden: " + trein);
                             return data;
 
                         }
@@ -65,6 +66,7 @@ public class Station {
                 }
             }
         }
+            
         return null;
     }
 
