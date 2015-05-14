@@ -6,6 +6,7 @@
 package treinsimulator;
 
 import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 /**
@@ -77,7 +78,7 @@ public class Lijn {
             //System.out.println("Nieuwe piekuurtrein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + i);
         }
         for (int i : uurVertrek) {
-            for (int j = 0; j < 2400; j += 100) {
+            for (int j = 400; j < 2200; j += 100) {
                 treinen.put(j + i, new Trein(j + i, this));
                 //System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
             }
@@ -213,8 +214,6 @@ public class Lijn {
             if ((Klok.incrementeer(vertrek, tijd) >= Klok.getTijd())) {
                 Trein trein = treinen.get(vertrek);
                 return trein;
-            } else {
-                return null;
             }
         }
         return null;
