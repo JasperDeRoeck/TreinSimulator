@@ -40,28 +40,34 @@ public class Station {
         return buren;
     }
 
-    public Overstapdata juisteTrein(int n, Station vertrek, Station doel) {
+    public Overstapdata juisteTrein(int n, Station doel) {
 
         for (Lijn lijntje : lijnen) {
-            int tijd = 0;
-            for (int i = 0; i < lijntje.getHaltes().length; i++) {
-                if (!vertrek.getStadsnaam().equals(lijntje.getHaltes()[i].getStadsnaam())) {
-                    if (i < lijntje.reisduren.length) {
-                        tijd += lijntje.getSegmenten()[i].tijd;
-                        tijd += lijntje.getHaltes()[i].overstaptijd;
-                    }
-                } else {
-                    for (int j = i + 1; j < lijntje.getHaltes().length; j++) {
-                        Reis r = new Reis(lijntje.getHaltes()[j], doel);
-                        if (r.bepaalAantalOverstappen() <= n - 1) {
-                            Station overstap = lijntje.getHaltes()[j];
-                            Trein trein = lijntje.geefEersteTrein(tijd);
-                            Overstapdata data = new Overstapdata(overstap, trein);
-                            return data;
+            if (lijntje.getRichting() == 'A') {
+                int tijd = 0;
+                for (int i = 0; i < lijntje.getHaltes().length; i++) {
+                    if (!this.getStadsnaam().equals(lijntje.getHaltes()[i].getStadsnaam())) {
+                        if (i < lijntje.reisduren.length) {
+                            tijd += lijntje.getSegmenten()[i].tijd;
+                            tijd += lijntje.getHaltes()[i].overstaptijd;
+                        }
+                    } else {
+                        for (int j = i + 1; j < lijntje.getHaltes().length; j++) {
+                            Reis r = new Reis(lijntje.getHaltes()[j], doel);
+                            if (r.bepaalAantalOverstappen() <= n - 1) {
+                                Station overstap = lijntje.getHaltes()[j];
+                                Trein trein = lijntje.geefEersteTrein(tijd);
+                                Overstapdata data = new Overstapdata(overstap, trein);
+                                return data;
+
+                            }
+                            else{
+                                //hier moet de b richting komen van diezelfde lijn
+                            }
 
                         }
-                    }
 
+                    }
                 }
             }
         }

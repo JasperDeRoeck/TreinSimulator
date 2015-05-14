@@ -41,9 +41,7 @@ public class TreinSimulator {
                     alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
                     // iedere lijn te moeten afgaan om daar alle treinen uit te halen
                     trein.aankomst(Klok.getTijd());
-                    System.out.println("Loop");
                 }
-                System.out.println("LijnLoop");
             }
             if (reizigersLijst.get(Klok.getTijd()) != null) {
                 for (Reiziger reiziger : reizigersLijst.get(Klok.getTijd())) {

@@ -46,7 +46,7 @@ public class Reiziger {
 
     public Trein zoekTrein() {
         System.out.println("Reiziger met reis " + reis + " zoekt een trein");
-        Overstapdata data = huidigStation.juisteTrein(reis.getAantalOverstappen(), huidigStation, reis.getEindstation());
+        Overstapdata data = huidigStation.juisteTrein(reis.getAantalOverstappen(), reis.getEindstation());
         volgendStation = data.getOverstap();
 
         Trein trein = data.getTrein();
