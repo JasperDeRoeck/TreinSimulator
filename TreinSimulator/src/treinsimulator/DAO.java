@@ -30,7 +30,6 @@ public class DAO {
     private static Set<Reis> alleReizen = new HashSet<>();
 
     //enige functie die nodig is om DAO te initialiseren en zijn gegevens te kunne gebruiken
-
     public static void initialiseer() {
         leesIni();
         maakDeductieStructuren();
@@ -58,6 +57,18 @@ public class DAO {
     private static void maakDeductieStructuren() {
         geefStationsBurenEnLijnen();
         maakKruisingen();
+        for (Lijn l : DAO.getLijnenLijst()) {
+            System.out.println(l.toString());
+        }
+        for (Station s : DAO.getStationLijst()) {
+            System.out.println(s.toString());
+        }
+        //onderstaande code init juiste trein voor elke reiziger,MOET na geefStationsBurenEnLijnen() komen
+        /*for(Map.Entry<Integer,ArrayList<Reiziger>> hm : reizigersLijst.entrySet()){
+         for (Reiziger r : hm.getValue()){
+         r.setJuisteTrein(r.zoekTrein());
+         }
+         }*/
     }
 
     //initialiseert de stations in stationLijst,wordt opgeroepen door leesIni()
@@ -128,19 +139,17 @@ public class DAO {
                     doelstation = s;
                 }
             }
-            
+
             Reis r = new Reis(beginstation, doelstation);
             if (!alleReizen.contains(r)) {
                 alleReizen.add(r);
-            }
-            else{
+            } else {
                 for (Reis reis : alleReizen) {
-                        if(reis.equals(r)){
-                            r = reis;
-                        }
+                    if (reis.equals(r)) {
+                        r = reis;
+                    }
                 }
             }
-            
 
             for (int j = 0; j < Integer.parseInt(lines[i + 1]); j++) {
                 if (reizigersLijst.containsKey(tijd)) {
@@ -201,6 +210,7 @@ public class DAO {
 
     //initialiseert de buren en doorgaande lijnen van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
     private static void geefStationsBurenEnLijnen() {
+        System.out.println("here");
         for (Lijn l : lijnenLijst) {
             for (Station s : l.getHaltes()) {
                 s.lijnen.add(l);
@@ -297,5 +307,5 @@ public class DAO {
     public static Set<Reis> getAlleReizen() {
         return alleReizen;
     }
-    
+
 }
