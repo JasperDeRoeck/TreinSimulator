@@ -29,8 +29,8 @@ public class TreinSimulator {
         stationLijst = DAO.getStationLijst();
         lijnenLijst = DAO.getLijnenLijst();
         reizigersLijst = DAO.getReizigersLijst();
-        int STOPTIJD = 1440;
-
+        int STOPTIJD = 2459;
+        
         Klok.setTijd(400);
         //Klok:
         System.out.println("-----------SIMULATIE START ----------");

@@ -6,7 +6,7 @@
 package treinsimulator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  *
@@ -26,7 +26,7 @@ public class Lijn {
     private ArrayList<Integer> uurVertrek = new ArrayList<>();
     private ArrayList<Integer> uurPiekVertrek = new ArrayList<>();
     public int[] reisduren;
-    public HashMap<Integer, Trein> treinen = new HashMap<>();
+    public TreeMap<Integer, Trein> treinen = new TreeMap<>();
 
     public Lijn(char richting, int id) {
         this.richting = richting;
@@ -165,7 +165,7 @@ public class Lijn {
     public void setReisduren(int[] reisduren) {
         this.reisduren = reisduren;
     }
-    
+
     @Override
     public String toString() {
         String zin = "\nLijn " + id + " rijdt over volgende trajecten :\n Volgens richting " + richting + "\n";
@@ -187,24 +187,31 @@ public class Lijn {
         for (Segment s : segmenten) {
             zin += s.toString();
         }
-        return zin;
-    }
+        /*for (Entry<Integer, Trein> entry : treinen.entrySet()) {
+            Integer key = entry.getKey();
+            zin+= "uur:" + key +"\n";
+        }*/
+            return zin;
+        }
 
-    public HashMap<Integer, Trein> getTreinen() {
+    
+
+    public TreeMap<Integer, Trein> getTreinen() {
         return treinen;
     }
 
     public int getId() {
         return id;
     }
-    public Kruising getKruising(){ //Moet op een of andere manier door een passagier gevraagd worden aan Lijn
+
+    public Kruising getKruising() { //Moet op een of andere manier door een passagier gevraagd worden aan Lijn
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public Trein geefEersteTrein(int tijd) {
         for (int vertrek : treinen.keySet()) {
-            if ((Klok.incrementeer(vertrek, tijd)>= Klok.getTijd())) {
-                Trein trein= treinen.get(vertrek);
+            if ((Klok.incrementeer(vertrek, tijd) >= Klok.getTijd())) {
+                Trein trein = treinen.get(vertrek);
                 return trein;
             } else {
                 return null;
