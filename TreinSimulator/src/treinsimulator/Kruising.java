@@ -19,7 +19,7 @@ public class Kruising {
     private int aantalReizigers = 0;
     private Station[] stations;
             
-    public Kruising (String naam ,Station [] stations){
+    public Kruising (String naam ,Station[] stations){
         this.naam=naam;
         this.stations = stations;
         for (int i= 0;i<stations.length;i++){

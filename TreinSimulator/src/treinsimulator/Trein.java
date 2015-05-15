@@ -78,7 +78,6 @@ public class Trein {
      */
     boolean opstappen(Reiziger r) {
         if (inzittenden.size() < lijn.getZitplaatsen()) {
-            System.out.println("yaay");
             inzittenden.add(r);
             return true;
         } else {

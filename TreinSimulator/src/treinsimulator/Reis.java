@@ -112,8 +112,9 @@ public class Reis {
         return  vertrekstation + " - " + eindstation;
     }
 
-    void addTijd(int decrementeer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void addTijd(int getal) {
+        totaleReiswegTijd += getal;
+        aantalReizigers++;
     }
     
 }

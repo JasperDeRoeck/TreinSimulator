@@ -18,7 +18,7 @@ public class TreinSimulator {
 
     private static ArrayList<Station> stationLijst;
     private static ArrayList<Lijn> lijnenLijst;
-    private static HashMap<Integer, ArrayList<Reiziger>> reizigersLijst;
+    private static ArrayList<Reiziger> reizigersLijst;
 
     // DAO mijnDAO; -----------> niet nodig, want zijn statische methodes..
     // to do : readlists updaten
@@ -48,11 +48,12 @@ public class TreinSimulator {
             }
             System.out.println("----------- PASSAGIERS WORDEN OVERLOPEN ----------");
             if (reizigersLijst.get(Klok.getTijd()) != null) {
-                for (Reiziger reiziger : reizigersLijst.get(Klok.getTijd())) {
+                for (Reiziger reiziger : reizigersLijst) {
                     if (!reiziger.gestrand) { //gestrande reizigers niet meer overlopen
                         reiziger.activeer(Klok.getTijd());
                     }
                 }
+                
             }
             System.out.println("----------- TREINEN VERTREKKEN ----------");
             for (Trein trein : alleTreinen) {

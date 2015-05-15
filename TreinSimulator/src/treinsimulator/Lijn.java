@@ -21,7 +21,6 @@ public class Lijn {
     //richting kan oftewel 'A' of 'B' zijn 
     //A ,van voor naar achter in de lijst van haltes. B vice versa
     char richting;
-
     private int capaciteit;
     private int zitplaatsen;
     private ArrayList<Integer> uurVertrek = new ArrayList<>();

@@ -31,7 +31,7 @@ public class Statistiek {
     private HashMap<Segment,Integer> rechtstaandeReizigers;
     private ArrayList<Lijn> lijnenLijst;
     
-    public Statistiek(ArrayList<Lijn> lijnenLijst, HashMap<Integer,ArrayList<Reiziger>> reizigersLijst){
+    public Statistiek(ArrayList<Lijn> lijnenLijst, ArrayList<Reiziger> reizigersLijst){
         
         alleKruisingen = DAO.getKruisingLijst();
         this.lijnenLijst = lijnenLijst;
@@ -40,12 +40,11 @@ public class Statistiek {
         this.wachttijdReiziger = berekenWachttijdReiziger();
         this.gestrandeReizigers = bepaalAantalGestrandeReizigersPerReis();
         this.rechtstaandeReizigers=bepaalStaandeReizigersPerDeeltraject();
-        for (int i = 0; i < 2400; i++) {
-            for(Reiziger reiziger: reizigersLijst.get(i)){
-                if(!reiziger.reis.getVertrekstation().equals(reiziger.getHuidigStation())){
-                    reiziger.reis.incGestrandeReizigers();
-                }
+        for(Reiziger reiziger: reizigersLijst){
+            if(!reiziger.reis.getVertrekstation().equals(reiziger.getHuidigStation())){
+                reiziger.reis.incGestrandeReizigers();
             }
+            
         }
     }
     public HashMap<Reis,Integer> berekenWachttijdReiziger(){
