@@ -6,6 +6,7 @@
 package treinsimulator;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -24,39 +25,45 @@ public class Trein {
     boolean weg = false;
     boolean netaangemaakt = true;
     int positie = 0;
+    String id;
     
     boolean isRijdend = false;
     
-    Trein(int vtijd, Lijn l) {
+    Trein(int vtijd, Lijn l, String id) {
         this.vtijd = vtijd;
         this.lijn = l;
         tellerNietOpgestapt = 0;
+        this.id = id;
     }
 
     void aankomst(int tijd) {
         if ((isRijdend) && (tijd == vtijd)) {
-            System.out.println("Trein op lijn: " + lijn.getId() + " komt aan om " + vtijd);
+            System.out.println(this + " komt aan in " + lijn.getHalte(positie));
             for (Reiziger reiziger : inzittenden) {
                 reiziger.uitstappen(tijd);
             }
             isRijdend = false;
-            vtijd += lijn.getSegmenten()[positie].getTijd();
+            //vtijd = lijn.getSegmenten()[positie].getTijd();
         }
     }
 
     void vertrek(int tijd) {
         if ((!isRijdend) && (tijd == vtijd)) {
+            System.out.println(this + " zal vertrekken.");
             if (netaangemaakt) {
                 isRijdend = true;
                 netaangemaakt = false;
-                vtijd += lijn.getSegmenten()[positie].getTijd();
+                vtijd = Klok.som(vtijd, lijn.getSegmenten()[positie].getTijd());
+                positie++;
+                System.out.println(this + " heeft zijn vtijd geupdate naar " + vtijd);
             } else if (positie == lijn.getSegmenten().length - 1) {
                 vtijd = -1;
                 System.out.println("Trein " + this + " heeft zijn eindbestemming bereikt.");
             } else {
-                positie++;
                 isRijdend = true;
-                vtijd += lijn.getSegmenten()[positie].getTijd();
+                vtijd = Klok.som(vtijd, lijn.getSegmenten()[positie].getTijd());
+                System.out.println(this + " heeft zijn vtijd geupdate naar " + vtijd);
+                positie++;
             }
             //Iets met "word", nog niet aan uit wat "word" hier plots komt doen
 
@@ -71,6 +78,7 @@ public class Trein {
      */
     boolean opstappen(Reiziger r) {
         if (inzittenden.size() < lijn.getZitplaatsen()) {
+            System.out.println("yaay");
             inzittenden.add(r);
             return true;
         } else {
@@ -102,8 +110,31 @@ public class Trein {
 
     @Override
     public String toString() {
-        return ("Trein op lijn " + lijn.getId());
+        return ("Trein (" + id + ") op lijn " + lijn.getId() + " ");
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Trein other = (Trein) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
     
 }
 //opmerking: is richting hier niet overbodig want het zit eigelijk al in de var. l ?

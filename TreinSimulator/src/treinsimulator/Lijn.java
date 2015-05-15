@@ -74,12 +74,12 @@ public class Lijn {
     public void maakTreinen() {
         //Aanmaken treinen:
         for (int i : uurPiekVertrek) {
-            treinen.put(i, new Trein(i, this));
+            treinen.put(i, new Trein(i, this, i + "P"));
             //System.out.println("Nieuwe piekuurtrein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + i);
         }
         for (int i : uurVertrek) {
             for (int j = 400; j < 2200; j += 100) {
-                treinen.put(j + i, new Trein(j + i, this));
+                treinen.put(j + i, new Trein(j + i, this, j + i +"R"+id));
                 //System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
             }
         }
@@ -211,13 +211,22 @@ public class Lijn {
 
     public Trein geefEersteTrein(int tijd) {
         for (int vertrek : treinen.keySet()) {
-            if ((Klok.incrementeer(vertrek, tijd)>= Klok.getTijd())) {
+            if ((Klok.som(vertrek, tijd)>= Klok.getTijd())) {
                 return treinen.get(vertrek);
             }
         }
         return null;
     }
-    
+    public int geefEersteTreinUur(int tijd, Station st){
+        int tijdTussenStations = tijdTussenStations(haltes[0],st);
+        for (int vertrek : treinen.keySet()) {
+            if(Klok.som(vertrek, tijdTussenStations) >= tijd){
+                return Klok.som(vertrek, tijdTussenStations);
+            }
+        }
+        System.out.println("Geen treinen meer.");
+        return -1;
+    }
     public int tijdTussenStations(Station st1, Station st2){
         boolean moetOptellen = false;
         boolean mustLoop = true;
@@ -225,9 +234,9 @@ public class Lijn {
         int i = 0;
         while(mustLoop && (i < haltes.length-1)){
             if(moetOptellen){
-                t += segmenten[i].getTijd();
+                t = Klok.som(segmenten[i-1].getTijd(), t);
             }
-            if(st1.equals(haltes[i]) || st2.equals(haltes[i])){     
+            if(st1.equals(haltes[i]) || st2.equals(haltes[i])){
                 if(moetOptellen == false){
                     moetOptellen = true;
                 }

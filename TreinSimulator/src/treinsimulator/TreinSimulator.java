@@ -33,15 +33,16 @@ public class TreinSimulator {
         
         Klok.setTijd(400);
         //Klok:
+        
         System.out.println("-----------SIMULATIE START ----------");
         while (Klok.getTijd() <= STOPTIJD) {
-
+        System.out.println(" ----------NIEUWE CYCLUS----------- \n Tijd: " + Klok.getTijd());
             Set<Trein> alleTreinen = new HashSet<>();
             System.out.println("----------- TREINEN KOMEN TOE ----------");
             for (Lijn lijn : lijnenLijst) {
                 for (Trein trein : lijn.getTreinen().values()) {
                     alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
-                    // iedere lijn te moeten afgaan om daar alle treinen uit te halen
+                                                        // iedere lijn te moeten afgaan om daar alle treinen uit te halen
                     trein.aankomst(Klok.getTijd());
                 }
             }
@@ -57,8 +58,7 @@ public class TreinSimulator {
             for (Trein trein : alleTreinen) {
                 trein.vertrek(Klok.getTijd());
             }
-            System.out.println("Tijd: " + Klok.getTijd());
-            Klok.ticktock();
+            Klok.incrementeer();
         }
         //Data-stuff:
 

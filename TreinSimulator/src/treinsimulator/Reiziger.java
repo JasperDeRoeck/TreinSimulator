@@ -33,13 +33,14 @@ public class Reiziger {
     }
 
     public void uitstappen(int t) {
-        
+        System.out.println(this + " heeft vtijd " + vtijd + "maar nu is het nog maar " + t);
         if(vtijd == t){
+           
             moetUitstappen = false;
             if (aantalGenomenOverstappen == reis.getAantalOverstappen()) {
                 //We zijn er -> data toevoegen
-                reis.addTijd(Klok.decrementeer(Klok.getTijd(), beginTijd));
-                System.out.println("Reiziger met reis " + reis + "stapt uit en heeft zijn eindhalte bereikt.");
+                reis.addTijd(Klok.verschil(Klok.getTijd(), beginTijd));
+                System.out.println(this + "stapt uit en heeft zijn eindhalte bereikt.");
             } else {
                 System.out.println("Reiziger met reis " + reis + "stapt uit en gaat op zoek naar een andere trein.");
                 //We zijn er nog niet -> nieuwe trein zoeken
@@ -51,7 +52,7 @@ public class Reiziger {
     }
 
     public Trein zoekTrein() {
-        System.out.println("Reiziger met reis " + reis + " zoekt een trein");
+        System.out.println(this + " zoekt een trein");
         Overstapdata data = huidigStation.juisteTrein(reis.getAantalOverstappen(), reis.getEindstation());
         volgendStation = data.getOverstap();
         return data.getTrein();
@@ -64,21 +65,24 @@ public class Reiziger {
         if (vtijd == t) {
             if (juisteTrein == null) {
                     juisteTrein = zoekTrein();
-                    vtijd += juisteTrein.getLijn().tijdTussenStations(huidigStation, volgendStation);
-                    System.out.println("Reiziger met reis " + reis + " heeft vtijd geupdate.");
+                    vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd(), huidigStation);
+                    System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want dan komt " + juisteTrein + " toe in " + huidigStation);
+                    
             } else {
+                System.out.println(this + "wil opstappen op de trein ");
                 if (!juisteTrein.opstappen(this)) {
-                    System.out.println("Reiziger met reis " + reis + " kon niet opstappen, er was niet genoeg plaats");
+                    System.out.println("maar er was niet genoeg plaats");
                     //Als trein vol is, nieuwe trein zoeken, vtijd instellen op volgende vertrekuur
                     juisteTrein = zoekTrein();
                     vtijd = juisteTrein.getVtijd();
                 } else {
-
+                    System.out.println("en is daar in geslaagd.");
                     juisteTrein.getKruising().addOverstaptijd(overstaptijd);  //Passagier geeft door aan kruising dat het niet meer op kruising bevindt.
                     moetUitstappen = true;                                    //Vanaf nu zit passagier op trein
                     vtijd += juisteTrein.getLijn().tijdTussenStations(huidigStation, volgendStation);
+                    System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want hij/zij moet uitstappen aan " + volgendStation);
                     huidigStation = volgendStation;
-                    System.out.println("Reiziger met reis " + reis + " is op de trein gestapt.");
+                    System.out.println(this + " is op de trein gestapt.");
                     volgendStation = null;
                 }
             }
@@ -89,5 +93,12 @@ public class Reiziger {
     public Station getHuidigStation() {
         return huidigStation;
     }
+
+    @Override
+    public String toString() {
+        return "Reiziger met reis " + reis;
+    }
+    
+    
 
 }

@@ -59,10 +59,10 @@ public class DAO {
         geefStationsBurenEnLijnen();
         maakKruisingen();
         for (Lijn l : DAO.getLijnenLijst()) {
-            System.out.println(l.toString());
+            //System.out.println(l.toString());
         }
         for (Station s : DAO.getStationLijst()) {
-            System.out.println(s.toString());
+            //System.out.println(s.toString());
         }
         //onderstaande code init juiste trein voor elke reiziger,MOET na geefStationsBurenEnLijnen() komen
         /*for(Map.Entry<Integer,ArrayList<Reiziger>> hm : reizigersLijst.entrySet()){
