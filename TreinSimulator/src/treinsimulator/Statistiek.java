@@ -25,14 +25,14 @@ import org.apache.poi.ss.usermodel.Row;
 
 public class Statistiek {
     private HashMap<Reis, Integer> wachttijdReiziger;
-    private ArrayList<Reis> alleReizen;
+    private ArrayList<Reis> alleReizen = new ArrayList<>();
     private HashMap<Reis,Double> gestrandeReizigers;
     private ArrayList<Kruising> alleKruisingen;
     private HashMap<Segment,Integer> rechtstaandeReizigers;
     private ArrayList<Lijn> lijnenLijst;
     
     public Statistiek(ArrayList<Lijn> lijnenLijst, ArrayList<Reiziger> reizigersLijst){
-        
+        alleReizen.addAll(DAO.getAlleReizen());
         alleKruisingen = DAO.getKruisingLijst();
         this.lijnenLijst = lijnenLijst;
         //alleReizen en segmentenLijst nog initialiseren.

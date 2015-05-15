@@ -29,13 +29,13 @@ public class TreinSimulator {
         stationLijst = DAO.getStationLijst();
         lijnenLijst = DAO.getLijnenLijst();
         reizigersLijst = DAO.getReizigersLijst();
-        int STOPTIJD = 2459;
+        int STOPTIJD = 100;
         
         Klok.setTijd(400);
         //Klok:
         
         System.out.println("-----------SIMULATIE START ----------");
-        while (Klok.getTijd() <= STOPTIJD) {
+        while (Klok.getTijd() != 100) {
         System.out.println(" ----------NIEUWE CYCLUS----------- \n Tijd: " + Klok.getTijd());
             Set<Trein> alleTreinen = new HashSet<>();
             System.out.println("----------- TREINEN KOMEN TOE ----------");

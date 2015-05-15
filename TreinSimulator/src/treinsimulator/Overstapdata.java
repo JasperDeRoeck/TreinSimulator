@@ -13,9 +13,11 @@ public class Overstapdata {
     private Station overstap;
     private Treinduurdata treindata;
     public Overstapdata(Station overstap, Treinduurdata treindata) throws NullPointerException{
+        /*
         if(treindata.getTrein()==null){
             throw new NullPointerException();
         }
+                */
         this.overstap= overstap;
         this.treindata=treindata;
     }

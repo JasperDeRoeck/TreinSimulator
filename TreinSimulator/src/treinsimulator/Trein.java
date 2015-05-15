@@ -38,7 +38,7 @@ public class Trein {
 
     void aankomst(int tijd) {
         if ((isRijdend) && (tijd == vtijd)) {
-            System.out.println(this + " komt aan in " + lijn.getHalte(positie));
+           // System.out.println(this + " komt aan in " + lijn.getHalte(positie));
             for (Reiziger reiziger : inzittenden) {
                 reiziger.uitstappen(tijd);
             }

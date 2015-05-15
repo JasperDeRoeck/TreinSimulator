@@ -56,7 +56,10 @@ public class Station {
                             if ((r.bepaalAantalOverstappen() <= n - 1) || (r.bepaalAantalOverstappen() == 0)) {
                                 Station overstap = lijntje.getHaltes()[j];
                                 Treinduurdata treindata = lijntje.geefEersteTrein(tijd);
-                                System.out.println("en heeft de trein gevonden: " + treindata.getTrein());
+                              //  System.out.println("en heeft de trein gevonden: " + treindata.getTrein());
+                                if(overstap == null){
+                                    return null;
+                                }
                                 Overstapdata data = new Overstapdata(overstap, treindata);
                                 return data;
 
@@ -80,7 +83,10 @@ public class Station {
                             if (doel.stadsnaam.equals(lijntje.getHaltes()[j].getStadsnaam())) {
                                 Station overstap = lijntje.getHaltes()[j];
                                 Treinduurdata treindata = lijntje.geefEersteTrein(tijd);
-                                System.out.println("en heeft de trein gevonden: " + treindata.getTrein());
+                             //   System.out.println("en heeft de trein gevonden: " + treindata.getTrein());
+                                if(overstap == null){
+                                    return null;
+                                }
                                 Overstapdata dat = new Overstapdata(overstap, treindata);
                                 return dat;
                             }
