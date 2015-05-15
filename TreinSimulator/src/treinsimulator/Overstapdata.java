@@ -12,7 +12,10 @@ package treinsimulator;
 public class Overstapdata {
     private Station overstap;
     private Trein trein;
-    public Overstapdata(Station overstap, Trein trein){
+    public Overstapdata(Station overstap, Trein trein) throws NullPointerException{
+        if(trein==null){
+            throw new NullPointerException();
+        }
         this.overstap= overstap;
         this.trein=trein;
     }

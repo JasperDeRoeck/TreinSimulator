@@ -40,12 +40,12 @@ public class Station {
         return buren;
     }
 
-    public Overstapdata juisteTrein(int n, Station vertrek, Station doel) {
-        System.out.println("van " + vertrek + " naar " + doel);
+    public Overstapdata juisteTrein(int n,  Station doel) {
+        System.out.println("van " + this + " naar " + doel);
         for (Lijn lijntje : lijnen) {
             int tijd = 0;
             for (int i = 0; i < lijntje.getHaltes().length; i++) {
-                if (!vertrek.getStadsnaam().equals(lijntje.getHaltes()[i].getStadsnaam())) {
+                if (!this.equals(lijntje.getHaltes()[i])) {
                     if (i < lijntje.reisduren.length) {
                         tijd += lijntje.getSegmenten()[i].tijd;
                         tijd += lijntje.getHaltes()[i].overstaptijd;
@@ -55,7 +55,7 @@ public class Station {
                         Reis r = new Reis(lijntje.getHaltes()[j], doel);
                         if (r.bepaalAantalOverstappen() <= n - 1) {
                             Station overstap = lijntje.getHaltes()[j];
-                            Trein trein = lijntje.geefEersteTrein(tijd);
+                            Trein trein = lijntje.geefEersteTrein(tijd, this);
                             Overstapdata data = new Overstapdata(overstap, trein);
                             System.out.println("en heeft de trein gevonden: " + trein);
                             return data;
@@ -66,10 +66,9 @@ public class Station {
                 }
             }
         }
-            
+        
         return null;
     }
-
     @Override
     public String toString() {
         return stadsnaam;

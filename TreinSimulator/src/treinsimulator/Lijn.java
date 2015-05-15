@@ -201,16 +201,34 @@ public class Lijn {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public Trein geefEersteTrein(int tijd) {
+    public Trein geefEersteTrein(int tijd, Station st) {
         for (int vertrek : treinen.keySet()) {
             if ((Klok.incrementeer(vertrek, tijd)>= Klok.getTijd())) {
-                Trein trein= treinen.get(vertrek);
-                return trein;
-            } else {
-                return null;
+                return treinen.get(vertrek);
             }
         }
         return null;
     }
-
+    
+    public int tijdTussenStations(Station st1, Station st2){
+        boolean moetOptellen = false;
+        boolean mustLoop = true;
+        int t = 0;
+        int i = 0;
+        while(mustLoop && (i < haltes.length)){
+            if(moetOptellen){
+                t += segmenten[i].getTijd();
+            }
+            if(st1.equals(haltes[i]) || st2.equals(haltes[i])){     
+                if(moetOptellen == false){
+                    moetOptellen = true;
+                }
+                else{
+                    mustLoop = false;
+                }
+            }
+            i++;
+        }
+        return t;
+    }
 }

@@ -33,20 +33,23 @@ public class Reiziger {
     }
 
     public void uitstappen(int t) {
-        moetUitstappen = false;
-        if (aantalGenomenOverstappen == reis.getAantalOverstappen()) {
-            //We zijn er -> data toevoegen
-            reis.addTijd(Klok.decrementeer(Klok.getTijd(), beginTijd));
-        } else {
-            //We zijn er nog niet -> nieuwe trein zoeken
-            juisteTrein = zoekTrein();
-            vtijd = juisteTrein.getVtijd();
+        if(vtijd == t){
+            moetUitstappen = false;
+            if (aantalGenomenOverstappen == reis.getAantalOverstappen()) {
+                //We zijn er -> data toevoegen
+                reis.addTijd(Klok.decrementeer(Klok.getTijd(), beginTijd));
+            } else {
+                //We zijn er nog niet -> nieuwe trein zoeken
+                juisteTrein = zoekTrein();
+                vtijd = juisteTrein.getVtijd();
+            }
         }
+        
     }
 
     public Trein zoekTrein() {
         System.out.println("Reiziger met reis " + reis + " zoekt een trein");
-        Overstapdata data = huidigStation.juisteTrein(reis.getAantalOverstappen(), huidigStation, reis.getEindstation());
+        Overstapdata data = huidigStation.juisteTrein(reis.getAantalOverstappen(), reis.getEindstation());
         volgendStation = data.getOverstap();
         Trein trein = data.getTrein();
         return trein;
@@ -70,9 +73,10 @@ public class Reiziger {
                 } else {
 
                     juisteTrein.getKruising().addOverstaptijd(overstaptijd);  //Passagier geeft door aan kruising dat het niet meer op kruising bevindt.
-                    moetUitstappen = true;                  //Vanaf nu zit passagier op trein
+                    moetUitstappen = true;                                    //Vanaf nu zit passagier op trein
+                    vtijd += juisteTrein.getLijn().tijdTussenStations(huidigStation, volgendStation);
                     huidigStation = volgendStation;
-                    System.out.println("Reiziger met reis " + reis + " heeft de trein genomen.");
+                    System.out.println("Reiziger met reis " + reis + " is op de trein gestapt.");
                     volgendStation = null;
                 }
             }

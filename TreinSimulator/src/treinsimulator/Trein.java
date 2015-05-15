@@ -53,6 +53,7 @@ public class Trein {
                 vtijd += lijn.getSegmenten()[positie].getTijd();
             } else if (positie == lijn.getSegmenten().length - 1) {
                 vtijd = -1;
+                System.out.println("Trein " + this + " heeft zijn eindbestemming bereikt.");
             } else {
                 positie++;
                 isRijdend = true;
