@@ -33,12 +33,15 @@ public class Reiziger {
     }
 
     public void uitstappen(int t) {
+        
         if(vtijd == t){
             moetUitstappen = false;
             if (aantalGenomenOverstappen == reis.getAantalOverstappen()) {
                 //We zijn er -> data toevoegen
                 reis.addTijd(Klok.decrementeer(Klok.getTijd(), beginTijd));
+                System.out.println("Reiziger met reis " + reis + "stapt uit en heeft zijn eindhalte bereikt.");
             } else {
+                System.out.println("Reiziger met reis " + reis + "stapt uit en gaat op zoek naar een andere trein.");
                 //We zijn er nog niet -> nieuwe trein zoeken
                 juisteTrein = zoekTrein();
                 vtijd = juisteTrein.getVtijd();
@@ -51,8 +54,7 @@ public class Reiziger {
         System.out.println("Reiziger met reis " + reis + " zoekt een trein");
         Overstapdata data = huidigStation.juisteTrein(reis.getAantalOverstappen(), reis.getEindstation());
         volgendStation = data.getOverstap();
-        Trein trein = data.getTrein();
-        return trein;
+        return data.getTrein();
     }
 
     public void activeer(int t) {
@@ -62,7 +64,7 @@ public class Reiziger {
         if (vtijd == t) {
             if (juisteTrein == null) {
                     juisteTrein = zoekTrein();
-                    vtijd = juisteTrein.getVtijd();
+                    vtijd += juisteTrein.getLijn().tijdTussenStations(huidigStation, volgendStation);
                     System.out.println("Reiziger met reis " + reis + " heeft vtijd geupdate.");
             } else {
                 if (!juisteTrein.opstappen(this)) {

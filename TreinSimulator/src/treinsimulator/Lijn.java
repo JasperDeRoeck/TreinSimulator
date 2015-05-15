@@ -209,7 +209,7 @@ public class Lijn {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public Trein geefEersteTrein(int tijd, Station st) {
+    public Trein geefEersteTrein(int tijd) {
         for (int vertrek : treinen.keySet()) {
             if ((Klok.incrementeer(vertrek, tijd)>= Klok.getTijd())) {
                 return treinen.get(vertrek);
@@ -223,7 +223,7 @@ public class Lijn {
         boolean mustLoop = true;
         int t = 0;
         int i = 0;
-        while(mustLoop && (i < haltes.length)){
+        while(mustLoop && (i < haltes.length-1)){
             if(moetOptellen){
                 t += segmenten[i].getTijd();
             }

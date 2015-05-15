@@ -107,13 +107,13 @@ public class Reis {
         return true;
     }
 
-    void addTijd(int decTijd) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public String toString() {
         return  vertrekstation + " - " + eindstation;
+    }
+
+    void addTijd(int decrementeer) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
