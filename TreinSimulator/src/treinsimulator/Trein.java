@@ -34,7 +34,6 @@ public class Trein {
     }
 
     void aankomst(int tijd) {
-        //System.out.println("Trein op lijn: " + lijn.getId() + " moet niks doen");
         if ((isRijdend) && (tijd == vtijd)) {
             System.out.println("Trein op lijn: " + lijn.getId() + " komt aan om " + vtijd);
             for (Reiziger reiziger : inzittenden) {

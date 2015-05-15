@@ -29,8 +29,8 @@ public class TreinSimulator {
         stationLijst = DAO.getStationLijst();
         lijnenLijst = DAO.getLijnenLijst();
         reizigersLijst = DAO.getReizigersLijst();
-        int STOPTIJD = 1440;
-
+        int STOPTIJD = 2459;
+        
         Klok.setTijd(400);
         //Klok:
         System.out.println("-----------SIMULATIE START ----------");
@@ -43,9 +43,7 @@ public class TreinSimulator {
                     alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
                     // iedere lijn te moeten afgaan om daar alle treinen uit te halen
                     trein.aankomst(Klok.getTijd());
-                   // System.out.println("Loop");
                 }
-                //System.out.println("LijnLoop");
             }
             System.out.println("----------- PASSAGIERS WORDEN OVERLOPEN ----------");
             if (reizigersLijst.get(Klok.getTijd()) != null) {

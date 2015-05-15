@@ -40,32 +40,32 @@ public class Station {
         return buren;
     }
 
-    public Overstapdata juisteTrein(int n,  Station doel) {
+    public Overstapdata juisteTrein(int n, Station doel) {
         System.out.println("van " + this + " naar " + doel);
         for (Lijn lijntje : lijnen) {
-            int tijd = 0;
-            for (int i = 0; i < lijntje.getHaltes().length; i++) {
-                if (!this.equals(lijntje.getHaltes()[i])) {
-                    if (i < lijntje.reisduren.length) {
-                        tijd += lijntje.getSegmenten()[i].tijd;
-                        tijd += lijntje.getHaltes()[i].overstaptijd;
-                    }
-                } else {
-                    for (int j = i + 1; j < lijntje.getHaltes().length; j++) {
-                        Reis r = new Reis(lijntje.getHaltes()[j], doel);
-                        if (r.bepaalAantalOverstappen() <= n - 1) {
-                            Station overstap = lijntje.getHaltes()[j];
-                            Trein trein = lijntje.geefEersteTrein(tijd, this);
-                            Overstapdata data = new Overstapdata(overstap, trein);
-                            System.out.println("en heeft de trein gevonden: " + trein);
-                            return data;
-
+                int tijd = 0;
+                for (int i = 0; i < lijntje.getHaltes().length; i++) {
+                    if (!this.getStadsnaam().equals(lijntje.getHaltes()[i].getStadsnaam())) {
+                        if (i < lijntje.reisduren.length) {
+                            tijd += lijntje.getSegmenten()[i].tijd;
+                            tijd += lijntje.getHaltes()[i].overstaptijd;
                         }
-                    }
+                    } else {
+                        for (int j = i + 1; j < lijntje.getHaltes().length; j++) {
+                            Reis r = new Reis(lijntje.getHaltes()[j], doel);
+                            if ((r.bepaalAantalOverstappen() <= n - 1) || (r.bepaalAantalOverstappen()==0)) {
+                                Station overstap = lijntje.getHaltes()[j];
+                                Trein trein = lijntje.geefEersteTrein(tijd);
+                                System.out.println("en heeft de trein gevonden: " + trein);
+                                Overstapdata data = new Overstapdata(overstap, trein);
+                                return data;
 
+                            }
+                        }
+
+                    }
                 }
             }
-        }
         
         return null;
     }
