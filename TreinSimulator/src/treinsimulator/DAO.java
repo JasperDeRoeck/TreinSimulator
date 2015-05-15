@@ -187,11 +187,10 @@ public class DAO {
         for (int i = 0; i < reisdurenInString.length; i++) {
             reisduren[i] = Integer.parseInt(reisdurenInString[i]);
         }
-        l.setReisduren(reisduren);
         Segment[] segmentarray = new Segment[stationsnamen.length - 1];
         for (int i = 0; i < segmentarray.length; i++) {
             Segment seg = new Segment(l, haltes[i], haltes[i + 1]);
-            seg.tijd = l.reisduren[i];
+            seg.tijd = reisduren[i];
             segmentarray[i] = seg;
         }
         l.setSegmenten(segmentarray);

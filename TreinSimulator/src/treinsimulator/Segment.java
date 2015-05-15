@@ -21,9 +21,13 @@ public class Segment {
     int tijd;
     
     public Segment(Lijn lijn,Station vertrek, Station eind){
+        this(lijn, vertrek, eind, -1);
+    }
+    public Segment(Lijn lijn,Station vertrek, Station eind, int tijd){
         this.lijn=lijn;
         vertrekStation = vertrek;
         eindStation = eind;
+        this.tijd = tijd;
     }
     public Segmentdata maakSegmentData(Trein t){
         //ArrayList<Trein> treinen = lijn.getTreinen();

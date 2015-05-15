@@ -45,7 +45,7 @@ public class Station {
                 int tijd = 0;
                 for (int i = 0; i < lijntje.getHaltes().length; i++) {
                     if (!this.getStadsnaam().equals(lijntje.getHaltes()[i].getStadsnaam())) {
-                        if (i < lijntje.reisduren.length) {
+                        if (i < lijntje.getSegmenten().length) {
                             tijd += lijntje.getSegmenten()[i].tijd;
                             tijd += lijntje.getHaltes()[i].overstaptijd;
                         }

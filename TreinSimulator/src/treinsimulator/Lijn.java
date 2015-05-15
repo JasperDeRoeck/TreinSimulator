@@ -26,7 +26,6 @@ public class Lijn {
     private int zitplaatsen;
     private ArrayList<Integer> uurVertrek = new ArrayList<>();
     private ArrayList<Integer> uurPiekVertrek = new ArrayList<>();
-    public int[] reisduren;
     public TreeMap<Integer, Trein> treinen = new TreeMap<>();
 
     public Lijn(char richting, int id) {
@@ -43,9 +42,9 @@ public class Lijn {
         for (int i = 0; i < haltes.length; i++) {
             haltes[i] = k.haltes[k.haltes.length - 1 - i];
         }
-        reisduren = new int[k.reisduren.length];
+        int[] reisduren = new int[k.getSegmenten().length];
         for (int i = 0; i < reisduren.length; i++) {
-            reisduren[i] = k.reisduren[k.reisduren.length - 1 - i];
+            reisduren[i] = k.getSegmenten()[k.getSegmenten().length - 1 - i].getTijd();
         }
         uurVertrek = new ArrayList<>();
         for (Integer e : k.uurVertrek) {
@@ -67,7 +66,13 @@ public class Lijn {
                 uurPiekVertrek.add(nieuwePiek);
             }
         }
-        maakSegmenten(k);
+        int aantal = k.getHaltes().length - 1;
+        Segment[] segArray = new Segment[aantal];
+        for (int i = 0; i <= (k.getHaltes().length) - 2; i++) {
+            Segment seg = new Segment(this, k.haltes[i], k.haltes[i + 1], reisduren[i]);
+            segArray[i] = seg;
+        }
+        segmenten = segArray;
         maakTreinen();
     }
 
@@ -79,20 +84,10 @@ public class Lijn {
         }
         for (int i : uurVertrek) {
             for (int j = 400; j < 2200; j += 100) {
-                treinen.put(j + i, new Trein(j + i, this, j + i +"R"+id));
+                treinen.put(j + i, new Trein(j + i, this, (j + i) +"R"+id+richting));
                 //System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
             }
         }
-    }
-
-    private void maakSegmenten(Lijn k) {
-        int aantal = k.getHaltes().length - 1;
-        Segment[] segArray = new Segment[aantal];
-        for (int i = 0; i <= (k.getHaltes().length) - 2; i++) {
-            Segment seg = new Segment(this, k.haltes[i], k.haltes[i + 1]);
-            segArray[i] = seg;
-        }
-        segmenten = segArray;
     }
 
     /*public Kruising getKruising(){
@@ -159,20 +154,12 @@ public class Lijn {
         this.uurPiekVertrek = uurPiekVertrek;
     }
 
-    public int[] getReisduren() {
-        return reisduren;
-    }
-
-    public void setReisduren(int[] reisduren) {
-        this.reisduren = reisduren;
-    }
-
     @Override
     public String toString() {
         String zin = "\nLijn " + id + " rijdt over volgende trajecten :\n Volgens richting " + richting + "\n";
         int j = 0;
         for (int i = 0; i < haltes.length - 1; i++) {
-            zin += "\t" + haltes[i].getStadsnaam() + "=>" + haltes[i + 1].getStadsnaam() + " voor een duur van " + reisduren[j] + " minuten.\n";
+            zin += "\t" + haltes[i].getStadsnaam() + "=>" + haltes[i + 1].getStadsnaam() + " voor een duur van " + segmenten[j].getTijd() + " minuten.\n";
             j++;
         }
         zin += "\ncapaciteit :" + capaciteit + "\n";
@@ -232,6 +219,9 @@ public class Lijn {
         boolean mustLoop = true;
         int t = 0;
         int i = 0;
+        if(st1.equals(st2)){
+            return 0;
+        }
         while(mustLoop && (i < haltes.length-1)){
             if(moetOptellen){
                 t = Klok.som(segmenten[i-1].getTijd(), t);
