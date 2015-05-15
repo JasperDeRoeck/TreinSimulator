@@ -195,10 +195,13 @@ public class Lijn {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public Trein geefEersteTrein(int tijd) {
+    public Treinduurdata geefEersteTrein(int tijd) {
         for (int vertrek : treinen.keySet()) {
-            if ((Klok.som(vertrek, tijd)>= Klok.getTijd())) {
-                return treinen.get(vertrek);
+            if ((Klok.som(vertrek, tijd)> Klok.getTijd())) {
+                Trein trein = treinen.get(vertrek);
+                int aankomst = Klok.som(vertrek, tijd);
+                Treinduurdata d = new Treinduurdata(trein, aankomst);
+                return d;
             }
         }
         return null;

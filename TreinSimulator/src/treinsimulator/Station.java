@@ -55,9 +55,9 @@ public class Station {
                             Reis r = new Reis(lijntje.getHaltes()[j], doel);
                             if ((r.bepaalAantalOverstappen() <= n - 1) || (r.bepaalAantalOverstappen() == 0)) {
                                 Station overstap = lijntje.getHaltes()[j];
-                                Trein trein = lijntje.geefEersteTrein(tijd);
-                                System.out.println("en heeft de trein gevonden: " + trein);
-                                Overstapdata data = new Overstapdata(overstap, trein);
+                                Treinduurdata treindata = lijntje.geefEersteTrein(tijd);
+                                System.out.println("en heeft de trein gevonden: " + treindata.getTrein());
+                                Overstapdata data = new Overstapdata(overstap, treindata);
                                 return data;
 
                             }
@@ -79,9 +79,9 @@ public class Station {
                         for (int j = i + 1; j < lijntje.getHaltes().length; j++) {
                             if (doel.stadsnaam.equals(lijntje.getHaltes()[j].getStadsnaam())) {
                                 Station overstap = lijntje.getHaltes()[j];
-                                Trein trein = lijntje.geefEersteTrein(tijd);
-                                System.out.println("en heeft de trein gevonden: " + trein);
-                                Overstapdata dat = new Overstapdata(overstap, trein);
+                                Treinduurdata treindata = lijntje.geefEersteTrein(tijd);
+                                System.out.println("en heeft de trein gevonden: " + treindata.getTrein());
+                                Overstapdata dat = new Overstapdata(overstap, treindata);
                                 return dat;
                             }
                         }
