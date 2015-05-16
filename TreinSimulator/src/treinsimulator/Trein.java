@@ -83,7 +83,6 @@ public class Trein {
         } else {
             tellerNietOpgestapt++;
             return false;
-
         }
     }
 
