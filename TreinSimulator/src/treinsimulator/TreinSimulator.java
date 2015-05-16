@@ -38,7 +38,7 @@ public class TreinSimulator {
         while (Klok.getTijd() != 100) {
         System.out.println(" ----------NIEUWE CYCLUS----------- \n Tijd: " + Klok.getTijd());
             Set<Trein> alleTreinen = new HashSet<>();
-            //System.out.println("----------- TREINEN KOMEN TOE ----------");
+            System.out.println("----------- TREINEN KOMEN TOE ----------");
             for (Lijn lijn : lijnenLijst) {
                 for (Trein trein : lijn.getTreinen().values()) {
                     alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer

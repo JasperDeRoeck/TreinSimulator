@@ -34,7 +34,7 @@ public class DAO {
     public static void initialiseer() {
         leesIni();
         maakDeductieStructuren();
-        //schrijfLijnen();
+        schrijfKruisingen();
     }
 
     //leest .ini bestand in met stationsinfo, lijninfo en passagiersinfo
