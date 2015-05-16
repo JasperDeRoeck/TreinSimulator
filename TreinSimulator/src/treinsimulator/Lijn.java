@@ -174,10 +174,10 @@ public class Lijn {
         for (Segment s : segmenten) {
             zin += s.toString();
         }
-        /*for (Entry<Integer, Trein> entry : treinen.entrySet()) {
+        for (Entry<Integer, Trein> entry : treinen.entrySet()) {
             Integer key = entry.getKey();
             zin+= "uur:" + key +"\n";
-        }*/
+        }
             return zin;
         }
 
