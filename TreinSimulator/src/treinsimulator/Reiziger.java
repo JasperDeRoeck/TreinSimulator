@@ -110,9 +110,8 @@ public class Reiziger {
                    // System.out.println("en is daar in geslaagd.");
                     Kruising k;
                     if((k = juisteTrein.getKruising()) != null){
-                        juisteTrein.getKruising().addOverstaptijd(overstaptijd);
+                        k.addOverstaptijd(overstaptijd);
                     }
-                      //Passagier geeft door aan kruising dat het niet meer op kruising bevindt.
                     moetUitstappen = true;                                    //Vanaf nu zit passagier op trein
                     vtijd = data.getAankomst();
                     //System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want hij/zij moet uitstappen aan " + volgendStation);

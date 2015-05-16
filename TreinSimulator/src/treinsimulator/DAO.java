@@ -206,7 +206,6 @@ public class DAO {
 
     //initialiseert de buren en doorgaande lijnen van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
     private static void geefStationsBurenEnLijnen() {
-        System.out.println("here");
         for (Lijn l : lijnenLijst) {
             for (Station s : l.getHaltes()) {
                 s.lijnen.add(l);
@@ -262,8 +261,10 @@ public class DAO {
         for (Station s : stationLijst) {
             System.out.println(s.getStadsnaam() + " heeft " + s.getOverstaptijd() + " min overstaptijd.");
             System.out.println("Heeft de volgende buren: ");
-            // s.getBuren().forEach(System.out.println()); Hier zit een fout in????
-            System.out.println("");
+            for (Station s2 : s.buren){
+                System.out.print(s2.toString()+" ");
+            }
+            System.out.println("===============================");
         }
     }
 
