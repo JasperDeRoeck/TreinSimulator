@@ -56,8 +56,8 @@ public class Reis {
             nietafgewerkt.clear();
             nietafgewerkt.addAll(nieuwnietafgewerkt);
         }
-        aantalOverstappen = n;
-        return n;
+        aantalOverstappen = n+1;
+        return aantalOverstappen;
         
     }
 

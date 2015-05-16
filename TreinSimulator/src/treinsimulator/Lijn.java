@@ -6,7 +6,8 @@
 package treinsimulator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 /**
  *
@@ -26,7 +27,7 @@ public class Lijn {
     private ArrayList<Integer> uurVertrek = new ArrayList<>();
     private ArrayList<Integer> uurPiekVertrek = new ArrayList<>();
     public int[] reisduren;
-    public HashMap<Integer, Trein> treinen = new HashMap<>();
+    public TreeMap<Integer, Trein> treinen = new TreeMap<>();
 
     public Lijn(char richting, int id) {
         this.richting = richting;
@@ -77,7 +78,7 @@ public class Lijn {
             //System.out.println("Nieuwe piekuurtrein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + i);
         }
         for (int i : uurVertrek) {
-            for (int j = 0; j < 2400; j += 100) {
+            for (int j = 400; j < 2200; j += 100) {
                 treinen.put(j + i, new Trein(j + i, this));
                 //System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
             }
@@ -187,27 +188,32 @@ public class Lijn {
         for (Segment s : segmenten) {
             zin += s.toString();
         }
-        return zin;
-    }
+        /*for (Entry<Integer, Trein> entry : treinen.entrySet()) {
+            Integer key = entry.getKey();
+            zin+= "uur:" + key +"\n";
+        }*/
+            return zin;
+        }
 
-    public HashMap<Integer, Trein> getTreinen() {
+    
+
+    public TreeMap<Integer, Trein> getTreinen() {
         return treinen;
     }
 
     public int getId() {
         return id;
     }
-    public Kruising getKruising(){ //Moet op een of andere manier door een passagier gevraagd worden aan Lijn
+
+    public Kruising getKruising() { //Moet op een of andere manier door een passagier gevraagd worden aan Lijn
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public Trein geefEersteTrein(int tijd) {
         for (int vertrek : treinen.keySet()) {
-            if ((Klok.incrementeer(vertrek, tijd)>= Klok.getTijd())) {
-                Trein trein= treinen.get(vertrek);
+            if ((Klok.incrementeer(vertrek, tijd) >= Klok.getTijd())) {
+                Trein trein = treinen.get(vertrek);
                 return trein;
-            } else {
-                return null;
             }
         }
         return null;

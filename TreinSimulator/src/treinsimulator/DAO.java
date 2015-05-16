@@ -33,6 +33,7 @@ public class DAO {
     public static void initialiseer() {
         leesIni();
         maakDeductieStructuren();
+        //schrijfLijnen();
     }
 
     //leest .ini bestand in met stationsinfo, lijninfo en passagiersinfo
@@ -214,14 +215,19 @@ public class DAO {
             for (Station s : l.getHaltes()) {
                 s.lijnen.add(l);
             }
-            for (int i = 0; i < l.getHaltes().length - 1; i++) {
-                l.getHaltes()[i].getBuren().add(l.getHaltes()[i + 1]);
-                l.getHaltes()[i + 1].getBuren().add(l.getHaltes()[i]);
+            for (int i = 0; i < l.getHaltes().length; i++) {
+                for (int j = 1; j < l.getHaltes().length - i; j++) {
+                    l.getHaltes()[i].getBuren().add(l.getHaltes()[i + j]);
+                    if (i - j >= 0) {
+                        l.getHaltes()[i].getBuren().add(l.getHaltes()[i - j]);
+                    }
+                }
+
             }
         }
     }
 
-    //initialiseert de kruisingen in kruisingenLijst,wordt opgeroepen door maakDeductieStructuren()
+//initialiseert de kruisingen in kruisingenLijst,wordt opgeroepen door maakDeductieStructuren()
     private static void maakKruisingen() {
         for (Lijn l : lijnenLijst) {
             for (Lijn m : lijnenLijst) {
