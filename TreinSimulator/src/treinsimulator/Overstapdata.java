@@ -11,17 +11,22 @@ package treinsimulator;
  */
 public class Overstapdata {
     private Station overstap;
-    private Trein trein;
-    public Overstapdata(Station overstap, Trein trein){
+    private Treinduurdata treindata;
+    public Overstapdata(Station overstap, Treinduurdata treindata) throws NullPointerException{
+        /*
+        if(treindata.getTrein()==null){
+            throw new NullPointerException();
+        }
+                */
         this.overstap= overstap;
-        this.trein=trein;
+        this.treindata=treindata;
     }
 
     public Station getOverstap() {
         return overstap;
     }
 
-    public Trein getTrein() {
-        return trein;
+    public Treinduurdata getTreindata() {
+        return treindata;
     }
 }

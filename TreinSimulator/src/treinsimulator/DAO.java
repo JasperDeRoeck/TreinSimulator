@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
@@ -25,7 +26,7 @@ public class DAO {
 
     private static ArrayList<Station> stationLijst = new ArrayList<>();
     private static ArrayList<Lijn> lijnenLijst = new ArrayList<>();
-    private static HashMap<Integer, ArrayList<Reiziger>> reizigersLijst = new HashMap<>();
+    private static ArrayList<Reiziger> reizigersLijst = new ArrayList<>();
     private static ArrayList<Kruising> kruisingLijst = new ArrayList<>();
     private static Set<Reis> alleReizen = new HashSet<>();
 
@@ -59,10 +60,10 @@ public class DAO {
         geefStationsBurenEnLijnen();
         maakKruisingen();
         for (Lijn l : DAO.getLijnenLijst()) {
-            System.out.println(l.toString());
+            //System.out.println(l.toString());
         }
         for (Station s : DAO.getStationLijst()) {
-            System.out.println(s.toString());
+            //System.out.println(s.toString());
         }
         //onderstaande code init juiste trein voor elke reiziger,MOET na geefStationsBurenEnLijnen() komen
         /*for(Map.Entry<Integer,ArrayList<Reiziger>> hm : reizigersLijst.entrySet()){
@@ -116,6 +117,7 @@ public class DAO {
 
     //initialiseert de reizigers in reizigersLijst,wordt opgeroepen door leesIni()
     private static void maakReizigers(BufferedReader br) throws IOException {
+        int cijfer= 0;
         String huidig = br.readLine();
         String passagiersLijst = "";
         while (huidig != null) {
@@ -151,20 +153,14 @@ public class DAO {
                     }
                 }
             }
-
+            
             for (int j = 0; j < Integer.parseInt(lines[i + 1]); j++) {
-                if (reizigersLijst.containsKey(tijd)) {
-                    reizigersLijst.get(tijd).add(new Reiziger(tijd, r));
-                } else {
-                    ArrayList<Reiziger> lijst = new ArrayList<>();
-                    lijst.add(new Reiziger(tijd, r));
-                    reizigersLijst.put(tijd, lijst);
-                }
+                reizigersLijst.add(new Reiziger(tijd, r, cijfer+""));
+                cijfer++;
             }
         }
 
     }
-
     //neemt een ganse lijnparagraaf ,analyseert ze en geeft een uitgewerkt lijnobj terug
     private static Lijn verwerkLijnParagraaf(String s) {
         /* Kleine aanpassing aangebracht: om het aantal getters/setters toch een beetje te reduceren,
@@ -187,11 +183,10 @@ public class DAO {
         for (int i = 0; i < reisdurenInString.length; i++) {
             reisduren[i] = Integer.parseInt(reisdurenInString[i]);
         }
-        l.setReisduren(reisduren);
         Segment[] segmentarray = new Segment[stationsnamen.length - 1];
         for (int i = 0; i < segmentarray.length; i++) {
             Segment seg = new Segment(l, haltes[i], haltes[i + 1]);
-            seg.tijd = l.reisduren[i];
+            seg.tijd = reisduren[i];
             segmentarray[i] = seg;
         }
         l.setSegmenten(segmentarray);
@@ -280,9 +275,7 @@ public class DAO {
     }
 
     public static void schrijfPassagiers() {
-        for (Map.Entry<Integer, ArrayList<Reiziger>> s : reizigersLijst.entrySet()) {
-            System.out.println("Om " + s.getKey() + " vertrekken er " + s.getValue().size() + " reizigers.\n");
-        }
+            throw new UnsupportedOperationException("Deprecated.");
     }
 
     public static void schrijfKruisingen() {
@@ -291,7 +284,7 @@ public class DAO {
         }
     }
 
-    public static HashMap<Integer, ArrayList<Reiziger>> getReizigersLijst() {
+    public static ArrayList<Reiziger> getReizigersLijst() {
         return reizigersLijst;
     }
 

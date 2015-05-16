@@ -21,10 +21,10 @@ public class Klok {
     public static int getTijd(){
         return tijd;
     }
-    public static void ticktock(){
-        tijd = incrementeer(tijd, 1);
+    public static void incrementeer(){
+        tijd = som(tijd, 1);
     }
-    public static int incrementeer(int tijd, int teller) {
+    public static int som(int tijd, int teller) {
         int huidig  = valideer(tijd);
         int totaal = (huidig % 100) + teller + (huidig / 100) * 60;
         int som = 0;
@@ -42,7 +42,7 @@ public class Klok {
         return som;
     }
  
-    public static int decrementeer(int tijd, int teller) {
+    public static int verschil(int tijd, int teller){
         int huidig = valideer(tijd);
         int totaal = huidig/100;
         totaal = totaal*100;
@@ -74,11 +74,13 @@ public class Klok {
         return som;
     }
    
-    private static int valideer(int tijd){
+    private static int valideer(int tijd) throws RuntimeException{
         String a = tijd+"";
+        if(tijd == 0){
+            return tijd;
+        }
         while (a.startsWith("0")){
             a=a.substring(0);
-            System.out.println(a);
         }
         return Integer.parseInt(a);
     }

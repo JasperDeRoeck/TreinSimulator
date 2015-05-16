@@ -18,7 +18,7 @@ public class TreinSimulator {
 
     private static ArrayList<Station> stationLijst;
     private static ArrayList<Lijn> lijnenLijst;
-    private static HashMap<Integer, ArrayList<Reiziger>> reizigersLijst;
+    private static ArrayList<Reiziger> reizigersLijst;
 
     // DAO mijnDAO; -----------> niet nodig, want zijn statische methodes..
     // to do : readlists updaten
@@ -29,36 +29,37 @@ public class TreinSimulator {
         stationLijst = DAO.getStationLijst();
         lijnenLijst = DAO.getLijnenLijst();
         reizigersLijst = DAO.getReizigersLijst();
-        int STOPTIJD = 2459;
+        int STOPTIJD = 100;
         
         Klok.setTijd(400);
         //Klok:
+        
         System.out.println("-----------SIMULATIE START ----------");
-        while (Klok.getTijd() <= STOPTIJD) {
-
+        while (Klok.getTijd() != 100) {
+        System.out.println(" ----------NIEUWE CYCLUS----------- \n Tijd: " + Klok.getTijd());
             Set<Trein> alleTreinen = new HashSet<>();
             System.out.println("----------- TREINEN KOMEN TOE ----------");
             for (Lijn lijn : lijnenLijst) {
                 for (Trein trein : lijn.getTreinen().values()) {
                     alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
-                    // iedere lijn te moeten afgaan om daar alle treinen uit te halen
+                                                        // iedere lijn te moeten afgaan om daar alle treinen uit te halen
                     trein.aankomst(Klok.getTijd());
                 }
             }
             System.out.println("----------- PASSAGIERS WORDEN OVERLOPEN ----------");
             if (reizigersLijst.get(Klok.getTijd()) != null) {
-                for (Reiziger reiziger : reizigersLijst.get(Klok.getTijd())) {
+                for (Reiziger reiziger : reizigersLijst) {
                     if (!reiziger.gestrand) { //gestrande reizigers niet meer overlopen
                         reiziger.activeer(Klok.getTijd());
                     }
                 }
+                
             }
             System.out.println("----------- TREINEN VERTREKKEN ----------");
             for (Trein trein : alleTreinen) {
                 trein.vertrek(Klok.getTijd());
             }
-            System.out.println("Tijd: " + Klok.getTijd());
-            Klok.ticktock();
+            Klok.incrementeer();
         }
         //Data-stuff:
 
