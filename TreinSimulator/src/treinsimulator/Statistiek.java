@@ -146,7 +146,7 @@ public class Statistiek {
 
     public HashMap<Reis, Integer> berekenWachttijdReiziger() {
         HashMap<Reis, Integer> wachttijd = new HashMap<>();
-        for (Reis r : DAO.getAlleReizen()) {
+        for (Reis r : alleReizen) {
             int tijd = r.getTotaleReiswegTijd();
             wachttijd.put(r, tijd);
         }
@@ -161,7 +161,7 @@ public class Statistiek {
                 double totaalP = r.getAantalReizigers();
                 System.out.println("totaalP = " + totaalP);
                 double percentage = gestrand / totaalP * 100;
-                aantalGestrandeReizigers.put(r, percentage);
+               aantalGestrandeReizigers.put(r, percentage);
             }
         }
         return aantalGestrandeReizigers;

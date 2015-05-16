@@ -38,9 +38,16 @@ public class Trein {
 
     void aankomst(int tijd) {
         if ((isRijdend) && (tijd == vtijd)) {
-           // System.out.println(this + " komt aan in " + lijn.getHalte(positie));
+            System.out.println(this + " komt aan in " + lijn.getHalte(positie));
+            Set<Reiziger> uitgesmeten = new HashSet<>();
             for (Reiziger reiziger : inzittenden) {
-                reiziger.uitstappen(tijd);
+                System.out.println(reiziger + " stapt krijgt de kans om uit te stappen");
+                if(reiziger.uitstappen(tijd)){
+                    uitgesmeten.add(reiziger);
+                }
+            }
+            for(Reiziger reiziger:uitgesmeten){
+                inzittenden.remove(reiziger);
             }
             isRijdend = false;
             //vtijd = lijn.getSegmenten()[positie].getTijd();

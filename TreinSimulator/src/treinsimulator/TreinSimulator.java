@@ -36,7 +36,7 @@ public class TreinSimulator {
         
         System.out.println("-----------SIMULATIE START ----------");
         while (Klok.getTijd() != 100) {
-        //System.out.println(" ----------NIEUWE CYCLUS----------- \n Tijd: " + Klok.getTijd());
+        System.out.println(" ----------NIEUWE CYCLUS----------- \n Tijd: " + Klok.getTijd());
             Set<Trein> alleTreinen = new HashSet<>();
             //System.out.println("----------- TREINEN KOMEN TOE ----------");
             for (Lijn lijn : lijnenLijst) {
@@ -46,7 +46,7 @@ public class TreinSimulator {
                     trein.aankomst(Klok.getTijd());
                 }
             }
-            //System.out.println("----------- PASSAGIERS WORDEN OVERLOPEN ----------");
+            System.out.println("----------- PASSAGIERS WORDEN OVERLOPEN ----------");
             if (reizigersLijst.get(Klok.getTijd()) != null) {
                 for (Reiziger reiziger : reizigersLijst) {
                     if (!reiziger.gestrand) { //gestrande reizigers niet meer overlopen
@@ -55,7 +55,7 @@ public class TreinSimulator {
                 }
                 
             }
-           // System.out.println("----------- TREINEN VERTREKKEN ----------");
+            System.out.println("----------- TREINEN VERTREKKEN ----------");
             for (Trein trein : alleTreinen) {
                 trein.vertrek(Klok.getTijd());
             }

@@ -238,6 +238,7 @@ public class Lijn {
             }
             i++;
         }
+        //System.out.println(st1 + " vs " + st2 + " maakt: " + t);
         return t;
     }
 }

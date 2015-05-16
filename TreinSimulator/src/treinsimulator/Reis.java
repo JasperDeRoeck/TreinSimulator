@@ -39,6 +39,7 @@ public class Reis {
     }
     public void incGestrandeReizigers(){
         aantalGestrandeReizigers++;
+        aantalReizigers++;
     }
     public int bepaalAantalOverstappen(){
         int n = -1;
@@ -113,6 +114,7 @@ public class Reis {
     }
 
     void addTijd(int getal) {
+        System.out.println("Joepie!! totale reisweg++");
         totaleReiswegTijd += getal;
         aantalReizigers++;
     }
