@@ -151,8 +151,8 @@ public class Statistiek {
         for (Lijn l : lijnenLijst) {
             totaalAantalSegmenten += l.getSegmenten().length;
         }
-        Cell[][] cellen = new Cell[totaalAantalSegmenten+1][50];
-        for (int i = 0; i < totaalAantalSegmenten+1; i++) {
+        Cell[][] cellen = new Cell[totaalAantalSegmenten + 1][50];
+        for (int i = 0; i < totaalAantalSegmenten + 1; i++) {
             Row r = sheet.createRow(i);
             for (int j = 0; j < 50; j++) {
                 cellen[i][j] = r.createCell(j);
@@ -160,23 +160,15 @@ public class Statistiek {
         }
         //init alle hoofdcriteria en bijcriteria
         cellen[0][0].setCellValue("Rechstaande Reizigers per Deeltraject");
-        cellen[0][1].setCellValue("4u00-4u30");
-        for (int i = 4; i < 23; i++) {
-            if (i % 2 == 0) {
-                cellen[0][i - 2].setCellValue(i + "u30-" + (i + 1) + "u00");
-            } else {
-                cellen[0][i - 2].setCellValue(i + "u00-" + (i + 1) + "u30");
-            }
+        for (int i=400;i<2500;i=i+100){
+            cellen[0][bepaalPositieKolom(i)].setCellValue(bepaalTijd(i));
+            cellen[0][bepaalPositieKolom(i+35)].setCellValue(bepaalTijd(i+30));
         }
-        cellen[0][21].setCellValue("23u00-23u30");
-        cellen[0][22].setCellValue("23u30-00u00");
-        cellen[0][23].setCellValue("00u00-00u30");
-        cellen[0][24].setCellValue("00u30-01u00");
         int rijteller = 1;
         for (Lijn l : lijnenLijst) {
             for (Segment s : l.getSegmenten()) {
                 cellen[rijteller][0].setCellValue("Lijn" + l.getId() + "" + l.getRichting() + " : " + s.vertrekStation.getStadsnaam() + "-" + s.eindStation.getStadsnaam());
-                for (Segmentdata sd : s.getData()){
+                for (Segmentdata sd : s.getData()) {
                     cellen[rijteller][bepaalPositieKolom(sd.getVtijd())].setCellValue(sd.getAantalRechtstaandeReizigers());
                 }
                 rijteller++;
@@ -188,19 +180,27 @@ public class Statistiek {
 
     }
     
-    private int bepaalPositieKolom(int vtijd){
-         int uur = vtijd/100;
-         if (uur==0){
-             uur=24;
-         } else if (uur==1){
-             uur=25;
-         }
-         int min = vtijd%100;
-         if (min<30){
-             return (1+(2*uur-8));
-         } else{
-             return (1+(2*uur-8)+1);
-         }
+    private String bepaalTijd(int i){
+        int eerste = Klok.som(i, 0);
+        int tweede = Klok.som(i, 30);
+        return (eerste+"-"+tweede);
+    }
+
+    private int bepaalPositieKolom(int vtijd) {
+        System.out.print(vtijd);
+        int uur = vtijd / 100;
+        if (uur == 0) {
+            uur = 24;
+        } else if (uur == 1) {
+            uur = 25;
+        }
+
+        int min = vtijd % 100;
+        if (min < 30) {
+            return (1 + ((2 * uur) - 8));
+        } else {
+            return (1 + ((2 * uur) - 8) + 1);
+        }
     }
 
     public HashMap<Reis, Integer> berekenWachttijdReiziger() {
