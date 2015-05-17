@@ -84,7 +84,7 @@ public class Reiziger {
                      ////System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want dan komt " + juisteTrein + " toe in " + huidigStation);
                 }
                 else{
-                    ////System.out.println("Gestrand!!");
+                    //System.out.println("Gestrand!!!!!!!");
                     reis.incGestrandeReizigers();
                     gestrand = true;
                 }

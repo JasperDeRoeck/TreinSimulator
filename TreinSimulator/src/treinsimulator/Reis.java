@@ -18,7 +18,7 @@ import java.util.Stack;
 //houdt statistisch belangrijke data bij 
 public class Reis {
     private int aantalReizigers;
-    private int aantalGestrandeReizigers;
+    private int aantalGestrandeReizigers = 0;
     // totaal aantal minuten reisweg voor alle reizigers samen
     private int totaleReiswegTijd;
     private int aantalOverstappen = -1;     //Op -1 instellen om ongeïnitialiseerd voor te stellen
@@ -71,7 +71,7 @@ public class Reis {
            // //System.out.println("Route from " + vertrekstation + " to " + eindstation + " is");
             for (int i = 0; i < lijnsequentie.length; i++) {
                 lijnsequentie[i] = ls.pop();
-               // //System.out.println(lijnsequentie[i].lijn + " en overstappen in " + lijnsequentie[i].station);
+                System.out.println(lijnsequentie[i].lijn + " en overstappen in " + lijnsequentie[i].station);
             }
         }
         else{

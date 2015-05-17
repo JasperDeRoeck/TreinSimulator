@@ -78,6 +78,7 @@ public class Station {
     }
 
     public boolean bepaalLijnSequentie(int n, Station doel, Stack<OverstapData> sequentie, Lijn l) {
+        //System.out.println("zoek van " + this + " naar " + doel);
         ////System.out.println("De n is : " + n);
         if(n == 0){
             for(Lijn lijn : lijnen){
@@ -108,7 +109,7 @@ public class Station {
                 }
             }
         }
-        
+        //System.out.println("NO route...");
         return false;
     }
 

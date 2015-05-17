@@ -44,12 +44,6 @@ public class Statistiek {
         this.lijnenLijst = lijnenLijst;
         //alleReizen en segmentenLijst nog initialiseren.
         this.stationLijst = stationLijst;
-        for (Reiziger reiziger : reizigersLijst) {
-            if (!reiziger.reis.getVertrekstation().equals(reiziger.getHuidigStation())) {
-                reiziger.reis.incGestrandeReizigers();
-            }
-
-        }
         this.wachttijdReiziger = berekenWachttijdReiziger();
         this.gestrandeReizigers = bepaalAantalGestrandeReizigersPerReis();
         this.rechtstaandeReizigers = bepaalStaandeReizigersPerDeeltraject();
@@ -217,9 +211,9 @@ public class Statistiek {
         for (Reis r : alleReizen) {
             if (r.getAantalReizigers() != 0) {
                 double gestrand = r.getAantalGestrandeReizigers();
-                System.out.println("Gestrand: " + gestrand);
+                //System.out.println("Gestrand: " + gestrand);
                 double totaalP = r.getAantalReizigers();
-                System.out.println("Totaal: " + gestrand);
+                //System.out.println("Totaal: " + gestrand);
                 double percentage = gestrand / totaalP * 100;
                aantalGestrandeReizigers.put(r, percentage);
             }

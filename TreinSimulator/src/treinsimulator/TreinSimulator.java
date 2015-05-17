@@ -33,9 +33,9 @@ public class TreinSimulator {
         
         Klok.setTijd(400);
         //Klok:
-        ////System.out.println("-----------SIMULATIE START ----------");
+        ///System.out.println("-----------SIMULATIE START ----------");
         while (Klok.getTijd() != 100) {
-        ////System.out.println(" ----------NIEUWE CYCLUS----------- \n Tijd: " + Klok.getTijd());
+        System.out.println(" ----------NIEUWE CYCLUS----------- \n Tijd: " + Klok.getTijd());
             Set<Trein> alleTreinen = new HashSet<>();
             ////System.out.println("----------- TREINEN KOMEN TOE ----------");
             for (Lijn lijn : lijnenLijst) {
