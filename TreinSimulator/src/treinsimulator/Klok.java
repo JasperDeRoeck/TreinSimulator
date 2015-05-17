@@ -25,6 +25,9 @@ public class Klok {
         tijd = som(tijd, 1);
     }
     public static int som(int tijd, int teller) {
+        //return fromSecondsToTime(fromTimeToSeconds(a) + fromTimeToSeconds(b));
+        
+        
         int huidig  = valideer(tijd);
         int totaal = (huidig % 100) + teller + (huidig / 100) * 60;
         int som = 0;
@@ -41,13 +44,12 @@ public class Klok {
         }
         return som;
     }
- 
     public static int verschil(int tijd, int teller){
         int huidig = valideer(tijd);
         int totaal = huidig/100;
         totaal = totaal*100;
         totaal = totaal-teller+huidig%100;
-        System.out.println(totaal);
+        //System.out.println(totaal);
         int som = 0;
         if (totaal < 0) {
             som = 2300;
@@ -56,7 +58,7 @@ public class Klok {
                 totaal += 60;
             }
             if (totaal < 0) {
-                System.out.println(totaal);
+                //System.out.println(totaal);
                 return (som + (60 + totaal));
             } else {
                 return (som + (60 - totaal));

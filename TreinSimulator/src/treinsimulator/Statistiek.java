@@ -37,23 +37,28 @@ public class Statistiek {
     private HashMap<Segment, Integer> rechtstaandeReizigers;
     private ArrayList<Lijn> lijnenLijst;
     private ArrayList<Station> stationLijst;
-
+    int totaalAantalReizigers;
+    int totaalAantalGestrande;
+    
     public Statistiek(ArrayList<Lijn> lijnenLijst, ArrayList<Reiziger> reizigersLijst, ArrayList<Station> stationLijst) {
         alleReizen.addAll(DAO.getAlleReizen());
         alleKruisingen = DAO.getKruisingLijst();
         this.lijnenLijst = lijnenLijst;
+        for(Reiziger r: reizigersLijst){
+            if(!r.gestrand && (r.getVtijd() > 0)){
+                System.out.println(r + " heeft vtijd = " + r.getVtijd() + " en gestrand= " + r.gestrand + " en moest op trein: "+ r.juisteTrein + " en zit nog in " + r.huidigStation + " en de trein had " + r.juisteTrein.vtijd);
+            }
+            
+        }
         //alleReizen en segmentenLijst nog initialiseren.
         this.stationLijst = stationLijst;
         this.wachttijdReiziger = berekenWachttijdReiziger();
         this.gestrandeReizigers = bepaalAantalGestrandeReizigersPerReis();
         this.rechtstaandeReizigers = bepaalStaandeReizigersPerDeeltraject();
-        for (Reiziger reiziger : reizigersLijst) {
-            if (!reiziger.reis.getVertrekstation().equals(reiziger.getHuidigStation())) {
-                reiziger.reis.incGestrandeReizigers();
-            }
-
-        }
+        System.out.println("Totaal aantal reizigers :" + totaalAantalReizigers);
+        System.out.println("Totaal aantal gestrande reizigers: " + totaalAantalGestrande);
         schrijfGegevensWeg();
+        
     }
 
     public void schrijfGegevensWeg() {
@@ -137,7 +142,7 @@ public class Statistiek {
             indexStation.put(s, index++);
         }
         for (Map.Entry m : gestrandeReizigers.entrySet()) {
-            System.out.println("stuff");
+            ////System.out.println("stuff");
             cellen[indexStation.get(((Reis) m.getKey()).getVertrekstation())][indexStation.get(((Reis) m.getKey()).getEindstation())].setCellValue(String.valueOf(m.getValue()));
         }
         //resized alle columns zodat alle inhoud duidelijk te lezen is 
@@ -161,8 +166,8 @@ public class Statistiek {
             }
         }
         //init alle hoofdcriteria en bijcriteria
-        cellen[0][0].setCellValue("Rechstaande Reizigers per Deeltraject");
-        for (int i = 400; i < 2500; i = i + 100) {
+        cellen[0][0].setCellValue("Rechtstaande Reizigers per Deeltraject");
+        for (int i=400;i<2500;i=i+100){
             cellen[0][bepaalPositieKolom(i)].setCellValue(bepaalTijd(i));
             cellen[0][bepaalPositieKolom(i + 35)].setCellValue(bepaalTijd(i + 30));
         }
@@ -263,7 +268,7 @@ public class Statistiek {
 
     //hulpfunctie voor schrijfrechstaandereizigers
     private int bepaalPositieKolom(int vtijd) {
-        System.out.print(vtijd);
+        //System.out.print(vtijd);
         int uur = vtijd / 100;
         if (uur == 0) {
             uur = 24;
@@ -281,7 +286,7 @@ public class Statistiek {
 
     public HashMap<Reis, Integer> berekenWachttijdReiziger() {
         HashMap<Reis, Integer> wachttijd = new HashMap<>();
-        for (Reis r : DAO.getAlleReizen()) {
+        for (Reis r : alleReizen) {
             int tijd = r.getTotaleReiswegTijd();
             wachttijd.put(r, tijd);
         }
@@ -293,10 +298,13 @@ public class Statistiek {
         for (Reis r : alleReizen) {
             if (r.getAantalReizigers() != 0) {
                 double gestrand = r.getAantalGestrandeReizigers();
+                totaalAantalGestrande += gestrand;
+                //System.out.println("Gestrand: " + gestrand);
                 double totaalP = r.getAantalReizigers();
-                System.out.println("totaalP = " + totaalP);
+                totaalAantalReizigers += totaalP;
+                //System.out.println("Totaal: " + gestrand);
                 double percentage = gestrand / totaalP * 100;
-                aantalGestrandeReizigers.put(r, percentage);
+               aantalGestrandeReizigers.put(r, percentage);
             }
         }
         return aantalGestrandeReizigers;

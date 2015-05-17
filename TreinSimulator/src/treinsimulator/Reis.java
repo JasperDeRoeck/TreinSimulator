@@ -8,6 +8,7 @@ package treinsimulator;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  *
@@ -17,12 +18,13 @@ import java.util.Set;
 //houdt statistisch belangrijke data bij 
 public class Reis {
     private int aantalReizigers;
-    private int aantalGestrandeReizigers;
+    private int aantalGestrandeReizigers = 0;
     // totaal aantal minuten reisweg voor alle reizigers samen
     private int totaleReiswegTijd;
     private int aantalOverstappen = -1;     //Op -1 instellen om ongeïnitialiseerd voor te stellen
     private Station vertrekstation;
     private Station eindstation;
+    private OverstapData[] lijnsequentie;
     
     public Reis(Station vertrek,Station doel){
         vertrekstation = vertrek;
@@ -33,21 +35,27 @@ public class Reis {
     }
     public int getAantalOverstappen(){
         if(aantalOverstappen == -1){
-            aantalOverstappen = bepaalAantalOverstappen();
+           bepaalLijnSequentie();
         }
         return aantalOverstappen;
     }
     public void incGestrandeReizigers(){
+        
         aantalGestrandeReizigers++;
+        aantalReizigers++;
+        //System.out.println(this + " heeft nu " + aantalGestrandeReizigers + " gestrande reizigers.");
     }
-    public int bepaalAantalOverstappen(){
+    public void incReizigers(){
+        aantalReizigers++;
+    }
+    public void bepaalLijnSequentie(){
         int n = -1;
         Set<Station> afgewerkt = new HashSet<>();
         afgewerkt.add(vertrekstation);
         Set<Station> nietafgewerkt = new HashSet<>();
         nietafgewerkt.addAll(vertrekstation.getBuren());
         while(!nietafgewerkt.contains(eindstation)){
-            n+=1;
+            n++;
             Set<Station> nieuwnietafgewerkt = new HashSet<>();
             for(Station statie: nietafgewerkt){
                 nieuwnietafgewerkt.addAll(statie.getBuren());
@@ -57,10 +65,26 @@ public class Reis {
             nietafgewerkt.addAll(nieuwnietafgewerkt);
         }
         aantalOverstappen = n+1;
-        return aantalOverstappen;
-        
+        Stack<OverstapData> ls = new Stack<OverstapData>();
+        if(vertrekstation.bepaalLijnSequentie(aantalOverstappen, eindstation, ls)){
+            //ls.pop();    //Laatst gepushte lijn zal een nullpointer zijn.
+            lijnsequentie = new OverstapData[ls.size()];
+           // //System.out.println("Route from " + vertrekstation + " to " + eindstation + " is");
+            for (int i = 0; i < lijnsequentie.length; i++) {
+                lijnsequentie[i] = ls.pop();
+                //System.out.println(lijnsequentie[i].lijn + " en overstappen in " + lijnsequentie[i].station);
+            }
+        }
+        else{
+            //System.out.println("No route to destination: " + vertrekstation + eindstation);
+        }
     }
-
+    public OverstapData getOverstapData(int i){
+        if(lijnsequentie == null){
+            bepaalLijnSequentie();
+        }
+        return lijnsequentie[i];
+    }
     public int getAantalReizigers() {
         return aantalReizigers;
     }
@@ -80,6 +104,8 @@ public class Reis {
     public Station getEindstation() {
         return eindstation;
     }
+
+    
 
     @Override
     public int hashCode() {
@@ -111,10 +137,8 @@ public class Reis {
     public String toString() {
         return  vertrekstation + " - " + eindstation;
     }
-
     void addTijd(int getal) {
         totaleReiswegTijd += getal;
-        aantalReizigers++;
     }
     
 }

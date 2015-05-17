@@ -79,12 +79,12 @@ public class Lijn {
         //Aanmaken treinen:
         for (int i : uurPiekVertrek) {
             treinen.put(i, new Trein(i, this, i + "P"));
-            //System.out.println("Nieuwe piekuurtrein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + i);
+            ////System.out.println("Nieuwe piekuurtrein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + i);
         }
         for (int i : uurVertrek) {
             for (int j = 400; j < 2200; j += 100) {
                 treinen.put(j + i, new Trein(j + i, this, (j + i) +"R"+id+richting));
-                //System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
+                ////System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
             }
         }
     }
@@ -152,7 +152,7 @@ public class Lijn {
     public void setUurPiekVertrek(ArrayList<Integer> uurPiekVertrek) {
         this.uurPiekVertrek = uurPiekVertrek;
     }
-
+/*
     @Override
     public String toString() {
         String zin = "\nLijn " + id + " rijdt over volgende trajecten :\n Volgens richting " + richting + "\n";
@@ -174,13 +174,20 @@ public class Lijn {
         for (Segment s : segmenten) {
             zin += s.toString();
         }
-        /*for (Entry<Integer, Trein> entry : treinen.entrySet()) {
+        
+        for (Entry<Integer, Trein> entry : treinen.entrySet()) {
             Integer key = entry.getKey();
             zin+= "uur:" + key +"\n";
-        }*/
+        }
+                
             return zin;
         }
+*/
 
+    @Override
+    public String toString() {
+        return "Lijn " + id + richting;
+    }
     
 
     public TreeMap<Integer, Trein> getTreinen() {
@@ -194,7 +201,7 @@ public class Lijn {
     public Kruising getKruising() { //Moet op een of andere manier door een passagier gevraagd worden aan Lijn
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
+/*
     public Treinduurdata geefEersteTrein(int tijd) {
         for (int vertrek : treinen.keySet()) {
             if ((Klok.som(vertrek, tijd)> Klok.getTijd())) {
@@ -206,27 +213,43 @@ public class Lijn {
         }
         return null;
     }
-    public int geefEersteTreinUur(int tijd, Station st){
-        int tijdTussenStations = tijdTussenStations(haltes[0],st);
+    */
+    public Trein geefEersteTrein(int tijd, Station st, boolean mustPrint){
+        int tijdTussenStations = tijdTussenStations(haltes[0],st, mustPrint);
+        for (int vertrek : treinen.keySet()) {
+            if(Klok.som(vertrek, tijdTussenStations) >= tijd){
+                return treinen.get(vertrek);
+            }
+        }
+        ////System.out.println("Geen treinen meer.");
+        return null;
+    }
+    public int geefEersteTreinUur(int tijd, Station st, boolean mustPrint){
+        int tijdTussenStations = tijdTussenStations(haltes[0],st, mustPrint);
         for (int vertrek : treinen.keySet()) {
             if(Klok.som(vertrek, tijdTussenStations) >= tijd){
                 return Klok.som(vertrek, tijdTussenStations);
             }
         }
-        System.out.println("Geen treinen meer.");
+        ////System.out.println("Geen treinen meer.");
         return -1;
     }
-    public int tijdTussenStations(Station st1, Station st2){
+    public int tijdTussenStations(Station st1, Station st2, boolean mustPrint){
+        if(mustPrint)
+        System.out.println("zoek tss " + st1 + " en " + st2 + " op lijn: " + this);
         boolean moetOptellen = false;
         boolean mustLoop = true;
         int t = 0;
         int i = 0;
         if(st1.equals(st2)){
+            //System.out.println("!!!");
             return 0;
         }
-        while(mustLoop && (i < haltes.length-1)){
+        while(mustLoop){
             if(moetOptellen){
-                t = Klok.som(segmenten[i-1].getTijd(), t);
+                t += segmenten[i-1].getTijd();
+                if(mustPrint)
+                    System.out.println("t is nu: " + t);
             }
             if(st1.equals(haltes[i]) || st2.equals(haltes[i])){
                 if(moetOptellen == false){
@@ -238,6 +261,8 @@ public class Lijn {
             }
             i++;
         }
+        if(mustPrint)
+            System.out.println("uiteindelijke t: " + t);
         return t;
     }
 }

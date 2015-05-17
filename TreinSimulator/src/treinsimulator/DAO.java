@@ -49,9 +49,9 @@ public class DAO {
             br = maakLijnen(br);
             maakReizigers(br);
         } catch (FileNotFoundException fnfe) {
-            System.out.println("Een .ini bestand is niet gevonden.");
+            //System.out.println("Een .ini bestand is niet gevonden.");
         } catch (IOException io) {
-            System.out.println("Probleem met het inlezen van een .ini bestand.");
+            //System.out.println("Probleem met het inlezen van een .ini bestand.");
         }
     }
 
@@ -60,10 +60,10 @@ public class DAO {
         geefStationsBurenEnLijnen();
         maakKruisingen();
         for (Lijn l : DAO.getLijnenLijst()) {
-            //System.out.println(l.toString());
+            ////System.out.println(l.toString());
         }
         for (Station s : DAO.getStationLijst()) {
-            //System.out.println(s.toString());
+            ////System.out.println(s.toString());
         }
         //onderstaande code init juiste trein voor elke reiziger,MOET na geefStationsBurenEnLijnen() komen
         /*for(Map.Entry<Integer,ArrayList<Reiziger>> hm : reizigersLijst.entrySet()){
@@ -135,6 +135,9 @@ public class DAO {
             Station beginstation = null;
             Station doelstation = null;
             int tijd = Integer.parseInt(lines[i].replace("u", ""));
+            if(100 < tijd && tijd  < 400){
+                tijd = 400;
+            }
             for (Station s : stationLijst) {
                 if (s.getStadsnaam().equals(lines[i + 2])) {
                     beginstation = s;
@@ -207,8 +210,10 @@ public class DAO {
     //initialiseert de buren en doorgaande lijnen van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
     private static void geefStationsBurenEnLijnen() {
         for (Lijn l : lijnenLijst) {
+          //  //System.out.println("bij " + l + " wordt: ");
             for (Station s : l.getHaltes()) {
                 s.lijnen.add(l);
+             //   //System.out.println(s + " toegevoegd");
             }
             for (int i = 0; i < l.getHaltes().length; i++) {
                 for (int j = 1; j < l.getHaltes().length - i; j++) {
@@ -259,18 +264,18 @@ public class DAO {
 
     public static void schrijfStations() {
         for (Station s : stationLijst) {
-            System.out.println(s.getStadsnaam() + " heeft " + s.getOverstaptijd() + " min overstaptijd.");
-            System.out.println("Heeft de volgende buren: ");
+            //System.out.println(s.getStadsnaam() + " heeft " + s.getOverstaptijd() + " min overstaptijd.");
+            //System.out.println("Heeft de volgende buren: ");
             for (Station s2 : s.buren){
                 System.out.print(s2.toString()+" ");
             }
-            System.out.println("===============================");
+            //System.out.println("===============================");
         }
     }
 
     public static void schrijfLijnen() {
         for (Lijn l : lijnenLijst) {
-            System.out.println(l.toString());
+            //System.out.println(l.toString());
         }
     }
 
@@ -280,7 +285,7 @@ public class DAO {
 
     public static void schrijfKruisingen() {
         for (Kruising k : kruisingLijst) {
-            System.out.println(k.toString());
+            //System.out.println(k.toString());
         }
     }
 
