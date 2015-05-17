@@ -34,7 +34,7 @@ public class DAO {
     public static void initialiseer() {
         leesIni();
         maakDeductieStructuren();
-        schrijfLijnen();
+        //schrijfLijnen();
     }
 
     //leest .ini bestand in met stationsinfo, lijninfo en passagiersinfo
@@ -207,8 +207,10 @@ public class DAO {
     //initialiseert de buren en doorgaande lijnen van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
     private static void geefStationsBurenEnLijnen() {
         for (Lijn l : lijnenLijst) {
+          //  System.out.println("bij " + l + " wordt: ");
             for (Station s : l.getHaltes()) {
                 s.lijnen.add(l);
+             //   System.out.println(s + " toegevoegd");
             }
             for (int i = 0; i < l.getHaltes().length; i++) {
                 for (int j = 1; j < l.getHaltes().length - i; j++) {

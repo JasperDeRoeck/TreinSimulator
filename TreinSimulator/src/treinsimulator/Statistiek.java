@@ -135,7 +135,7 @@ public class Statistiek {
             indexStation.put(s, index++);
         }
         for (Map.Entry m : gestrandeReizigers.entrySet()) {
-            System.out.println("stuff");
+            //System.out.println("stuff");
             cellen[indexStation.get(((Reis) m.getKey()).getVertrekstation())][indexStation.get(((Reis) m.getKey()).getEindstation())].setCellValue(String.valueOf(m.getValue()));
         }
         //resized alle columns zodat alle inhoud duidelijk te lezen is 
@@ -218,7 +218,7 @@ public class Statistiek {
             if (r.getAantalReizigers() != 0) {
                 double gestrand = r.getAantalGestrandeReizigers();
                 double totaalP = r.getAantalReizigers();
-                System.out.println("totaalP = " + totaalP);
+                //System.out.println("totaalP = " + totaalP);
                 double percentage = gestrand / totaalP * 100;
                aantalGestrandeReizigers.put(r, percentage);
             }

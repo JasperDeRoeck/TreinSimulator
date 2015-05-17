@@ -152,7 +152,7 @@ public class Lijn {
     public void setUurPiekVertrek(ArrayList<Integer> uurPiekVertrek) {
         this.uurPiekVertrek = uurPiekVertrek;
     }
-
+/*
     @Override
     public String toString() {
         String zin = "\nLijn " + id + " rijdt over volgende trajecten :\n Volgens richting " + richting + "\n";
@@ -174,13 +174,20 @@ public class Lijn {
         for (Segment s : segmenten) {
             zin += s.toString();
         }
+        
         for (Entry<Integer, Trein> entry : treinen.entrySet()) {
             Integer key = entry.getKey();
             zin+= "uur:" + key +"\n";
         }
+                
             return zin;
         }
+*/
 
+    @Override
+    public String toString() {
+        return "Lijn " + id + richting;
+    }
     
 
     public TreeMap<Integer, Trein> getTreinen() {
@@ -194,7 +201,7 @@ public class Lijn {
     public Kruising getKruising() { //Moet op een of andere manier door een passagier gevraagd worden aan Lijn
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
+/*
     public Treinduurdata geefEersteTrein(int tijd) {
         for (int vertrek : treinen.keySet()) {
             if ((Klok.som(vertrek, tijd)> Klok.getTijd())) {
@@ -204,6 +211,17 @@ public class Lijn {
                 return d;
             }
         }
+        return null;
+    }
+    */
+    public Trein geefEersteTrein(int tijd, Station st){
+        int tijdTussenStations = tijdTussenStations(haltes[0],st);
+        for (int vertrek : treinen.keySet()) {
+            if(Klok.som(vertrek, tijdTussenStations) >= tijd){
+                return treinen.get(vertrek);
+            }
+        }
+        System.out.println("Geen treinen meer.");
         return null;
     }
     public int geefEersteTreinUur(int tijd, Station st){

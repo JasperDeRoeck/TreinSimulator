@@ -8,6 +8,7 @@ package treinsimulator;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  *
@@ -39,66 +40,7 @@ public class Station {
     public Set getBuren() {
         return buren;
     }
-
-    public Overstapdata juisteTrein(int n, Station doel) {
-        if (n != 0) {
-            for (Lijn lijntje : lijnen) {
-                int tijd = 0;
-                for (int i = 0; i < lijntje.getHaltes().length; i++) {
-                    if (!this.getStadsnaam().equals(lijntje.getHaltes()[i].getStadsnaam())) {
-                        if (i < lijntje.getSegmenten().length) {
-                            tijd += lijntje.getSegmenten()[i].tijd;
-                            tijd += lijntje.getHaltes()[i].overstaptijd;
-                        }
-                    } else {
-                        for (int j = i + 1; j < lijntje.getHaltes().length; j++) {
-                            Reis r = new Reis(lijntje.getHaltes()[j], doel);
-                            if ((r.bepaalAantalOverstappen() <= n - 1) || (r.bepaalAantalOverstappen() == 0)) {
-                                Station overstap = lijntje.getHaltes()[j];
-                                Treinduurdata treindata = lijntje.geefEersteTrein(tijd);
-                              //  System.out.println("en heeft de trein gevonden: " + treindata.getTrein());
-                                if(overstap == null){
-                                    return null;
-                                }
-                                Overstapdata data = new Overstapdata(overstap, treindata);
-                                return data;
-
-                            }
-                        }
-
-                    }
-                }
-            }
-        } else {
-            for (Lijn lijntje : lijnen) {
-                int tijd = 0;
-                for (int i = 0; i < lijntje.getHaltes().length; i++) {
-                    if (!this.getStadsnaam().equals(lijntje.getHaltes()[i].getStadsnaam())) {
-                        if (i < lijntje.getSegmenten().length) {
-                            tijd += lijntje.getSegmenten()[i].tijd;
-                            tijd += lijntje.getHaltes()[i].overstaptijd;
-                        }
-                    } else {
-                        for (int j = i + 1; j < lijntje.getHaltes().length; j++) {
-                            if (doel.stadsnaam.equals(lijntje.getHaltes()[j].getStadsnaam())) {
-                                Station overstap = lijntje.getHaltes()[j];
-                                Treinduurdata treindata = lijntje.geefEersteTrein(tijd);
-                             //   System.out.println("en heeft de trein gevonden: " + treindata.getTrein());
-                                if(overstap == null){
-                                    return null;
-                                }
-                                Overstapdata dat = new Overstapdata(overstap, treindata);
-                                return dat;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
-
+    
     @Override
     public String toString() {
         return stadsnaam;
@@ -133,6 +75,41 @@ public class Station {
             return false;
         }
         return true;
+    }
+
+    public boolean bepaalLijnSequentie(int n, Station doel, Stack<OverstapData> sequentie, Lijn l) {
+        //System.out.println("De n is : " + n);
+        if(n == 0){
+            for(Lijn lijn : lijnen){
+                boolean isOk = false;
+                for (int i = 0; i < lijn.getHaltes().length; i++) {
+                    if(lijn.getHaltes()[i].equals(this)){
+                        isOk = true;
+                    }
+                    if(lijn.getHaltes()[i].equals(doel) && isOk){
+                         sequentie.push(new OverstapData(lijn, lijn.getHaltes()[i]));
+                         return true;
+                    }
+                }
+            }
+            return false;
+        }
+        for(Lijn lijn : lijnen){
+            boolean isOk = false;
+            for (int i = 0; i < lijn.getHaltes().length; i++) {
+                if(lijn.getHaltes()[i].equals(this)){
+                    isOk = true;
+                }
+                if(isOk && lijn.getHaltes()[i].getKruising() != null){
+                    if(lijn.getHaltes()[i].bepaalLijnSequentie(n-1, doel, sequentie, lijn)){
+                        sequentie.push(new OverstapData(lijn, lijn.getHaltes()[i]));
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        return false;
     }
 
 }

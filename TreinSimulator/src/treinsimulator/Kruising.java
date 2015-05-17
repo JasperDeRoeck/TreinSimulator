@@ -22,9 +22,7 @@ public class Kruising {
     public Kruising (String naam ,Station[] stations){
         this.naam=naam;
         this.stations = stations;
-        for (int i= 0;i<stations.length;i++){
-            overstaptijd +=stations[i].getOverstaptijd();
-        }
+        
         for(Station st: stations){
             st.setKruising(this);
         }
