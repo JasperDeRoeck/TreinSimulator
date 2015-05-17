@@ -66,8 +66,8 @@ public class Statistiek {
         schrijfWachttijdPerReiziger(workbook);
         schrijfGestrandeReizigers(workbook);
         schrijfRechtstaandeReizigers(workbook);
-        //schrijfTotaleReistijdPerKruising(workbook);
-        //schrijfGemiddeldeOverstaptijdPerKruising(workbook);
+        schrijfTotaleReistijdPerKruising(workbook);
+        schrijfGemiddeldeOverstaptijdPerKruising(workbook);
         try {
             FileOutputStream out = new FileOutputStream(new File("Stat.xls"));
             workbook.write(out);

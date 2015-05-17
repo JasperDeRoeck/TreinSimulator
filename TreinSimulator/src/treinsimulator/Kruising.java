@@ -66,8 +66,15 @@ public class Kruising {
         return (zin);
     }
 
-    void addOverstaptijd(int overstaptijd) {
+    void addOverstaptijd(Lijn l1, Lijn l2, int overstaptijd) {
         this.overstaptijd += overstaptijd;
+        String n = "Lijn" + l1.getId() + "-->" + "Lijn" + l2.getId();
+        if(overstappen.get(n) == null){
+            overstappen.put(n, new HashMap<>());
+        }
+        overstappen.get(n).put(overstaptijd, 0);
+        int k = overstappen.get(n).get(overstaptijd) + 1;
+        overstappen.get(n).put(overstaptijd, k);
         aantalReizigers++;
     }
 
