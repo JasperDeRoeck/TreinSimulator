@@ -68,7 +68,6 @@ public class Statistiek {
             workbook.write(out);
             out.close();
             System.out.println("Excel written successfully..");
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -76,6 +75,7 @@ public class Statistiek {
         }
     }
 
+    
     private void schrijfWachttijdPerReiziger(HSSFWorkbook wb) {
         HSSFSheet sheet = wb.createSheet("Wachttijd per Reis");
 
