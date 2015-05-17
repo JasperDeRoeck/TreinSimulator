@@ -5,6 +5,8 @@
  */
 package treinsimulator;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Bernard
@@ -18,6 +20,8 @@ public class Kruising {
     private int overstaptijd=0;
     private int aantalReizigers = 0;
     private Station[] stations;
+    // onderstaande var : hm<naamRichting(Lijn1ALijn2B),hm<overstaptijd,aantal personen met zelfde overstaptijd>>
+    private HashMap<String , HashMap<Integer,Integer> >overstappen = new HashMap<>();
             
     public Kruising (String naam ,Station[] stations){
         this.naam=naam;
@@ -68,5 +72,9 @@ public class Kruising {
         this.overstaptijd += overstaptijd;
         aantalReizigers++;
     }
-    
+
+    public HashMap<String, HashMap<Integer, Integer>> getOverstappen() {
+        return overstappen;
+    }
+     
 }
