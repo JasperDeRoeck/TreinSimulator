@@ -18,12 +18,12 @@ public class Lijn {
     private int id;
     private Station[] haltes;
     private Segment[] segmenten;
-    char richting;
+    private char richting;
     private int capaciteit;
     private int zitplaatsen;
     private ArrayList<Integer> uurVertrek = new ArrayList<>();
     private ArrayList<Integer> uurPiekVertrek = new ArrayList<>();
-    public TreeMap<Integer, Trein> treinen = new TreeMap<>();
+    private TreeMap<Integer, Trein> treinen = new TreeMap<>();
 
     public Lijn(char richting, int id) {
         this.richting = richting;

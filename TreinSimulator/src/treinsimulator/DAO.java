@@ -190,7 +190,7 @@ public class DAO {
         Segment[] segmentarray = new Segment[stationsnamen.length - 1];
         for (int i = 0; i < segmentarray.length; i++) {
             Segment seg = new Segment(l, haltes[i], haltes[i + 1]);
-            seg.tijd = reisduren[i];
+            seg.setTijd(reisduren[i]);
             segmentarray[i] = seg;
         }
         l.setSegmenten(segmentarray);
@@ -213,7 +213,7 @@ public class DAO {
         for (Lijn l : lijnenLijst) {
           //  //
             for (Station s : l.getHaltes()) {
-                s.lijnen.add(l);
+                s.getLijnen().add(l);
              //   //
             }
             for (int i = 0; i < l.getHaltes().length; i++) {
@@ -236,7 +236,7 @@ public class DAO {
                     Stack<Station> st = new Stack<>();
                     for (int i = 0; i < l.getHaltes().length; i++) {
                         for (int j = 0; j < m.getHaltes().length; j++) {
-                            if (l.getHaltes()[i].stadsnaam.equals(m.getHaltes()[j].getStadsnaam())) {
+                            if (l.getHaltes()[i].getStadsnaam().equals(m.getHaltes()[j].getStadsnaam())) {
                                 st.push(m.getHaltes()[j]);
                             }
                         }
@@ -265,12 +265,7 @@ public class DAO {
 
     public static void schrijfStations() {
         for (Station s : stationLijst) {
-            //
-            //
-            for (Station s2 : s.buren){
-                System.out.print(s2.toString()+" ");
-            }
-            //
+            s.toString();
         }
     }
 

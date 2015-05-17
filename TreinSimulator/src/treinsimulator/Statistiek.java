@@ -173,7 +173,7 @@ public class Statistiek {
         int rijteller = 1;
         for (Lijn l : lijnenLijst) {
             for (Segment s : l.getSegmenten()) {
-                cellen[rijteller][0].setCellValue("Lijn" + l.getId() + "" + l.getRichting() + " : " + s.vertrekStation.getStadsnaam() + "-" + s.eindStation.getStadsnaam());
+                cellen[rijteller][0].setCellValue("Lijn" + l.getId() + "" + l.getRichting() + " : " + s.getVertrekStation().getStadsnaam() + "-" + s.getEindStation().getStadsnaam());
                 for (Segmentdata sd : s.getData()) {
                     cellen[rijteller][bepaalPositieKolom(sd.getVtijd())].setCellValue(sd.getAantalRechtstaandeReizigers());
                 }

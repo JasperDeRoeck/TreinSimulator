@@ -14,11 +14,11 @@ import java.util.Set;
  */
 //segment/deeltraject is de weg tussen twee opeenvolgende stations
 public class Segment {
-    Station vertrekStation;
-    Station eindStation;
-    Lijn lijn;
-    Set<Segmentdata> data = new HashSet<>();
-    int tijd;
+    private Station vertrekStation;
+    private Station eindStation;
+    private Lijn lijn;
+    private Set<Segmentdata> data = new HashSet<>();
+    private int tijd;
     
     public Segment(Lijn lijn,Station vertrek, Station eind){
         this(lijn, vertrek, eind, -1);
@@ -29,24 +29,18 @@ public class Segment {
         eindStation = eind;
         this.tijd = tijd;
     }
-    /*
-    public Segmentdata maakSegmentData(Trein t){
-        //ArrayList<Trein> treinen = lijn.getTreinen();
-        //for(Trein t: treinen){
-            Segmentdata segdata = new Segmentdata();
-            int vtijd = t.getVtijd();
-            segdata.setVtijd(vtijd);
-            int aantalReizigers = t.getAantalInzittenden();
-            segdata.setAantalReizigersPerTrein(aantalReizigers);
-            int aantalzitplaatsen = lijn.getZitplaatsen(); //tussenwaarde om aantalRechtstaande te berekenen
-            int aantalRechtstaande = aantalReizigers - aantalzitplaatsen;
-            segdata.setAantalRechtstaandeReizigers(aantalRechtstaande);
-            int aantalAchtergebleven=0;
-            segdata.setAantalAchterGeblevenReizigers(aantalAchtergebleven);
-            return segdata;
-        //}
+
+    public Station getVertrekStation() {
+        return vertrekStation;
     }
-*/
+
+    public Station getEindStation() {
+        return eindStation;
+    }
+    
+    void setTijd(int tijd){
+        this.tijd=tijd;
+    }
     void setData(Segmentdata sd) {
         data.add(sd);
     }

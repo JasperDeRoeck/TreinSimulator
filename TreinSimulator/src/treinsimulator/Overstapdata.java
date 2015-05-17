@@ -10,12 +10,20 @@ package treinsimulator;
  * @author Wolfger
  */
 public class Overstapdata {
-    Lijn lijn;
-    Station station;
+    private Lijn lijn;
+    private Station station;
 
     public Overstapdata(Lijn lijn, Station station) {
         this.lijn = lijn;
         this.station = station;
+    }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public Lijn getLijn() {
+        return lijn;
     }
     
 }

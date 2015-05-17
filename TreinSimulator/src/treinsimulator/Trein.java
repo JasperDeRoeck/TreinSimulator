@@ -18,15 +18,15 @@ import java.util.Set;
 public class Trein {
 
 //vtijd geeft aan op welk tijdstip de volgende gebeurtenis plaatsvindt
-    int vtijd;
-    Lijn lijn;
-    Set<Reiziger> inzittenden = new HashSet<>();
-    int tellerNietOpgestapt;
-    boolean weg = false;
-    boolean netaangemaakt = true;
-    int positie = 0;
-    String id;
-    boolean isRijdend = false;
+    private int vtijd;
+    private Lijn lijn;
+    private Set<Reiziger> inzittenden = new HashSet<>();
+    private int tellerNietOpgestapt;
+    private boolean weg = false;
+    private boolean netaangemaakt = true;
+    private int positie = 0;
+    private String id;
+    private boolean isRijdend = false;
     
     Trein(int vtijd, Lijn l, String id) {
         this.vtijd = vtijd;
