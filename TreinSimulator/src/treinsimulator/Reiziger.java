@@ -39,6 +39,7 @@ public class Reiziger {
      * @return true if passenger exits train
      */
     public boolean uitstappen(int t) {
+        //System.out.println(this + "heeft kans gehad");
         if (vtijd == t) {
             moetUitstappen = false;
             huidigStation = reis.getOverstapData(aantalGenomenOverstappen).station;
@@ -48,7 +49,9 @@ public class Reiziger {
                 reis.addTijd(Klok.verschil(Klok.getTijd(), beginTijd));
                 vtijd = -1;
                 reis.incReizigers();
-                System.out.println(this + " stapt uit en heeft zijn eindhalte bereikt.");
+                if(voorwaarde()){
+                    System.out.println(this + " stapt uit en heeft zijn eindhalte bereikt.");
+                }
             } else {
                 //System.out.println(this + " stapt uit en gaat op zoek naar een andere trein, want " + aantalGenomenOverstappen + " is nog niet gelijk aan " + reis.getAantalOverstappen());
                 //We zijn er nog niet -> nieuwe trein zoeken
@@ -56,7 +59,10 @@ public class Reiziger {
                 juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd(), huidigStation);
                 if(juisteTrein != null){
                     vtijd = Klok.som(Klok.getTijd(), juisteTrein.getLijn().tijdTussenStations(juisteTrein.getLijn().getHalte(0), huidigStation));//data.getAankomst;
-                    System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want hij/zij moet instappen in " + huidigStation + "met trein(" + juisteTrein.id+")");
+                     
+                    if(voorwaarde()){
+                         System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want hij/zij moet instappen in " + huidigStation + "met trein(" + juisteTrein.id+")");
+                    }
                 }
                 else{
                     reis.incGestrandeReizigers();
@@ -73,15 +79,18 @@ public class Reiziger {
      * @return true if vtijd has changed
      */
     public boolean activeer(int t) {
+        
         if (!moetUitstappen) {
             overstaptijd++;
         }
         if (vtijd == t) {
             if (juisteTrein == null) {
-                juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd(), huidigStation);
+                juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd()+1, huidigStation);
                 if(juisteTrein != null){
-                     vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd(), huidigStation);
-                     ////System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want dan komt " + juisteTrein + " toe in " + huidigStation);
+                     vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd()+1, huidigStation);
+                        if(voorwaarde()){
+                           System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want dan komt " + juisteTrein + " toe in " + huidigStation);
+                        }
                 }
                 else{
                     //System.out.println("Gestrand!!!!!!!");
@@ -89,22 +98,35 @@ public class Reiziger {
                     gestrand = true;
                 }
             } else {
-                ////System.out.println(this + " wil opstappen op de trein ");
+                
+                if(voorwaarde()){
+                    System.out.println(this + " wil opstappen op de trein ");
+                }
                 if (!juisteTrein.opstappen(this)) {
                     //Als trein vol is, nieuwe trein zoeken, vtijd instellen op volgende vertrekuur
-                    ////System.out.println("maar er was niet genoeg plaats");
-                    juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd(), huidigStation);//data.getTrein();
-                    vtijd = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTreinUur(Klok.getTijd(), huidigStation);                            ///!!!!!Zal nog nullpointer geven, als er geen treinen meer rijden!!
+                    juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd()+1, huidigStation);//data.getTrein();
+                    vtijd = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTreinUur(Klok.getTijd()+1, huidigStation); 
+                    
+                    if(voorwaarde()){
+                        System.out.println("maar er was niet genoeg plaats");
+                        System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want dan komt " + juisteTrein + " toe in " + huidigStation);
+                    }
+                    
                 } else {
-                    ////System.out.println("en is daar in geslaagd.");
+                    //System.out.println("en is daar in geslaagd.");
                     Kruising k;
                     if((k = juisteTrein.getKruising()) != null){
                         k.addOverstaptijd(overstaptijd);
                     }
                     moetUitstappen = true;                                    //Vanaf nu zit passagier op trein
                     vtijd = Klok.som(Klok.getTijd(), juisteTrein.getLijn().tijdTussenStations(huidigStation, reis.getOverstapData(aantalGenomenOverstappen).station));
-                    ////System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want hij/zij moet uitstappen aan " + reis.getOverstapData(aantalGenomenOverstappen).station);
-                    ////System.out.println(this + " is op " + juisteTrein + " gestapt.");
+                    
+                    if(voorwaarde()){
+                        System.out.println(juisteTrein.getLijn().tijdTussenStations(huidigStation, reis.getOverstapData(aantalGenomenOverstappen).station));
+                        System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want hij/zij moet uitstappen aan " + reis.getOverstapData(aantalGenomenOverstappen).station + " op " + juisteTrein);
+                        System.out.println(this + " is op " + juisteTrein + " gestapt.");
+                    }
+                    
                 }
             }
             return true;
@@ -124,5 +146,8 @@ public class Reiziger {
     @Override
     public String toString() {
         return "Reiziger (" + naam + ") met reis " + reis;
+    }
+    private boolean voorwaarde(){
+        return (naam.equals("5520"));
     }
 }

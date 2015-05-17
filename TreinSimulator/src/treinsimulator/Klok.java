@@ -25,6 +25,9 @@ public class Klok {
         tijd = som(tijd, 1);
     }
     public static int som(int tijd, int teller) {
+        //return fromSecondsToTime(fromTimeToSeconds(a) + fromTimeToSeconds(b));
+        
+        
         int huidig  = valideer(tijd);
         int totaal = (huidig % 100) + teller + (huidig / 100) * 60;
         int som = 0;
@@ -41,7 +44,6 @@ public class Klok {
         }
         return som;
     }
- 
     public static int verschil(int tijd, int teller){
         int huidig = valideer(tijd);
         int totaal = huidig/100;

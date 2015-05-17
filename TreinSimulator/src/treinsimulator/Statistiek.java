@@ -37,17 +37,28 @@ public class Statistiek {
     private HashMap<Segment, Integer> rechtstaandeReizigers;
     private ArrayList<Lijn> lijnenLijst;
     private ArrayList<Station> stationLijst;
-
+    int totaalAantalReizigers;
+    int totaalAantalGestrande;
+    
     public Statistiek(ArrayList<Lijn> lijnenLijst, ArrayList<Reiziger> reizigersLijst, ArrayList<Station> stationLijst) {
         alleReizen.addAll(DAO.getAlleReizen());
         alleKruisingen = DAO.getKruisingLijst();
         this.lijnenLijst = lijnenLijst;
+        for(Reiziger r: reizigersLijst){
+            if(!r.gestrand && (r.getVtijd() > 0)){
+                System.out.println(r + " heeft vtijd = " + r.getVtijd() + " en gestrand= " + r.gestrand + " en moest op trein: "+ r.juisteTrein + " en zit nog in " + r.huidigStation + " en de trein had " + r.juisteTrein.vtijd);
+            }
+            
+        }
         //alleReizen en segmentenLijst nog initialiseren.
         this.stationLijst = stationLijst;
         this.wachttijdReiziger = berekenWachttijdReiziger();
         this.gestrandeReizigers = bepaalAantalGestrandeReizigersPerReis();
         this.rechtstaandeReizigers = bepaalStaandeReizigersPerDeeltraject();
+        System.out.println("Totaal aantal reizigers :" + totaalAantalReizigers);
+        System.out.println("Totaal aantal gestrande reizigers: " + totaalAantalGestrande);
         schrijfGegevensWeg();
+        
     }
 
     public void schrijfGegevensWeg() {
@@ -211,8 +222,10 @@ public class Statistiek {
         for (Reis r : alleReizen) {
             if (r.getAantalReizigers() != 0) {
                 double gestrand = r.getAantalGestrandeReizigers();
+                totaalAantalGestrande += gestrand;
                 //System.out.println("Gestrand: " + gestrand);
                 double totaalP = r.getAantalReizigers();
+                totaalAantalReizigers += totaalP;
                 //System.out.println("Totaal: " + gestrand);
                 double percentage = gestrand / totaalP * 100;
                aantalGestrandeReizigers.put(r, percentage);

@@ -37,8 +37,12 @@ public class Trein {
     }
 
     void aankomst(int tijd) {
+       
         if ((isRijdend) && (tijd == vtijd)) {
-            ////System.out.println(this + " komt aan in " + lijn.getHalte(positie));
+            if(id.equals("2132R8A")){
+                 System.out.println(this + " komt aan in " + lijn.getHalte(positie));
+            }
+           
             Set<Reiziger> uitgesmeten = new HashSet<>();
             for (Reiziger reiziger : inzittenden) {
                 if(reiziger.uitstappen(tijd)){
@@ -62,15 +66,24 @@ public class Trein {
                 vtijd = Klok.som(vtijd, lijn.getSegmenten()[positie].getTijd());
                 positie++;
                 lijn.getSegmenten()[positie-1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen() , tellerNietOpgestapt));
-                ////System.out.println(this + " heeft zijn vtijd geupdate naar " + vtijd);
+                //if(id.equals("2132R8A")){
+                    System.out.println(this + " heeft zijn vtijd geupdate naar " + vtijd);
+                //}
+                
             } else if (positie == lijn.getSegmenten().length) {
                 lijn.getSegmenten()[positie-1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen() , tellerNietOpgestapt));
                 vtijd = -1;
-                ////System.out.println("Trein " + this + " heeft zijn eindbestemming bereikt want positie=" + positie + " vs " + lijn.getSegmenten().length);
+                //if(id.equals("2132R8A")){
+                    System.out.println("Trein " + this + " heeft zijn eindbestemming bereikt want positie=" + positie + " vs " + lijn.getSegmenten().length);
+                //}
+                
             } else {
                 isRijdend = true;
                 vtijd = Klok.som(vtijd, lijn.getSegmenten()[positie].getTijd());
-                ////System.out.println(this + " heeft zijn vtijd geupdate naar " + vtijd);
+                //if(id.equals("2132R8A")){
+                    System.out.println(this + " heeft zijn vtijd geupdate naar " + vtijd);
+                //}
+                
                 positie++;
                 lijn.getSegmenten()[positie-1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen() , tellerNietOpgestapt));
             }

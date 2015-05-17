@@ -30,14 +30,16 @@ public class TreinSimulator {
         lijnenLijst = DAO.getLijnenLijst();
         reizigersLijst = DAO.getReizigersLijst();
         int STOPTIJD = 100;
-        
         Klok.setTijd(400);
+        int a = 1448;
+        int b = 74;
+        System.out.println(Klok.som(a,b));
         //Klok:
         ///System.out.println("-----------SIMULATIE START ----------");
         while (Klok.getTijd() != 100) {
         System.out.println(" ----------NIEUWE CYCLUS----------- \n Tijd: " + Klok.getTijd());
             Set<Trein> alleTreinen = new HashSet<>();
-            ////System.out.println("----------- TREINEN KOMEN TOE ----------");
+            System.out.println("----------- TREINEN KOMEN TOE ----------");
             for (Lijn lijn : lijnenLijst) {
                 for (Trein trein : lijn.getTreinen().values()) {
                     alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
@@ -45,17 +47,20 @@ public class TreinSimulator {
                     trein.aankomst(Klok.getTijd());
                 }
             }
-            ////System.out.println("----------- PASSAGIERS WORDEN OVERLOPEN ----------");
+            System.out.println("----------- PASSAGIERS WORDEN OVERLOPEN ----------");
             if (reizigersLijst.get(Klok.getTijd()) != null) {
                 for (Reiziger reiziger : reizigersLijst) {
+                    if((reiziger.vtijd > 100 && reiziger.vtijd < 400)){
+                        System.out.println(reiziger + "----------------------------" + reiziger.juisteTrein);
+                    }
                     if (!reiziger.gestrand) { //gestrande reizigers niet meer overlopen
                         reiziger.activeer(Klok.getTijd());
                     }
                 }
             }
-            ////System.out.println("----------- TREINEN VERTREKKEN ----------");
+            System.out.println("----------- TREINEN VERTREKKEN ----------");
             for (Trein trein : alleTreinen) {
-                trein.vertrek(Klok.getTijd());
+                trein.vertrek(Klok.getTijd() );
             }
             Klok.incrementeer();
         }

@@ -40,9 +40,10 @@ public class Reis {
         return aantalOverstappen;
     }
     public void incGestrandeReizigers(){
-        System.out.println(this + " heeft nu " + aantalGestrandeReizigers + " gestrande reizigers.");
+        
         aantalGestrandeReizigers++;
         aantalReizigers++;
+        //System.out.println(this + " heeft nu " + aantalGestrandeReizigers + " gestrande reizigers.");
     }
     public void incReizigers(){
         aantalReizigers++;
@@ -65,13 +66,13 @@ public class Reis {
         }
         aantalOverstappen = n+1;
         Stack<OverstapData> ls = new Stack<OverstapData>();
-        if(vertrekstation.bepaalLijnSequentie(aantalOverstappen, eindstation, ls, null)){
+        if(vertrekstation.bepaalLijnSequentie(aantalOverstappen, eindstation, ls)){
             //ls.pop();    //Laatst gepushte lijn zal een nullpointer zijn.
             lijnsequentie = new OverstapData[ls.size()];
            // //System.out.println("Route from " + vertrekstation + " to " + eindstation + " is");
             for (int i = 0; i < lijnsequentie.length; i++) {
                 lijnsequentie[i] = ls.pop();
-                System.out.println(lijnsequentie[i].lijn + " en overstappen in " + lijnsequentie[i].station);
+                //System.out.println(lijnsequentie[i].lijn + " en overstappen in " + lijnsequentie[i].station);
             }
         }
         else{

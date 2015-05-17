@@ -235,16 +235,19 @@ public class Lijn {
         return -1;
     }
     public int tijdTussenStations(Station st1, Station st2){
+        //System.out.println("zoek tss " + st1 + " en " + st2 + " op lijn: " + this);
         boolean moetOptellen = false;
         boolean mustLoop = true;
         int t = 0;
         int i = 0;
         if(st1.equals(st2)){
+            //System.out.println("!!!");
             return 0;
         }
-        while(mustLoop && (i < haltes.length-1)){
+        while(mustLoop && (i < haltes.length)){
             if(moetOptellen){
-                t = Klok.som(segmenten[i-1].getTijd(), t);
+                t += segmenten[i-1].getTijd();
+                //System.out.println(t);
             }
             if(st1.equals(haltes[i]) || st2.equals(haltes[i])){
                 if(moetOptellen == false){
@@ -256,7 +259,6 @@ public class Lijn {
             }
             i++;
         }
-        ////System.out.println(st1 + " vs " + st2 + " maakt: " + t);
         return t;
     }
 }
