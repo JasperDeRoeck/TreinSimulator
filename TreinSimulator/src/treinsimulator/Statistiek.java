@@ -60,6 +60,7 @@ public class Statistiek {
         HSSFWorkbook workbook = new HSSFWorkbook();
         schrijfWachttijdPerReiziger(workbook);
         schrijfGestrandeReizigers(workbook);
+        schrijfRechtstaandeReizigers(workbook);
         try {
             FileOutputStream out = new FileOutputStream(new File("Stat.xls"));
             workbook.write(out);
@@ -135,13 +136,71 @@ public class Statistiek {
         }
         for (Map.Entry m : gestrandeReizigers.entrySet()) {
             System.out.println("stuff");
-            cellen[indexStation.get(((Reis) m.getKey()).getVertrekstation())][indexStation.get(((Reis) m.getKey()).getEindstation())].setCellValue(String.valueOf( m.getValue()));
+            cellen[indexStation.get(((Reis) m.getKey()).getVertrekstation())][indexStation.get(((Reis) m.getKey()).getEindstation())].setCellValue(String.valueOf(m.getValue()));
         }
         //resized alle columns zodat alle inhoud duidelijk te lezen is 
         for (int i = 0; i < stationLijst.size() + 1; i++) {
             sheet.autoSizeColumn(i);
         }
 
+    }
+
+    private void schrijfRechtstaandeReizigers(HSSFWorkbook wb) {
+        HSSFSheet sheet = wb.createSheet("Rechtstaande Reizigers");
+        int totaalAantalSegmenten = 0;
+        for (Lijn l : lijnenLijst) {
+            totaalAantalSegmenten += l.getSegmenten().length;
+        }
+        Cell[][] cellen = new Cell[totaalAantalSegmenten + 1][50];
+        for (int i = 0; i < totaalAantalSegmenten + 1; i++) {
+            Row r = sheet.createRow(i);
+            for (int j = 0; j < 50; j++) {
+                cellen[i][j] = r.createCell(j);
+            }
+        }
+        //init alle hoofdcriteria en bijcriteria
+        cellen[0][0].setCellValue("Rechstaande Reizigers per Deeltraject");
+        for (int i=400;i<2500;i=i+100){
+            cellen[0][bepaalPositieKolom(i)].setCellValue(bepaalTijd(i));
+            cellen[0][bepaalPositieKolom(i+35)].setCellValue(bepaalTijd(i+30));
+        }
+        int rijteller = 1;
+        for (Lijn l : lijnenLijst) {
+            for (Segment s : l.getSegmenten()) {
+                cellen[rijteller][0].setCellValue("Lijn" + l.getId() + "" + l.getRichting() + " : " + s.vertrekStation.getStadsnaam() + "-" + s.eindStation.getStadsnaam());
+                for (Segmentdata sd : s.getData()) {
+                    cellen[rijteller][bepaalPositieKolom(sd.getVtijd())].setCellValue(sd.getAantalRechtstaandeReizigers());
+                }
+                rijteller++;
+            }
+        }
+        for (int i = 0; i < 50; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+    }
+    
+    private String bepaalTijd(int i){
+        int eerste = Klok.som(i, 0);
+        int tweede = Klok.som(i, 30);
+        return (eerste+"-"+tweede);
+    }
+
+    private int bepaalPositieKolom(int vtijd) {
+        System.out.print(vtijd);
+        int uur = vtijd / 100;
+        if (uur == 0) {
+            uur = 24;
+        } else if (uur == 1) {
+            uur = 25;
+        }
+
+        int min = vtijd % 100;
+        if (min < 30) {
+            return (1 + ((2 * uur) - 8));
+        } else {
+            return (1 + ((2 * uur) - 8) + 1);
+        }
     }
 
     public HashMap<Reis, Integer> berekenWachttijdReiziger() {
@@ -251,7 +310,7 @@ public class Statistiek {
             aantal = 0;
             Segment s = l.getSegmenten()[0];
             for (Segmentdata sd : s.getData()) {
-                aantal += sd.aantalRechtstaandeReizigers;
+                aantal += sd.getAantalAchterGeblevenReizigers();
             }
             aantalRecht.put(s, aantal);
         }
