@@ -43,7 +43,7 @@ public class Reis {
         
         aantalGestrandeReizigers++;
         aantalReizigers++;
-        //System.out.println(this + " heeft nu " + aantalGestrandeReizigers + " gestrande reizigers.");
+        //
     }
     public void incReizigers(){
         aantalReizigers++;
@@ -67,16 +67,10 @@ public class Reis {
         aantalOverstappen = n+1;
         Stack<Overstapdata> ls = new Stack<Overstapdata>();
         if(vertrekstation.bepaalLijnSequentie(aantalOverstappen, eindstation, ls)){
-            //ls.pop();    //Laatst gepushte lijn zal een nullpointer zijn.
             lijnsequentie = new Overstapdata[ls.size()];
-           // //System.out.println("Route from " + vertrekstation + " to " + eindstation + " is");
             for (int i = 0; i < lijnsequentie.length; i++) {
                 lijnsequentie[i] = ls.pop();
-                //System.out.println(lijnsequentie[i].lijn + " en overstappen in " + lijnsequentie[i].station);
             }
-        }
-        else{
-            //System.out.println("No route to destination: " + vertrekstation + eindstation);
         }
     }
     public Overstapdata getOverstapdata(int i){
@@ -104,9 +98,6 @@ public class Reis {
     public Station getEindstation() {
         return eindstation;
     }
-
-    
-
     @Override
     public int hashCode() {
         int hash = 7;

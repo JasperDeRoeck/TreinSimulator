@@ -24,20 +24,23 @@ public class TreinSimulator {
     // to do : readlists updaten
     public static void main(String[] args) {
         //Set up:
-        DAO.initialiseer();
-
+        System.out.println("Initialiseren...");
+        try{
+        DAO.initialiseer(args[0]);
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Zorg dat er zeker een invoerbestand opgegeven werd.");
+            System.exit(0);
+        }
         stationLijst = DAO.getStationLijst();
         lijnenLijst = DAO.getLijnenLijst();
         reizigersLijst = DAO.getReizigersLijst();
         int STOPTIJD = 100;
         Klok.setTijd(400);
-        System.out.println("nieuwe build");
-        //Klok:
-        ///System.out.println("-----------SIMULATIE START ----------");
+        System.out.println("Simuleren...");
         while (Klok.getTijd() != 100) {
-        System.out.println(" ----------NIEUWE CYCLUS----------- \n Tijd: " + Klok.getTijd());
+        
             Set<Trein> alleTreinen = new HashSet<>();
-            System.out.println("----------- TREINEN KOMEN TOE ----------");
             for (Lijn lijn : lijnenLijst) {
                 for (Trein trein : lijn.getTreinen().values()) {
                     alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
@@ -45,12 +48,11 @@ public class TreinSimulator {
                     trein.aankomst(Klok.getTijd());
                 }
             }
-            System.out.println("----------- PASSAGIERS WORDEN OVERLOPEN ----------");
             if(reizigersLijst.size() > Klok.getTijd()){
                 if (reizigersLijst.get(Klok.getTijd()) != null) {
                 for (Reiziger reiziger : reizigersLijst) {
                     if((reiziger.getVtijd() > 100 && reiziger.getVtijd() < 400)){
-                        System.out.println(reiziger + "----------------------------" + reiziger.getJuisteTrein());
+                        
                     }
                     if (!reiziger.isGestrand()) { //gestrande reizigers niet meer overlopen
                         reiziger.activeer(Klok.getTijd());
@@ -59,15 +61,14 @@ public class TreinSimulator {
             }
             }
             
-            System.out.println("----------- TREINEN VERTREKKEN ----------");
+            
             for (Trein trein : alleTreinen) {
                 trein.vertrek(Klok.getTijd() );
             }
             Klok.incrementeer();
         }
-        //Data-stuff:
-        ////System.out.println("----------------------End of the simulation---------------------");
         Statistiek st = new Statistiek(lijnenLijst, reizigersLijst,stationLijst);
+        System.out.println("Afgewerkt.");
     }
 
 }

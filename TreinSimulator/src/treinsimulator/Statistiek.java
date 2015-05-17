@@ -46,7 +46,7 @@ public class Statistiek {
         this.lijnenLijst = lijnenLijst;
         for(Reiziger r: reizigersLijst){
             if(!r.isGestrand() && (r.getVtijd() > 0)){
-                System.out.println(r + " heeft vtijd = " + r.getVtijd() + " en gestrand= " + r.isGestrand() + " en moest op trein: "+ r.getJuisteTrein() + " en zit nog in " + r.getHuidigStation() + " en de trein had " + r.getJuisteTrein().getVtijd());
+                
             }
            
         }
@@ -55,8 +55,8 @@ public class Statistiek {
         this.wachttijdReiziger = berekenWachttijdReiziger();
         this.gestrandeReizigers = bepaalAantalGestrandeReizigersPerReis();
         this.rechtstaandeReizigers = bepaalStaandeReizigersPerDeeltraject();
-        System.out.println("Totaal aantal reizigers :" + totaalAantalReizigers);
-        System.out.println("Totaal aantal gestrande reizigers: " + totaalAantalGestrande);
+        
+        
         schrijfGegevensWeg();
        
     }
@@ -72,7 +72,7 @@ public class Statistiek {
             FileOutputStream out = new FileOutputStream(new File("Stat.xls"));
             workbook.write(out);
             out.close();
-            System.out.println("Excel written successfully..");
+            
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -141,7 +141,7 @@ public class Statistiek {
             indexStation.put(s, index++);
         }
         for (Map.Entry m : gestrandeReizigers.entrySet()) {
-            ////System.out.println("stuff");
+            ////
             cellen[indexStation.get(((Reis) m.getKey()).getVertrekstation())][indexStation.get(((Reis) m.getKey()).getEindstation())].setCellValue(String.valueOf(m.getValue()));
         }
         //resized alle columns zodat alle inhoud duidelijk te lezen is
@@ -192,7 +192,7 @@ public class Statistiek {
         for (Kruising k : alleKruisingen) {
             totaalAantalRichtingen += k.getOverstappen().size();
         }
-        System.out.println(alleKruisingen.size()+" === "+totaalAantalRichtingen);
+        
         Cell[][] cellen = new Cell[alleKruisingen.size() + 1][totaalAantalRichtingen+1];
         for (int i = 0; i < alleKruisingen.size() + 1; i++) {
             Row r = sheet.createRow(i);
@@ -230,7 +230,7 @@ public class Statistiek {
         for (Kruising k : alleKruisingen) {
             totaalAantalRichtingen += k.getOverstappen().size();
         }
-        System.out.println(alleKruisingen.size()+" === "+totaalAantalRichtingen);
+        
         Cell[][] cellen = new Cell[alleKruisingen.size() + 1][totaalAantalRichtingen+1];
         for (int i = 0; i < alleKruisingen.size() + 1; i++) {
             Row r = sheet.createRow(i);
@@ -304,10 +304,10 @@ public class Statistiek {
             if (r.getAantalReizigers() != 0) {
                 double gestrand = r.getAantalGestrandeReizigers();
                 totaalAantalGestrande += gestrand;
-                //System.out.println("Gestrand: " + gestrand);
+                //
                 double totaalP = r.getAantalReizigers();
                 totaalAantalReizigers += totaalP;
-                //System.out.println("Totaal: " + gestrand);
+                //
                 double percentage = gestrand / totaalP * 100;
                aantalGestrandeReizigers.put(r, percentage);
             }
