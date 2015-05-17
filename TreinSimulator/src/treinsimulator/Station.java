@@ -50,11 +50,9 @@ public class Station {
     ) {
         kruising = kr;
     }
-
     public Kruising getKruising() {
         return kruising;
     }
-
     @Override
     public int hashCode() {
         int hash = 5;

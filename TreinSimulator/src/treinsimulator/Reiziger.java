@@ -115,7 +115,7 @@ public class Reiziger {
                 } else {
                     //System.out.println("en is daar in geslaagd.");
                     Kruising k;
-                    if((k = juisteTrein.getKruising()) != null){
+                    if((k = reis.getOverstapData(aantalGenomenOverstappen).station.getKruising()) != null){
                         if(reis.getAantalOverstappen()!=aantalGenomenOverstappen){
                             k.addOverstaptijd(reis.getOverstapData(aantalGenomenOverstappen).lijn, reis.getOverstapData(aantalGenomenOverstappen+1).lijn, overstaptijd);
                         }

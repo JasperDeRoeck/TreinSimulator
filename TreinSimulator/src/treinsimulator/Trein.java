@@ -105,11 +105,6 @@ public class Trein {
             return false;
         }
     }
-
-    Kruising getKruising() {
-        return lijn.getHalte(positie).getKruising();
-    }
-
     public Lijn getLijn() {
         return lijn;
     }
