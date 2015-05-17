@@ -37,16 +37,16 @@ public class Statistiek {
     private HashMap<Segment, Integer> rechtstaandeReizigers;
     private ArrayList<Lijn> lijnenLijst;
     private ArrayList<Station> stationLijst;
-    int totaalAantalReizigers;
-    int totaalAantalGestrande;
+    private int totaalAantalReizigers;
+    private int totaalAantalGestrande;
     
     public Statistiek(ArrayList<Lijn> lijnenLijst, ArrayList<Reiziger> reizigersLijst, ArrayList<Station> stationLijst) {
         alleReizen.addAll(DAO.getAlleReizen());
         alleKruisingen = DAO.getKruisingLijst();
         this.lijnenLijst = lijnenLijst;
         for(Reiziger r: reizigersLijst){
-            if(!r.gestrand && (r.getVtijd() > 0)){
-                System.out.println(r + " heeft vtijd = " + r.getVtijd() + " en gestrand= " + r.gestrand + " en moest op trein: "+ r.juisteTrein + " en zit nog in " + r.huidigStation + " en de trein had " + r.juisteTrein.vtijd);
+            if(!r.isGestrand() && (r.getVtijd() > 0)){
+                System.out.println(r + " heeft vtijd = " + r.getVtijd() + " en gestrand= " + r.isGestrand() + " en moest op trein: "+ r.getJuisteTrein() + " en zit nog in " + r.getHuidigStation() + " en de trein had " + r.getJuisteTrein().getVtijd());
             }
             
         }
@@ -66,8 +66,8 @@ public class Statistiek {
         schrijfWachttijdPerReiziger(workbook);
         schrijfGestrandeReizigers(workbook);
         schrijfRechtstaandeReizigers(workbook);
-        schrijfTotaleReistijdPerKruising(workbook);
-        schrijfGemiddeldeOverstaptijdPerKruising(workbook);
+        //schrijfTotaleReistijdPerKruising(workbook);
+        //schrijfGemiddeldeOverstaptijdPerKruising(workbook);
         try {
             FileOutputStream out = new FileOutputStream(new File("Stat.xls"));
             workbook.write(out);
@@ -79,7 +79,6 @@ public class Statistiek {
             e.printStackTrace();
         }
     }
-
     
     private void schrijfWachttijdPerReiziger(HSSFWorkbook wb) {
         HSSFSheet sheet = wb.createSheet("Wachttijd per Reis");
@@ -127,7 +126,7 @@ public class Statistiek {
             }
         }
         //init alle hoofdcriteria en bijcriteria
-        cellen[0][0].setCellValue("Wachttijd per Reis");
+        cellen[0][0].setCellValue("Gestrande Reizigers");
         int teller = 1;
         for (Station s : stationLijst) {
             cellen[teller][0].setCellValue(s.getStadsnaam());
@@ -193,6 +192,7 @@ public class Statistiek {
         for (Kruising k : alleKruisingen) {
             totaalAantalRichtingen += k.getOverstappen().size();
         }
+        System.out.println(alleKruisingen.size()+" === "+totaalAantalRichtingen);
         Cell[][] cellen = new Cell[alleKruisingen.size() + 1][totaalAantalRichtingen];
         for (int i = 0; i < alleKruisingen.size() + 1; i++) {
             Row r = sheet.createRow(i);
@@ -200,7 +200,7 @@ public class Statistiek {
                 cellen[i][j] = r.createCell(j);
             }
         }
-        cellen[0][0].setCellValue("Totale Reistijd Per Kruising");
+        //cellen[0][0].setCellValue("Totale Reistijd Per Kruising");
         int rijnummer = 1;
         int kolomnummer = 1;
         for (Kruising k : alleKruisingen) {

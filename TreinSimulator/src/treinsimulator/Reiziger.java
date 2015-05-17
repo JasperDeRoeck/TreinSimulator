@@ -11,16 +11,16 @@ package treinsimulator;
  */
 public class Reiziger {
 
-    int beginTijd;
-    Trein juisteTrein;
-    int vtijd;
-    Reis reis;
-    int aantalGenomenOverstappen;
-    boolean moetUitstappen;
-    int overstaptijd;
-    boolean gestrand = false;
-    Station huidigStation;
-    String naam;                //PUUR voor debuggen
+    private int beginTijd;
+    private Trein juisteTrein;
+    private int vtijd;
+    private Reis reis;
+    private int aantalGenomenOverstappen;
+    private boolean moetUitstappen;
+    private int overstaptijd;
+    private boolean gestrand = false;
+    private Station huidigStation;
+    private String naam;                //PUUR voor debuggen
     
     // het tijdstip waarop de volgende gebeurtenis met betrekking tot de reiziger plaatsvindt
     // als een reiziger strandt of aankomt bij zijn eindstation dan wordt dit ingesteld op oneindig
@@ -42,7 +42,7 @@ public class Reiziger {
         //System.out.println(this + "heeft kans gehad");
         if (vtijd == t) {
             moetUitstappen = false;
-            huidigStation = reis.getOverstapData(aantalGenomenOverstappen).station;
+            huidigStation = reis.getOverstapData(aantalGenomenOverstappen).getStation();
             aantalGenomenOverstappen++;
             if (aantalGenomenOverstappen >= reis.getAantalOverstappen()) {
                 //We zijn er -> data toevoegen
@@ -56,7 +56,7 @@ public class Reiziger {
                 //System.out.println(this + " stapt uit en gaat op zoek naar een andere trein, want " + aantalGenomenOverstappen + " is nog niet gelijk aan " + reis.getAantalOverstappen());
                 //We zijn er nog niet -> nieuwe trein zoeken
                 ////System.out.println(this + " zoekt een trein");
-                juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd(), huidigStation, voorwaarde());
+                juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).getLijn().geefEersteTrein(Klok.getTijd(), huidigStation, voorwaarde());
                 if(juisteTrein != null){
                     vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd()+1, huidigStation, voorwaarde());
                      
@@ -85,7 +85,7 @@ public class Reiziger {
         }
         if (vtijd == t) {
             if (juisteTrein == null) {
-                juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd()+1, huidigStation, voorwaarde());
+                juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).getLijn().geefEersteTrein(Klok.getTijd()+1, huidigStation, voorwaarde());
                 if(juisteTrein != null){
                      vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd()+1, huidigStation, voorwaarde());
                         if(voorwaarde()){
@@ -104,8 +104,8 @@ public class Reiziger {
                 }
                 if (!juisteTrein.opstappen(this)) {
                     //Als trein vol is, nieuwe trein zoeken, vtijd instellen op volgende vertrekuur
-                    juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd()+1, huidigStation, voorwaarde());//data.getTrein();
-                    vtijd = reis.getOverstapData(aantalGenomenOverstappen).lijn.geefEersteTreinUur(Klok.getTijd()+1, huidigStation, voorwaarde()); 
+                    juisteTrein = reis.getOverstapData(aantalGenomenOverstappen).getLijn().geefEersteTrein(Klok.getTijd()+1, huidigStation, voorwaarde());//data.getTrein();
+                    vtijd = reis.getOverstapData(aantalGenomenOverstappen).getLijn().geefEersteTreinUur(Klok.getTijd()+1, huidigStation, voorwaarde()); 
                     
                     if(voorwaarde()){
                         System.out.println("maar er was niet genoeg plaats");
@@ -119,13 +119,13 @@ public class Reiziger {
                         k.addOverstaptijd(overstaptijd);
                     }
                     moetUitstappen = true;                                    //Vanaf nu zit passagier op trein
-                    vtijd = Klok.som(Klok.getTijd(), juisteTrein.getLijn().tijdTussenStations(huidigStation, reis.getOverstapData(aantalGenomenOverstappen).station, voorwaarde()));
+                    vtijd = Klok.som(Klok.getTijd(), juisteTrein.getLijn().tijdTussenStations(huidigStation, reis.getOverstapData(aantalGenomenOverstappen).getStation(), voorwaarde()));
                     
                     if(voorwaarde()){
                         //System.out.println("TOT HIER8!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                         //System.out.println(huidigStation + " vs " + reis.getOverstapData(aantalGenomenOverstappen).station);
-                        System.out.println("tijd tussen " + huidigStation + " en " + reis.getOverstapData(aantalGenomenOverstappen).station + " is " + juisteTrein.getLijn().tijdTussenStations(huidigStation, reis.getOverstapData(aantalGenomenOverstappen).station, false));
-                        System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want hij/zij moet uitstappen aan " + reis.getOverstapData(aantalGenomenOverstappen).station + " op " + juisteTrein);
+                        System.out.println("tijd tussen " + huidigStation + " en " + reis.getOverstapData(aantalGenomenOverstappen).getStation() + " is " + juisteTrein.getLijn().tijdTussenStations(huidigStation, reis.getOverstapData(aantalGenomenOverstappen).getStation(), false));
+                        System.out.println(this + " heeft vtijd geupdate naar " + vtijd + " want hij/zij moet uitstappen aan " + reis.getOverstapData(aantalGenomenOverstappen).getStation() + " op " + juisteTrein);
                         System.out.println(this + " is op " + juisteTrein + " gestapt.");
                     }
                     
@@ -152,4 +152,14 @@ public class Reiziger {
     private boolean voorwaarde(){
         return (naam.equals("9879"));
     }
+
+    public boolean isGestrand() {
+        return gestrand;
+    }
+
+    public Trein getJuisteTrein() {
+        return juisteTrein;
+    }
+    
+    
 }

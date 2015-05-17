@@ -16,7 +16,7 @@ import java.util.HashMap;
 // deze klasse houdt relevante statistische data bij 
 public class Kruising {
     // naam van een kruising is van de vorm "Lijn_n1xLijn_n2"
-    String naam;
+    private String naam;
     private int overstaptijd=0;
     private int aantalReizigers = 0;
     private Station[] stations;

@@ -50,10 +50,10 @@ public class TreinSimulator {
             System.out.println("----------- PASSAGIERS WORDEN OVERLOPEN ----------");
             if (reizigersLijst.get(Klok.getTijd()) != null) {
                 for (Reiziger reiziger : reizigersLijst) {
-                    if((reiziger.vtijd > 100 && reiziger.vtijd < 400)){
-                        System.out.println(reiziger + "----------------------------" + reiziger.juisteTrein);
+                    if((reiziger.getVtijd() > 100 && reiziger.getVtijd() < 400)){
+                        System.out.println(reiziger + "----------------------------" + reiziger.getJuisteTrein());
                     }
-                    if (!reiziger.gestrand) { //gestrande reizigers niet meer overlopen
+                    if (!reiziger.isGestrand()) { //gestrande reizigers niet meer overlopen
                         reiziger.activeer(Klok.getTijd());
                     }
                 }
