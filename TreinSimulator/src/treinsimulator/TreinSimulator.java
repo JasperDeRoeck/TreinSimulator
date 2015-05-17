@@ -31,9 +31,7 @@ public class TreinSimulator {
         reizigersLijst = DAO.getReizigersLijst();
         int STOPTIJD = 100;
         Klok.setTijd(400);
-        int a = 1448;
-        int b = 74;
-        System.out.println(Klok.som(a,b));
+        System.out.println("nieuwe build");
         //Klok:
         ///System.out.println("-----------SIMULATIE START ----------");
         while (Klok.getTijd() != 100) {
@@ -48,7 +46,8 @@ public class TreinSimulator {
                 }
             }
             System.out.println("----------- PASSAGIERS WORDEN OVERLOPEN ----------");
-            if (reizigersLijst.get(Klok.getTijd()) != null) {
+            if(reizigersLijst.size() > Klok.getTijd()){
+                if (reizigersLijst.get(Klok.getTijd()) != null) {
                 for (Reiziger reiziger : reizigersLijst) {
                     if((reiziger.getVtijd() > 100 && reiziger.getVtijd() < 400)){
                         System.out.println(reiziger + "----------------------------" + reiziger.getJuisteTrein());
@@ -58,6 +57,8 @@ public class TreinSimulator {
                     }
                 }
             }
+            }
+            
             System.out.println("----------- TREINEN VERTREKKEN ----------");
             for (Trein trein : alleTreinen) {
                 trein.vertrek(Klok.getTijd() );
