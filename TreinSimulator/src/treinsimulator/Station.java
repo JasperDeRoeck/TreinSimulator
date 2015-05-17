@@ -75,7 +75,7 @@ public class Station {
         return true;
     }
 
-    public boolean bepaalLijnSequentie(int n, Station doel, Stack<OverstapData> sequentie) {
+    public boolean bepaalLijnSequentie(int n, Station doel, Stack<Overstapdata> sequentie) {
         //System.out.println("zoek van " + this + " naar " + doel);
         ////System.out.println("De n is : " + n);
         if(n == 0){
@@ -86,7 +86,7 @@ public class Station {
                         isOk = true;
                     }
                     if(lijn.getHaltes()[i].equals(doel) && isOk){
-                         sequentie.push(new OverstapData(lijn, lijn.getHaltes()[i]));
+                         sequentie.push(new Overstapdata(lijn, lijn.getHaltes()[i]));
                          return true;
                     }
                 }
@@ -101,7 +101,7 @@ public class Station {
                 }
                 if(isOk && lijn.getHaltes()[i].getKruising() != null){
                     if(lijn.getHaltes()[i].bepaalLijnSequentie(n-1, doel, sequentie)){
-                        sequentie.push(new OverstapData(lijn, lijn.getHaltes()[i]));
+                        sequentie.push(new Overstapdata(lijn, lijn.getHaltes()[i]));
                         return true;
                     }
                 }

@@ -7,26 +7,15 @@ package treinsimulator;
 
 /**
  *
- * @author Jasper
+ * @author Wolfger
  */
 public class Overstapdata {
-    private Station overstap;
-    private Treinduurdata treindata;
-    public Overstapdata(Station overstap, Treinduurdata treindata) throws NullPointerException{
-        /*
-        if(treindata.getTrein()==null){
-            throw new NullPointerException();
-        }
-                */
-        this.overstap= overstap;
-        this.treindata=treindata;
-    }
+    Lijn lijn;
+    Station station;
 
-    public Station getOverstap() {
-        return overstap;
+    public Overstapdata(Lijn lijn, Station station) {
+        this.lijn = lijn;
+        this.station = station;
     }
-
-    public Treinduurdata getTreindata() {
-        return treindata;
-    }
+    
 }

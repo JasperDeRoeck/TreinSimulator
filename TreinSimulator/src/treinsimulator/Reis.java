@@ -24,7 +24,7 @@ public class Reis {
     private int aantalOverstappen = -1;     //Op -1 instellen om ongeïnitialiseerd voor te stellen
     private Station vertrekstation;
     private Station eindstation;
-    private OverstapData[] lijnsequentie;
+    private Overstapdata[] lijnsequentie;
     
     public Reis(Station vertrek,Station doel){
         vertrekstation = vertrek;
@@ -65,10 +65,10 @@ public class Reis {
             nietafgewerkt.addAll(nieuwnietafgewerkt);
         }
         aantalOverstappen = n+1;
-        Stack<OverstapData> ls = new Stack<OverstapData>();
+        Stack<Overstapdata> ls = new Stack<Overstapdata>();
         if(vertrekstation.bepaalLijnSequentie(aantalOverstappen, eindstation, ls)){
             //ls.pop();    //Laatst gepushte lijn zal een nullpointer zijn.
-            lijnsequentie = new OverstapData[ls.size()];
+            lijnsequentie = new Overstapdata[ls.size()];
            // //System.out.println("Route from " + vertrekstation + " to " + eindstation + " is");
             for (int i = 0; i < lijnsequentie.length; i++) {
                 lijnsequentie[i] = ls.pop();
@@ -79,7 +79,7 @@ public class Reis {
             //System.out.println("No route to destination: " + vertrekstation + eindstation);
         }
     }
-    public OverstapData getOverstapData(int i){
+    public Overstapdata getOverstapdata(int i){
         if(lijnsequentie == null){
             bepaalLijnSequentie();
         }
