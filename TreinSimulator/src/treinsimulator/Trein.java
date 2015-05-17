@@ -38,10 +38,9 @@ public class Trein {
 
     void aankomst(int tijd) {
         if ((isRijdend) && (tijd == vtijd)) {
-            System.out.println(this + " komt aan in " + lijn.getHalte(positie));
+            ////System.out.println(this + " komt aan in " + lijn.getHalte(positie));
             Set<Reiziger> uitgesmeten = new HashSet<>();
             for (Reiziger reiziger : inzittenden) {
-                System.out.println(reiziger + " stapt krijgt de kans om uit te stappen");
                 if(reiziger.uitstappen(tijd)){
                     uitgesmeten.add(reiziger);
                 }
@@ -56,26 +55,26 @@ public class Trein {
 
     void vertrek(int tijd) {
         if ((!isRijdend) && (tijd == vtijd)) {
-            System.out.println(this + " zal vertrekken.");
+            ////System.out.println(this + " zal vertrekken.");
             if (netaangemaakt) {
                 isRijdend = true;
                 netaangemaakt = false;
                 vtijd = Klok.som(vtijd, lijn.getSegmenten()[positie].getTijd());
                 positie++;
-                System.out.println(this + " heeft zijn vtijd geupdate naar " + vtijd);
+                lijn.getSegmenten()[positie-1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen() , tellerNietOpgestapt));
+                ////System.out.println(this + " heeft zijn vtijd geupdate naar " + vtijd);
             } else if (positie == lijn.getSegmenten().length) {
+                lijn.getSegmenten()[positie-1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen() , tellerNietOpgestapt));
                 vtijd = -1;
-                System.out.println("Trein " + this + " heeft zijn eindbestemming bereikt want positie=" + positie + " vs " + lijn.getSegmenten().length);
-                positie--;      //OutofboundsExceptie voorkomen bij het maken van segmentdata. segmentdata mag ook gecreeerd worden bij vorige segment
+                ////System.out.println("Trein " + this + " heeft zijn eindbestemming bereikt want positie=" + positie + " vs " + lijn.getSegmenten().length);
             } else {
                 isRijdend = true;
                 vtijd = Klok.som(vtijd, lijn.getSegmenten()[positie].getTijd());
-                System.out.println(this + " heeft zijn vtijd geupdate naar " + vtijd);
+                ////System.out.println(this + " heeft zijn vtijd geupdate naar " + vtijd);
                 positie++;
+                lijn.getSegmenten()[positie-1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen() , tellerNietOpgestapt));
             }
-            Segmentdata sd = lijn.getSegmenten()[positie-1].maakSegmentData(this);
-            sd.setAantalAchterGeblevenReizigers(tellerNietOpgestapt);
-            lijn.getSegmenten()[positie-1].setData(sd);
+            
         }
     }
     
@@ -83,9 +82,9 @@ public class Trein {
      * Voegt toe als er nog plaats is, anders returnt de methode false
      */
     boolean opstappen(Reiziger r) {
-        if (inzittenden.size() < lijn.getZitplaatsen()) {
+        if (inzittenden.size() < lijn.getCapaciteit()) {
             inzittenden.add(r);
-            System.out.println(r + " zit nu op trein " + this);
+            ////System.out.println(r + " zit nu op trein " + this);
             return true;
         } else {
             tellerNietOpgestapt++;

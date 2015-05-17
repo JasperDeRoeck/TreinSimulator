@@ -79,12 +79,12 @@ public class Lijn {
         //Aanmaken treinen:
         for (int i : uurPiekVertrek) {
             treinen.put(i, new Trein(i, this, i + "P"));
-            //System.out.println("Nieuwe piekuurtrein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + i);
+            ////System.out.println("Nieuwe piekuurtrein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + i);
         }
         for (int i : uurVertrek) {
             for (int j = 400; j < 2200; j += 100) {
                 treinen.put(j + i, new Trein(j + i, this, (j + i) +"R"+id+richting));
-                //System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
+                ////System.out.println("Nieuwe regelmatige trein aangemaakt op lijn " + haltes[0] + " - " + haltes[haltes.length-1] + " met vertrekuur: " + (i + j));
             }
         }
     }
@@ -221,7 +221,7 @@ public class Lijn {
                 return treinen.get(vertrek);
             }
         }
-        System.out.println("Geen treinen meer.");
+        ////System.out.println("Geen treinen meer.");
         return null;
     }
     public int geefEersteTreinUur(int tijd, Station st){
@@ -231,7 +231,7 @@ public class Lijn {
                 return Klok.som(vertrek, tijdTussenStations);
             }
         }
-        System.out.println("Geen treinen meer.");
+        ////System.out.println("Geen treinen meer.");
         return -1;
     }
     public int tijdTussenStations(Station st1, Station st2){
@@ -256,7 +256,7 @@ public class Lijn {
             }
             i++;
         }
-        //System.out.println(st1 + " vs " + st2 + " maakt: " + t);
+        ////System.out.println(st1 + " vs " + st2 + " maakt: " + t);
         return t;
     }
 }

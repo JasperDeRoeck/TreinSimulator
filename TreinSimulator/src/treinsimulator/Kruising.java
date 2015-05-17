@@ -5,6 +5,8 @@
  */
 package treinsimulator;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Bernard
@@ -18,7 +20,6 @@ public class Kruising {
     private int overstaptijd=0;
     private int aantalReizigers = 0;
     private Station[] stations;
-            
     public Kruising (String naam ,Station[] stations){
         this.naam=naam;
         this.stations = stations;

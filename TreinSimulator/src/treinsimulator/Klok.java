@@ -47,7 +47,7 @@ public class Klok {
         int totaal = huidig/100;
         totaal = totaal*100;
         totaal = totaal-teller+huidig%100;
-        System.out.println(totaal);
+        //System.out.println(totaal);
         int som = 0;
         if (totaal < 0) {
             som = 2300;
@@ -56,7 +56,7 @@ public class Klok {
                 totaal += 60;
             }
             if (totaal < 0) {
-                System.out.println(totaal);
+                //System.out.println(totaal);
                 return (som + (60 + totaal));
             } else {
                 return (som + (60 - totaal));

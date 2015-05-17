@@ -40,7 +40,11 @@ public class Reis {
         return aantalOverstappen;
     }
     public void incGestrandeReizigers(){
+        System.out.println(this + " heeft nu " + aantalGestrandeReizigers + " gestrande reizigers.");
         aantalGestrandeReizigers++;
+        aantalReizigers++;
+    }
+    public void incReizigers(){
         aantalReizigers++;
     }
     public void bepaalLijnSequentie(){
@@ -64,14 +68,14 @@ public class Reis {
         if(vertrekstation.bepaalLijnSequentie(aantalOverstappen, eindstation, ls, null)){
             //ls.pop();    //Laatst gepushte lijn zal een nullpointer zijn.
             lijnsequentie = new OverstapData[ls.size()];
-           // System.out.println("Route from " + vertrekstation + " to " + eindstation + " is");
+           // //System.out.println("Route from " + vertrekstation + " to " + eindstation + " is");
             for (int i = 0; i < lijnsequentie.length; i++) {
                 lijnsequentie[i] = ls.pop();
-               // System.out.println(lijnsequentie[i].lijn + " en overstappen in " + lijnsequentie[i].station);
+               // //System.out.println(lijnsequentie[i].lijn + " en overstappen in " + lijnsequentie[i].station);
             }
         }
         else{
-            System.out.println("No route to destination: " + vertrekstation + eindstation);
+            //System.out.println("No route to destination: " + vertrekstation + eindstation);
         }
     }
     public OverstapData getOverstapData(int i){
@@ -99,6 +103,8 @@ public class Reis {
     public Station getEindstation() {
         return eindstation;
     }
+
+    
 
     @Override
     public int hashCode() {
@@ -130,11 +136,8 @@ public class Reis {
     public String toString() {
         return  vertrekstation + " - " + eindstation;
     }
-
     void addTijd(int getal) {
-        System.out.println("Joepie!! totale reisweg++");
         totaleReiswegTijd += getal;
-        aantalReizigers++;
     }
     
 }
