@@ -214,8 +214,8 @@ public class Lijn {
         return null;
     }
     */
-    public Trein geefEersteTrein(int tijd, Station st){
-        int tijdTussenStations = tijdTussenStations(haltes[0],st);
+    public Trein geefEersteTrein(int tijd, Station st, boolean mustPrint){
+        int tijdTussenStations = tijdTussenStations(haltes[0],st, mustPrint);
         for (int vertrek : treinen.keySet()) {
             if(Klok.som(vertrek, tijdTussenStations) >= tijd){
                 return treinen.get(vertrek);
@@ -224,8 +224,8 @@ public class Lijn {
         ////System.out.println("Geen treinen meer.");
         return null;
     }
-    public int geefEersteTreinUur(int tijd, Station st){
-        int tijdTussenStations = tijdTussenStations(haltes[0],st);
+    public int geefEersteTreinUur(int tijd, Station st, boolean mustPrint){
+        int tijdTussenStations = tijdTussenStations(haltes[0],st, mustPrint);
         for (int vertrek : treinen.keySet()) {
             if(Klok.som(vertrek, tijdTussenStations) >= tijd){
                 return Klok.som(vertrek, tijdTussenStations);
@@ -234,8 +234,9 @@ public class Lijn {
         ////System.out.println("Geen treinen meer.");
         return -1;
     }
-    public int tijdTussenStations(Station st1, Station st2){
-        //System.out.println("zoek tss " + st1 + " en " + st2 + " op lijn: " + this);
+    public int tijdTussenStations(Station st1, Station st2, boolean mustPrint){
+        if(mustPrint)
+        System.out.println("zoek tss " + st1 + " en " + st2 + " op lijn: " + this);
         boolean moetOptellen = false;
         boolean mustLoop = true;
         int t = 0;
@@ -244,10 +245,11 @@ public class Lijn {
             //System.out.println("!!!");
             return 0;
         }
-        while(mustLoop && (i < haltes.length)){
+        while(mustLoop){
             if(moetOptellen){
                 t += segmenten[i-1].getTijd();
-                //System.out.println(t);
+                if(mustPrint)
+                    System.out.println("t is nu: " + t);
             }
             if(st1.equals(haltes[i]) || st2.equals(haltes[i])){
                 if(moetOptellen == false){
@@ -259,6 +261,8 @@ public class Lijn {
             }
             i++;
         }
+        if(mustPrint)
+            System.out.println("uiteindelijke t: " + t);
         return t;
     }
 }
