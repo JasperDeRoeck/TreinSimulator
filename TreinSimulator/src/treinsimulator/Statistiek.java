@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package treinsimulator;
- 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
- 
+
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
- 
+
 /**
  *
  * @author Bernard
@@ -29,7 +29,7 @@ import org.apache.poi.ss.usermodel.Row;
 // Er is voor gekozen om deze eign. samen te brengen in één enkel object met een operatie voor elke statistiek omdat
 // dit het meest flexibele model oplevert.
 public class Statistiek {
- 
+
     private HashMap<Reis, Integer> wachttijdReiziger;
     private ArrayList<Reis> alleReizen = new ArrayList<>();
     private HashMap<Reis, Double> gestrandeReizigers;
@@ -39,28 +39,27 @@ public class Statistiek {
     private ArrayList<Station> stationLijst;
     private int totaalAantalReizigers;
     private int totaalAantalGestrande;
-   
+
     public Statistiek(ArrayList<Lijn> lijnenLijst, ArrayList<Reiziger> reizigersLijst, ArrayList<Station> stationLijst) {
         alleReizen.addAll(DAO.getAlleReizen());
         alleKruisingen = DAO.getKruisingLijst();
         this.lijnenLijst = lijnenLijst;
-        for(Reiziger r: reizigersLijst){
-            if(!r.isGestrand() && (r.getVtijd() > 0)){
-                
+        for (Reiziger r : reizigersLijst) {
+            if (!r.isGestrand() && (r.getVtijd() > 0)) {
+
             }
-           
+
         }
         //alleReizen en segmentenLijst nog initialiseren.
         this.stationLijst = stationLijst;
         this.wachttijdReiziger = berekenWachttijdReiziger();
         this.gestrandeReizigers = bepaalAantalGestrandeReizigersPerReis();
         this.rechtstaandeReizigers = bepaalStaandeReizigersPerDeeltraject();
-        
-        
+
         schrijfGegevensWeg();
-       
+
     }
- 
+
     public void schrijfGegevensWeg() {
         HSSFWorkbook workbook = new HSSFWorkbook();
         schrijfWachttijdPerReiziger(workbook);
@@ -72,17 +71,17 @@ public class Statistiek {
             FileOutputStream out = new FileOutputStream(new File("Stat.xls"));
             workbook.write(out);
             out.close();
-            
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-   
+
     private void schrijfWachttijdPerReiziger(HSSFWorkbook wb) {
         HSSFSheet sheet = wb.createSheet("Wachttijd per Reis");
- 
+
         Cell[][] cellen = new Cell[stationLijst.size() + 1][stationLijst.size() + 1];
         for (int i = 0; i < stationLijst.size() + 1; i++) {
             Row r = sheet.createRow(i);
@@ -112,12 +111,12 @@ public class Statistiek {
         for (int i = 0; i < stationLijst.size() + 1; i++) {
             sheet.autoSizeColumn(i);
         }
- 
+
     }
- 
+
     private void schrijfGestrandeReizigers(HSSFWorkbook wb) {
         HSSFSheet sheet = wb.createSheet("Gestrande Reizigers");
- 
+
         Cell[][] cellen = new Cell[stationLijst.size() + 1][stationLijst.size() + 1];
         for (int i = 0; i < stationLijst.size() + 1; i++) {
             Row r = sheet.createRow(i);
@@ -148,9 +147,9 @@ public class Statistiek {
         for (int i = 0; i < stationLijst.size() + 1; i++) {
             sheet.autoSizeColumn(i);
         }
- 
+
     }
- 
+
     private void schrijfRechtstaandeReizigers(HSSFWorkbook wb) {
         HSSFSheet sheet = wb.createSheet("Rechtstaande Reizigers");
         int totaalAantalSegmenten = 0;
@@ -166,7 +165,7 @@ public class Statistiek {
         }
         //init alle hoofdcriteria en bijcriteria
         cellen[0][0].setCellValue("Rechtstaande Reizigers per Deeltraject");
-        for (int i=400;i<2500;i=i+100){
+        for (int i = 400; i < 2500; i = i + 100) {
             cellen[0][bepaalPositieKolom(i)].setCellValue(bepaalTijd(i));
             cellen[0][bepaalPositieKolom(i + 35)].setCellValue(bepaalTijd(i + 30));
         }
@@ -183,20 +182,20 @@ public class Statistiek {
         for (int i = 0; i < 50; i++) {
             sheet.autoSizeColumn(i);
         }
- 
+
     }
- 
+
     private void schrijfTotaleReistijdPerKruising(HSSFWorkbook wb) {
         HSSFSheet sheet = wb.createSheet("Totale Reistijd Per Kruising");
         int totaalAantalRichtingen = 0;
         for (Kruising k : alleKruisingen) {
             totaalAantalRichtingen += k.getOverstappen().size();
         }
-        
-        Cell[][] cellen = new Cell[alleKruisingen.size() + 1][totaalAantalRichtingen+1];
+
+        Cell[][] cellen = new Cell[alleKruisingen.size() + 1][totaalAantalRichtingen + 1];
         for (int i = 0; i < alleKruisingen.size() + 1; i++) {
             Row r = sheet.createRow(i);
-            for (int j = 0; j < totaalAantalRichtingen+1; j++) {
+            for (int j = 0; j < totaalAantalRichtingen + 1; j++) {
                 cellen[i][j] = r.createCell(j);
             }
         }
@@ -205,17 +204,17 @@ public class Statistiek {
         int kolomnummer = 1;
         for (Kruising k : alleKruisingen) {
             cellen[rijnummer][0].setCellValue(k.getNaam());
-           
-            for (Map.Entry m : k.getOverstappen().entrySet()){
-                cellen[0][kolomnummer].setCellValue((String)m.getKey());
-                int totaleReistijdPerKruising=0;
-                for (Map.Entry m2 : ((HashMap<Integer,Integer>)m.getValue()).entrySet()){
-                    totaleReistijdPerKruising=totaleReistijdPerKruising+((int)m2.getKey())*((int)m2.getValue());
+
+            for (Map.Entry m : k.getOverstappen().entrySet()) {
+                cellen[0][kolomnummer].setCellValue((String) m.getKey());
+                int totaleReistijdPerKruising = 0;
+                for (Map.Entry m2 : ((HashMap<Integer, Integer>) m.getValue()).entrySet()) {
+                    totaleReistijdPerKruising = totaleReistijdPerKruising + ((int) m2.getKey()) * ((int) m2.getValue());
                 }
                 cellen[rijnummer][kolomnummer].setCellValue(totaleReistijdPerKruising);
                 kolomnummer++;
             }
-           
+
             rijnummer++;
         }
         //resizen van de kolommen
@@ -223,18 +222,18 @@ public class Statistiek {
             sheet.autoSizeColumn(i);
         }
     }
-   
-    private void schrijfGemiddeldeOverstaptijdPerKruising(HSSFWorkbook wb){
+
+    private void schrijfGemiddeldeOverstaptijdPerKruising(HSSFWorkbook wb) {
         HSSFSheet sheet = wb.createSheet("Gemiddelde Reistijd Per Kruising");
         int totaalAantalRichtingen = 0;
         for (Kruising k : alleKruisingen) {
             totaalAantalRichtingen += k.getOverstappen().size();
         }
-        
-        Cell[][] cellen = new Cell[alleKruisingen.size() + 1][totaalAantalRichtingen+1];
+
+        Cell[][] cellen = new Cell[alleKruisingen.size() + 1][totaalAantalRichtingen + 1];
         for (int i = 0; i < alleKruisingen.size() + 1; i++) {
             Row r = sheet.createRow(i);
-            for (int j = 0; j < totaalAantalRichtingen+1; j++) {
+            for (int j = 0; j < totaalAantalRichtingen + 1; j++) {
                 cellen[i][j] = r.createCell(j);
             }
         }
@@ -243,19 +242,19 @@ public class Statistiek {
         int kolomnummer = 1;
         for (Kruising k : alleKruisingen) {
             cellen[rijnummer][0].setCellValue(k.getNaam());
-           
-            for (Map.Entry m : k.getOverstappen().entrySet()){
-                cellen[0][kolomnummer].setCellValue((String)m.getKey());
-                int totaleReistijdPerKruising=0;
-                int aantalMensen=0;
-                for (Map.Entry m2 : ((HashMap<Integer,Integer>)m.getValue()).entrySet()){
-                    totaleReistijdPerKruising=totaleReistijdPerKruising+((int)m2.getKey())*((int)m2.getValue());
-                    aantalMensen =aantalMensen + (int)m2.getValue();
+
+            for (Map.Entry m : k.getOverstappen().entrySet()) {
+                cellen[0][kolomnummer].setCellValue((String) m.getKey());
+                int totaleReistijdPerKruising = 0;
+                int aantalMensen = 0;
+                for (Map.Entry m2 : ((HashMap<Integer, Integer>) m.getValue()).entrySet()) {
+                    totaleReistijdPerKruising = totaleReistijdPerKruising + ((int) m2.getKey()) * ((int) m2.getValue());
+                    aantalMensen = aantalMensen + (int) m2.getValue();
                 }
-                cellen[rijnummer][kolomnummer].setCellValue((double)totaleReistijdPerKruising/aantalMensen);
+                cellen[rijnummer][kolomnummer].setCellValue((double) totaleReistijdPerKruising / aantalMensen);
                 kolomnummer++;
             }
-           
+
             rijnummer++;
         }
         //resizen van de kolommen
@@ -263,14 +262,14 @@ public class Statistiek {
             sheet.autoSizeColumn(i);
         }
     }
- 
+
     //hulpfunctie voor schrijfrechstaandereizigers
     private String bepaalTijd(int i) {
         int eerste = Klok.som(i, 0);
         int tweede = Klok.som(i, 30);
         return (eerste + "-" + tweede);
     }
- 
+
     //hulpfunctie voor schrijfrechstaandereizigers
     private int bepaalPositieKolom(int vtijd) {
         //System.out.print(vtijd);
@@ -280,7 +279,7 @@ public class Statistiek {
         } else if (uur == 1) {
             uur = 25;
         }
- 
+
         int min = vtijd % 100;
         if (min < 30) {
             return (1 + ((2 * uur) - 8));
@@ -288,7 +287,7 @@ public class Statistiek {
             return (1 + ((2 * uur) - 8) + 1);
         }
     }
- 
+
     public HashMap<Reis, Integer> berekenWachttijdReiziger() {
         HashMap<Reis, Integer> wachttijd = new HashMap<>();
         for (Reis r : alleReizen) {
@@ -297,7 +296,7 @@ public class Statistiek {
         }
         return wachttijd;
     }
- 
+
     public HashMap<Reis, Double> bepaalAantalGestrandeReizigersPerReis() {
         HashMap<Reis, Double> aantalGestrandeReizigers = new HashMap<>();
         for (Reis r : alleReizen) {
@@ -309,22 +308,22 @@ public class Statistiek {
                 totaalAantalReizigers += totaalP;
                 //
                 double percentage = gestrand / totaalP * 100;
-               aantalGestrandeReizigers.put(r, percentage);
+                aantalGestrandeReizigers.put(r, percentage);
             }
         }
         return aantalGestrandeReizigers;
     }
- 
+
     public HashMap<Kruising, Double> bepaalGemiddeldeOverstapTijdPerKruising() { //Het aantal stations opvragen en dan totale tijd delen door het aantal stations
         HashMap<Kruising, Double> gemiddeldeTijd = new HashMap<>();
- 
+
         for (Kruising k : alleKruisingen) {
             double gemiddelde = k.getOverstaptijd() / k.getAantalReizigers();
             gemiddeldeTijd.put(k, gemiddelde);
         }
         return gemiddeldeTijd;
     }
- 
+
     public HashMap<Reis, Double> bepaalPercentageGestrandeReizigers() {
         HashMap<Reis, Double> hm = new HashMap<>();
         for (Reis r : alleReizen) {
@@ -333,7 +332,7 @@ public class Statistiek {
         }
         return hm;
     }
- 
+
     //Is voor alle kruisingen in het algemeen, maar moet per kruising
 //    public double bepaalGemiddeldeOverstaptijd(){
 //        int tijd = 0;
@@ -373,7 +372,7 @@ public class Statistiek {
         }
         return aantalReizigers;
     }
- 
+
     public HashMap<Kruising, Integer> bepaalReizigersAantalPerKruising() {
         HashMap<Kruising, Integer> aantal = new HashMap<>();
         for (Kruising k : alleKruisingen) {
@@ -382,7 +381,7 @@ public class Statistiek {
         }
         return aantal;
     }
- 
+
     public HashMap<Segment, Integer> bepaalStaandeReizigersPerDeeltraject() {
         HashMap<Segment, Integer> aantalRecht = new HashMap<>();
         int aantal;
@@ -396,5 +395,5 @@ public class Statistiek {
         }
         return aantalRecht;
     }
- 
+
 }

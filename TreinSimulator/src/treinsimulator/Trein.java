@@ -27,7 +27,7 @@ public class Trein {
     int positie = 0;
     String id;
     boolean isRijdend = false;
-    
+
     Trein(int vtijd, Lijn l, String id) {
         this.vtijd = vtijd;
         this.lijn = l;
@@ -36,15 +36,15 @@ public class Trein {
     }
 
     void aankomst(int tijd) {
-       
+
         if ((isRijdend) && (tijd == vtijd)) {
             Set<Reiziger> uitgesmeten = new HashSet<>();
             for (Reiziger reiziger : inzittenden) {
-                if(reiziger.uitstappen(tijd)){
+                if (reiziger.uitstappen(tijd)) {
                     uitgesmeten.add(reiziger);
                 }
             }
-            for(Reiziger reiziger:uitgesmeten){
+            for (Reiziger reiziger : uitgesmeten) {
                 inzittenden.remove(reiziger);
             }
             uitgesmeten.clear();
@@ -59,21 +59,21 @@ public class Trein {
                 netaangemaakt = false;
                 vtijd = Klok.som(vtijd, lijn.getSegmenten()[positie].getTijd());
                 positie++;
-                lijn.getSegmenten()[positie-1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen() , tellerNietOpgestapt));
-                
+                lijn.getSegmenten()[positie - 1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen(), tellerNietOpgestapt));
+
             } else if (positie == lijn.getSegmenten().length) {
-                lijn.getSegmenten()[positie-1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen() , tellerNietOpgestapt));
+                lijn.getSegmenten()[positie - 1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen(), tellerNietOpgestapt));
                 vtijd = -1;
             } else {
                 isRijdend = true;
                 vtijd = Klok.som(vtijd, lijn.getSegmenten()[positie].getTijd());
                 positie++;
-                lijn.getSegmenten()[positie-1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen() , tellerNietOpgestapt));
+                lijn.getSegmenten()[positie - 1].addSegmentData(new Segmentdata(vtijd, inzittenden.size(), inzittenden.size() - lijn.getZitplaatsen(), tellerNietOpgestapt));
             }
-            
+
         }
     }
-    
+
     /*
      * Voegt toe als er nog plaats is, anders returnt de methode false
      */
@@ -86,6 +86,7 @@ public class Trein {
             return false;
         }
     }
+
     public Lijn getLijn() {
         return lijn;
     }

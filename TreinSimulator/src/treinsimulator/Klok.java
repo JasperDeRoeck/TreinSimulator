@@ -12,21 +12,24 @@ import javax.naming.OperationNotSupportedException;
  * @author Bernard
  */
 public class Klok {
-    
+
     private static int tijd;
 
     static void setTijd(int i) {
         tijd = i;
     }
-    public static int getTijd(){
+
+    public static int getTijd() {
         return tijd;
     }
-    public static void incrementeer(){
+
+    public static void incrementeer() {
         tijd = som(tijd, 1);
     }
+
     public static int som(int tijd, int teller) {
         //return fromSecondsToTime(fromTimeToSeconds(a) + fromTimeToSeconds(b));
-        int huidig  = valideer(tijd);
+        int huidig = valideer(tijd);
         int totaal = (huidig % 100) + teller + (huidig / 100) * 60;
         int som = 0;
         while (totaal > 59) {
@@ -42,11 +45,12 @@ public class Klok {
         }
         return som;
     }
-    public static int verschil(int tijd, int teller){
+
+    public static int verschil(int tijd, int teller) {
         int huidig = valideer(tijd);
-        int totaal = huidig/100;
-        totaal = totaal*100;
-        totaal = totaal-teller+huidig%100;
+        int totaal = huidig / 100;
+        totaal = totaal * 100;
+        totaal = totaal - teller + huidig % 100;
         int som = 0;
         if (totaal < 0) {
             som = 2300;
@@ -68,17 +72,17 @@ public class Klok {
         if (som % 100 > 59) {
             som += 40;
         }
- 
+
         return som;
     }
-   
-    private static int valideer(int tijd) throws RuntimeException{
-        String a = tijd+"";
-        if(tijd == 0){
+
+    private static int valideer(int tijd) throws RuntimeException {
+        String a = tijd + "";
+        if (tijd == 0) {
             return tijd;
         }
-        while (a.startsWith("0")){
-            a=a.substring(0);
+        while (a.startsWith("0")) {
+            a = a.substring(0);
         }
         return Integer.parseInt(a);
     }

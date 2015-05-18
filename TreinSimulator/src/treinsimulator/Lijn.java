@@ -79,10 +79,11 @@ public class Lijn {
         }
         for (int i : uurVertrek) {
             for (int j = 400; j < 2200; j += 100) {
-                treinen.put(j + i, new Trein(j + i, this, (j + i) +"R"+id+richting));
+                treinen.put(j + i, new Trein(j + i, this, (j + i) + "R" + id + richting));
             }
         }
     }
+
     public Station[] getHaltes() {
         return haltes;
     }
@@ -142,11 +143,11 @@ public class Lijn {
     public void setUurPiekVertrek(ArrayList<Integer> uurPiekVertrek) {
         this.uurPiekVertrek = uurPiekVertrek;
     }
+
     @Override
     public String toString() {
         return "Lijn " + id + richting;
     }
-    
 
     public TreeMap<Integer, Trein> getTreinen() {
         return treinen;
@@ -155,41 +156,43 @@ public class Lijn {
     public int getId() {
         return id;
     }
-    public Trein geefEersteTrein(int tijd, Station st){
-        int tijdTussenStations = tijdTussenStations(haltes[0],st);
+
+    public Trein geefEersteTrein(int tijd, Station st) {
+        int tijdTussenStations = tijdTussenStations(haltes[0], st);
         for (int vertrek : treinen.keySet()) {
-            if(Klok.som(vertrek, tijdTussenStations) >= tijd){
+            if (Klok.som(vertrek, tijdTussenStations) >= tijd) {
                 return treinen.get(vertrek);
             }
         }
         return null;
     }
-    public int geefEersteTreinUur(int tijd, Station st){
-        int tijdTussenStations = tijdTussenStations(haltes[0],st);
+
+    public int geefEersteTreinUur(int tijd, Station st) {
+        int tijdTussenStations = tijdTussenStations(haltes[0], st);
         for (int vertrek : treinen.keySet()) {
-            if(Klok.som(vertrek, tijdTussenStations) >= tijd){
+            if (Klok.som(vertrek, tijdTussenStations) >= tijd) {
                 return Klok.som(vertrek, tijdTussenStations);
             }
         }
         return -1;
     }
-    public int tijdTussenStations(Station st1, Station st2){
+
+    public int tijdTussenStations(Station st1, Station st2) {
         boolean moetOptellen = false;
         boolean mustLoop = true;
         int t = 0;
         int i = 0;
-        if(st1.equals(st2)){
+        if (st1.equals(st2)) {
             return 0;
         }
-        while(mustLoop){
-            if(moetOptellen){
-                t += segmenten[i-1].getTijd();
+        while (mustLoop) {
+            if (moetOptellen) {
+                t += segmenten[i - 1].getTijd();
             }
-            if(st1.equals(haltes[i]) || st2.equals(haltes[i])){
-                if(moetOptellen == false){
+            if (st1.equals(haltes[i]) || st2.equals(haltes[i])) {
+                if (moetOptellen == false) {
                     moetOptellen = true;
-                }
-                else{
+                } else {
                     mustLoop = false;
                 }
             }

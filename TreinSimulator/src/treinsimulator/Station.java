@@ -40,7 +40,7 @@ public class Station {
     public Set getBuren() {
         return buren;
     }
-    
+
     @Override
     public String toString() {
         return stadsnaam;
@@ -50,9 +50,11 @@ public class Station {
     ) {
         kruising = kr;
     }
+
     public Kruising getKruising() {
         return kruising;
     }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -78,29 +80,29 @@ public class Station {
     public boolean bepaalLijnSequentie(int n, Station doel, Stack<Overstapdata> sequentie) {
         //
         ////
-        if(n == 0){
-            for(Lijn lijn : lijnen){
+        if (n == 0) {
+            for (Lijn lijn : lijnen) {
                 boolean isOk = false;
                 for (int i = 0; i < lijn.getHaltes().length; i++) {
-                    if(lijn.getHaltes()[i].equals(this)){
+                    if (lijn.getHaltes()[i].equals(this)) {
                         isOk = true;
                     }
-                    if(lijn.getHaltes()[i].equals(doel) && isOk){
-                         sequentie.push(new Overstapdata(lijn, lijn.getHaltes()[i]));
-                         return true;
+                    if (lijn.getHaltes()[i].equals(doel) && isOk) {
+                        sequentie.push(new Overstapdata(lijn, lijn.getHaltes()[i]));
+                        return true;
                     }
                 }
             }
             return false;
         }
-        for(Lijn lijn : lijnen){
+        for (Lijn lijn : lijnen) {
             boolean isOk = false;
             for (int i = 0; i < lijn.getHaltes().length; i++) {
-                if(lijn.getHaltes()[i].equals(this)){
+                if (lijn.getHaltes()[i].equals(this)) {
                     isOk = true;
                 }
-                if(isOk && lijn.getHaltes()[i].getKruising() != null){
-                    if(lijn.getHaltes()[i].bepaalLijnSequentie(n-1, doel, sequentie)){
+                if (isOk && lijn.getHaltes()[i].getKruising() != null) {
+                    if (lijn.getHaltes()[i].bepaalLijnSequentie(n - 1, doel, sequentie)) {
                         sequentie.push(new Overstapdata(lijn, lijn.getHaltes()[i]));
                         return true;
                     }

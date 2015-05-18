@@ -10,6 +10,7 @@ package treinsimulator;
  * @author Wolfger
  */
 public class Overstapdata {
+
     Lijn lijn;
     Station station;
 
@@ -17,5 +18,5 @@ public class Overstapdata {
         this.lijn = lijn;
         this.station = station;
     }
-    
+
 }

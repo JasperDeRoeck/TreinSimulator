@@ -11,24 +11,25 @@ package treinsimulator;
  */
 // elke trein die een segment aflegt maakt een reeks segmentdata over aan het segment
 public class Segmentdata {
+
     //het moment waarop de trein vertrekt uit het beginstation
+
     private int vtijd;
     private int aantalReizigersPerTrein;
     private int aantalRechtstaandeReizigers;
     private int aantalAchterGeblevenReizigers;
-    
-    public Segmentdata(int vtijd, int aantalReizigersPerTrein, int aantalRechtstaandeReizigers, int aantalAchterGeblevenReizigers){
+
+    public Segmentdata(int vtijd, int aantalReizigersPerTrein, int aantalRechtstaandeReizigers, int aantalAchterGeblevenReizigers) {
         this.vtijd = vtijd;
-        this.aantalAchterGeblevenReizigers= aantalAchterGeblevenReizigers;
-        if(aantalRechtstaandeReizigers < 0){
+        this.aantalAchterGeblevenReizigers = aantalAchterGeblevenReizigers;
+        if (aantalRechtstaandeReizigers < 0) {
             this.aantalRechtstaandeReizigers = 0;
-        }
-        else{
+        } else {
             this.aantalRechtstaandeReizigers = aantalRechtstaandeReizigers;
         }
         this.aantalReizigersPerTrein = aantalReizigersPerTrein;
     }
-    
+
     public int getAantalRechtstaandeReizigers() {
         return aantalRechtstaandeReizigers;
     }
@@ -49,6 +50,5 @@ public class Segmentdata {
     public String toString() {
         return "Segmentdata{" + "vtijd=" + vtijd + ", aantalReizigersPerTrein=" + aantalReizigersPerTrein + ", aantalRechtstaandeReizigers=" + aantalRechtstaandeReizigers + ", aantalAchterGeblevenReizigers=" + aantalAchterGeblevenReizigers + '}';
     }
-    
-    
+
 }

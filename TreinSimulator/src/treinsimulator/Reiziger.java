@@ -21,7 +21,7 @@ public class Reiziger {
     private boolean gestrand = false;
     private Station huidigStation;
     private String naam;                //PUUR voor debuggen
-    
+
     // het tijdstip waarop de volgende gebeurtenis met betrekking tot de reiziger plaatsvindt
     // als een reiziger strandt of aankomt bij zijn eindstation dan wordt dit ingesteld op oneindig
     public Reiziger(int aankomstSysteem, Reis reis, String naam) {
@@ -52,10 +52,9 @@ public class Reiziger {
             } else {
                 //We zijn er nog niet -> nieuwe trein zoeken
                 juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd(), huidigStation);
-                if(juisteTrein != null){
-                    vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd()+1, huidigStation);
-                }
-                else{
+                if (juisteTrein != null) {
+                    vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd() + 1, huidigStation);
+                } else {
                     reis.incGestrandeReizigers();
                     gestrand = true;
                 }
@@ -64,35 +63,35 @@ public class Reiziger {
         }
         return false;
     }
+
     /**
      *
      * @param t = huidige tijd
      * @return true if vtijd has changed
      */
     public boolean activeer(int t) {
-        
+
         if (!moetUitstappen) {
             overstaptijd++;
         }
         if (vtijd == t) {
             if (juisteTrein == null) {
-                juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd()+1, huidigStation);
-                if(juisteTrein != null){
-                     vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd()+1, huidigStation);
-                }
-                else{
+                juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd() + 1, huidigStation);
+                if (juisteTrein != null) {
+                    vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd() + 1, huidigStation);
+                } else {
                     reis.incGestrandeReizigers();
                     gestrand = true;
                 }
             } else {
                 if (!juisteTrein.opstappen(this)) {
-                    juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd()+1, huidigStation);   //Als trein vol is, nieuwe trein zoeken, vtijd instellen op volgende vertrekuur
-                    vtijd = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTreinUur(Klok.getTijd()+1, huidigStation); 
+                    juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd() + 1, huidigStation);   //Als trein vol is, nieuwe trein zoeken, vtijd instellen op volgende vertrekuur
+                    vtijd = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTreinUur(Klok.getTijd() + 1, huidigStation);
                 } else {
                     Kruising k;
-                    if((k = reis.getOverstapdata(aantalGenomenOverstappen).station.getKruising()) != null){
-                        if(reis.getAantalOverstappen()!=aantalGenomenOverstappen){
-                            k.addOverstaptijd(reis.getOverstapdata(aantalGenomenOverstappen).lijn, reis.getOverstapdata(aantalGenomenOverstappen+1).lijn, overstaptijd);
+                    if ((k = reis.getOverstapdata(aantalGenomenOverstappen).station.getKruising()) != null) {
+                        if (reis.getAantalOverstappen() != aantalGenomenOverstappen) {
+                            k.addOverstaptijd(reis.getOverstapdata(aantalGenomenOverstappen).lijn, reis.getOverstapdata(aantalGenomenOverstappen + 1).lijn, overstaptijd);
                         }
                     }
                     moetUitstappen = true;                                    //Vanaf nu zit passagier op trein
@@ -117,6 +116,7 @@ public class Reiziger {
     public String toString() {
         return "Reiziger (" + naam + ") met reis " + reis;
     }
+
     public boolean isGestrand() {
         return gestrand;
     }
@@ -124,6 +124,5 @@ public class Reiziger {
     public Trein getJuisteTrein() {
         return juisteTrein;
     }
-    
-    
+
 }

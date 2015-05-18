@@ -15,7 +15,7 @@ import java.util.Set;
  * @author Bernard
  */
 public class TreinSimulator {
-
+    
     private static ArrayList<Station> stationLijst;
     private static ArrayList<Lijn> lijnenLijst;
     private static ArrayList<Reiziger> reizigersLijst;
@@ -25,10 +25,9 @@ public class TreinSimulator {
     public static void main(String[] args) {
         //Set up:
         System.out.println("Initialiseren...");
-        try{
-        DAO.initialiseer(args[0]);
-        }
-        catch(ArrayIndexOutOfBoundsException e){
+        try {
+            DAO.initialiseer(args[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Zorg dat er zeker een invoerbestand opgegeven werd.");
             System.exit(0);
         }
@@ -39,36 +38,35 @@ public class TreinSimulator {
         Klok.setTijd(400);
         System.out.println("Simuleren...");
         while (Klok.getTijd() != 100) {
-        
+            
             Set<Trein> alleTreinen = new HashSet<>();
             for (Lijn lijn : lijnenLijst) {
                 for (Trein trein : lijn.getTreinen().values()) {
                     alleTreinen.add(trein);             // Tijdelijk treinen opslaan in een set, om niet twee keer
-                                                        // iedere lijn te moeten afgaan om daar alle treinen uit te halen
+                    // iedere lijn te moeten afgaan om daar alle treinen uit te halen
                     trein.aankomst(Klok.getTijd());
                 }
             }
-            if(reizigersLijst.size() > Klok.getTijd()){
+            if (reizigersLijst.size() > Klok.getTijd()) {
                 if (reizigersLijst.get(Klok.getTijd()) != null) {
-                for (Reiziger reiziger : reizigersLijst) {
-                    if((reiziger.getVtijd() > 100 && reiziger.getVtijd() < 400)){
-                        
-                    }
-                    if (!reiziger.isGestrand()) { //gestrande reizigers niet meer overlopen
-                        reiziger.activeer(Klok.getTijd());
+                    for (Reiziger reiziger : reizigersLijst) {
+                        if ((reiziger.getVtijd() > 100 && reiziger.getVtijd() < 400)) {
+                            
+                        }
+                        if (!reiziger.isGestrand()) { //gestrande reizigers niet meer overlopen
+                            reiziger.activeer(Klok.getTijd());
+                        }
                     }
                 }
             }
-            }
-            
             
             for (Trein trein : alleTreinen) {
-                trein.vertrek(Klok.getTijd() );
+                trein.vertrek(Klok.getTijd());
             }
             Klok.incrementeer();
         }
-        Statistiek st = new Statistiek(lijnenLijst, reizigersLijst,stationLijst);
+        Statistiek st = new Statistiek(lijnenLijst, reizigersLijst, stationLijst);
         System.out.println("Afgewerkt.");
     }
-
+    
 }

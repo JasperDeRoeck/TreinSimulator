@@ -23,7 +23,7 @@ import java.util.Stack;
  * @author Bernard
  */
 public class DAO {
-
+    
     private static ArrayList<Station> stationLijst = new ArrayList<>();
     private static ArrayList<Lijn> lijnenLijst = new ArrayList<>();
     private static ArrayList<Reiziger> reizigersLijst = new ArrayList<>();
@@ -118,7 +118,7 @@ public class DAO {
 
     //initialiseert de reizigers in reizigersLijst,wordt opgeroepen door leesIni()
     private static void maakReizigers(BufferedReader br) throws IOException {
-        int cijfer= 0;
+        int cijfer = 0;
         String huidig = br.readLine();
         String passagiersLijst = "";
         while (huidig != null) {
@@ -131,12 +131,12 @@ public class DAO {
         }
         passagiersLijst = passagiersLijst.replaceAll("\\\\", "");
         String[] lines = passagiersLijst.split(" ");
-
+        
         for (int i = 0; i < lines.length; i = i + 4) {
             Station beginstation = null;
             Station doelstation = null;
             int tijd = Integer.parseInt(lines[i].replace("u", ""));
-            if(100 < tijd && tijd  < 400){
+            if (100 < tijd && tijd < 400) {
                 tijd = 400;
             }
             for (Station s : stationLijst) {
@@ -146,7 +146,7 @@ public class DAO {
                     doelstation = s;
                 }
             }
-
+            
             Reis r = new Reis(beginstation, doelstation);
             if (!alleReizen.contains(r)) {
                 alleReizen.add(r);
@@ -159,13 +159,15 @@ public class DAO {
             }
             
             for (int j = 0; j < Integer.parseInt(lines[i + 1]); j++) {
-                reizigersLijst.add(new Reiziger(tijd, r, cijfer+""));
+                reizigersLijst.add(new Reiziger(tijd, r, cijfer + ""));
                 cijfer++;
             }
         }
-
+        
     }
+
     //neemt een ganse lijnparagraaf ,analyseert ze en geeft een uitgewerkt lijnobj terug
+
     private static Lijn verwerkLijnParagraaf(String s) {
         /* Kleine aanpassing aangebracht: om het aantal getters/setters toch een beetje te reduceren,
          * heb ik de constructor van Lijn aangepast om richting en id al aan te nemen. Deze worden dan
@@ -195,7 +197,7 @@ public class DAO {
         }
         l.setSegmenten(segmentarray);
         l.setHaltes(haltes);
-
+        
         l.setCapaciteit(Integer.parseInt(s.substring(s.indexOf("CapaciteitPerTrein=") + 19, s.indexOf("ZitplaatsenPerTrein="))));
         l.setZitplaatsen(Integer.parseInt(s.substring(s.indexOf("ZitplaatsenPerTrein=") + 20, s.indexOf("Uurvaste"))));
         for (String uur : s.substring(s.indexOf("Uurvaste") + 16, s.indexOf("Piekuurtreinen=")).split(",")) {
@@ -211,10 +213,10 @@ public class DAO {
     //initialiseert de buren en doorgaande lijnen van elk station in de stationslijst,wordt opgeroepen door maakDeductieStructuren()
     private static void geefStationsBurenEnLijnen() {
         for (Lijn l : lijnenLijst) {
-          //  //
+            //  //
             for (Station s : l.getHaltes()) {
                 s.lijnen.add(l);
-             //   //
+                //   //
             }
             for (int i = 0; i < l.getHaltes().length; i++) {
                 for (int j = 1; j < l.getHaltes().length - i; j++) {
@@ -223,7 +225,7 @@ public class DAO {
                         l.getHaltes()[i].getBuren().add(l.getHaltes()[i - j]);
                     }
                 }
-
+                
             }
         }
     }
@@ -262,56 +264,56 @@ public class DAO {
         }
         return false;
     }
-
+    
     public static void schrijfStations() {
         for (Station s : stationLijst) {
             //
             //
-            for (Station s2 : s.buren){
-                System.out.print(s2.toString()+" ");
+            for (Station s2 : s.buren) {
+                System.out.print(s2.toString() + " ");
             }
             //
         }
     }
-
+    
     public static void schrijfLijnen() {
         for (Lijn l : lijnenLijst) {
             //
         }
     }
-
+    
     public static void schrijfPassagiers() {
-            throw new UnsupportedOperationException("Deprecated.");
+        throw new UnsupportedOperationException("Deprecated.");
     }
-
+    
     public static void schrijfKruisingen() {
         for (Kruising k : kruisingLijst) {
             //
         }
     }
-
+    
     public static ArrayList<Reiziger> getReizigersLijst() {
         return reizigersLijst;
     }
-
+    
     public static ArrayList<Kruising> getKruisingLijst() {
         return kruisingLijst;
     }
-
+    
     public Station getTrein(int i) {
         return stationLijst.get(i);
     }
-
+    
     public static ArrayList<Station> getStationLijst() {
         return stationLijst;
     }
-
+    
     public static ArrayList<Lijn> getLijnenLijst() {
         return lijnenLijst;
     }
-
+    
     public static Set<Reis> getAlleReizen() {
         return alleReizen;
     }
-
+    
 }
