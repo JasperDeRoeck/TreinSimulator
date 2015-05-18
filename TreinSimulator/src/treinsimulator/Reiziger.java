@@ -42,7 +42,7 @@ public class Reiziger {
         //
         if (vtijd == t) {
             moetUitstappen = false;
-            huidigStation = reis.getOverstapdata(aantalGenomenOverstappen).station;
+            huidigStation = reis.getOverstapdata(aantalGenomenOverstappen).getStation();
             aantalGenomenOverstappen++;
             if (aantalGenomenOverstappen >= reis.getAantalOverstappen()) {
                 //We zijn er -> data toevoegen
@@ -51,10 +51,11 @@ public class Reiziger {
                 reis.incReizigers();
             } else {
                 //We zijn er nog niet -> nieuwe trein zoeken
-                juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd(), huidigStation);
-                if (juisteTrein != null) {
-                    vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd() + 1, huidigStation);
-                } else {
+                juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).getLijn().geefEersteTrein(Klok.getTijd(), huidigStation);
+                if(juisteTrein != null){
+                    vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd()+1, huidigStation);
+                }
+                else{
                     reis.incGestrandeReizigers();
                     gestrand = true;
                 }
@@ -76,26 +77,27 @@ public class Reiziger {
         }
         if (vtijd == t) {
             if (juisteTrein == null) {
-                juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd() + 1, huidigStation);
-                if (juisteTrein != null) {
-                    vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd() + 1, huidigStation);
-                } else {
+                juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).getLijn().geefEersteTrein(Klok.getTijd()+1, huidigStation);
+                if(juisteTrein != null){
+                     vtijd = juisteTrein.getLijn().geefEersteTreinUur(Klok.getTijd()+1, huidigStation);
+                }
+                else{
                     reis.incGestrandeReizigers();
                     gestrand = true;
                 }
             } else {
                 if (!juisteTrein.opstappen(this)) {
-                    juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTrein(Klok.getTijd() + 1, huidigStation);   //Als trein vol is, nieuwe trein zoeken, vtijd instellen op volgende vertrekuur
-                    vtijd = reis.getOverstapdata(aantalGenomenOverstappen).lijn.geefEersteTreinUur(Klok.getTijd() + 1, huidigStation);
+                    juisteTrein = reis.getOverstapdata(aantalGenomenOverstappen).getLijn().geefEersteTrein(Klok.getTijd()+1, huidigStation);   //Als trein vol is, nieuwe trein zoeken, vtijd instellen op volgende vertrekuur
+                    vtijd = reis.getOverstapdata(aantalGenomenOverstappen).getLijn().geefEersteTreinUur(Klok.getTijd()+1, huidigStation); 
                 } else {
                     Kruising k;
-                    if ((k = reis.getOverstapdata(aantalGenomenOverstappen).station.getKruising()) != null) {
-                        if (reis.getAantalOverstappen() != aantalGenomenOverstappen) {
-                            k.addOverstaptijd(reis.getOverstapdata(aantalGenomenOverstappen).lijn, reis.getOverstapdata(aantalGenomenOverstappen + 1).lijn, overstaptijd);
+                    if((k = reis.getOverstapdata(aantalGenomenOverstappen).getStation().getKruising()) != null){
+                        if(reis.getAantalOverstappen()!=aantalGenomenOverstappen){
+                            k.addOverstaptijd(reis.getOverstapdata(aantalGenomenOverstappen).getLijn(), reis.getOverstapdata(aantalGenomenOverstappen+1).getLijn(), overstaptijd);
                         }
                     }
                     moetUitstappen = true;                                    //Vanaf nu zit passagier op trein
-                    vtijd = Klok.som(Klok.getTijd(), juisteTrein.getLijn().tijdTussenStations(huidigStation, reis.getOverstapdata(aantalGenomenOverstappen).station));
+                    vtijd = Klok.som(Klok.getTijd(), juisteTrein.getLijn().tijdTussenStations(huidigStation, reis.getOverstapdata(aantalGenomenOverstappen).getStation()));
                 }
             }
             return true;

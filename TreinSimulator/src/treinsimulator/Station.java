@@ -18,11 +18,11 @@ import java.util.Stack;
 // anders enkel nodig als verbindingspunt
 public class Station {
 
-    String stadsnaam;
-    int overstaptijd;
-    Set<Station> buren = new HashSet<>();
-    Set<Lijn> lijnen = new HashSet<>();
-    Kruising kruising;
+    private String stadsnaam;
+    private int overstaptijd;
+    private Set<Station> buren = new HashSet<>();
+    private Set<Lijn> lijnen = new HashSet<>();
+    private Kruising kruising;
 
     public Station(String naam, int overstaptijd) {
         this.stadsnaam = naam;
@@ -41,6 +41,11 @@ public class Station {
         return buren;
     }
 
+    public Set<Lijn> getLijnen() {
+        return lijnen;
+    }
+    
+    
     @Override
     public String toString() {
         return stadsnaam;
